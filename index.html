@@ -9,6 +9,7 @@
 body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .hidden { display: none !important; }
 
+/* ЭКРАН ЗАГРУЗКИ */
 #loading-screen {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #000; display: flex; flex-direction: column;
@@ -31,6 +32,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   transition: width 0.2s;
 }
 
+/* СТАРТ */
 #screen-start {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #fff; display: flex; justify-content: center; align-items: center;
@@ -43,6 +45,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #start-btn:active { transform: scale(0.95); }
 
+/* ВХОД */
 #screen-login {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #fff; display: flex; justify-content: center; align-items: center;
@@ -61,13 +64,15 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #login-error { color: #ff0000; margin-top: 15px; font-size: 14px; font-weight: bold; }
 
-.page { padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 1s ease-in; padding-bottom: 60px; }
+/* ОБЩИЕ */
+.page { padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 1s ease-in; padding-bottom: 60px; position: relative; z-index: 10; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .title-wrap { text-align: center; margin: 20px 0 10px; }
 #title-canvas { display: block; margin: 0 auto; max-width: 100%; }
 #counter-canvas { display: block; margin: 0 auto 25px; max-width: 100%; }
 
+/* ГАЛЕРЕЯ */
 #gallery, #video-gallery, #bonus-gallery {
   background: #111; border-radius: 15px; padding: 15px; margin-bottom: 25px;
   border: 2px solid #222;
@@ -87,6 +92,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .gallery-controls button:disabled { background: #333; color: #666; cursor: not-allowed; }
 #photo-counter, #video-counter, #bonus-counter { color: #888; font-size: 14px; text-align: center; min-width: 80px; }
 
+/* КНОПКИ */
 #next-btn, #kill-btn, #bonus-btn {
   display: block; width: 100%; padding: 20px; background: #00e676; color: #000;
   border: none; border-radius: 15px; font-size: 20px; font-weight: bold;
@@ -101,11 +107,16 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   cursor: pointer; margin-bottom: 20px;
 }
 
-#screen-final { padding: 30px 20px; max-width: 800px; margin: 0 auto; min-height: 100vh; }
+/* ФИНАЛ + ДОЖДЬ */
+#screen-final {
+  padding: 30px 20px; max-width: 800px; margin: 0 auto; min-height: 100vh;
+  position: relative;
+}
 #final-text {
-  background: #111; padding: 25px; border-radius: 15px; border: 2px solid #00e676;
-  line-height: 1.8; font-size: 16px; color: #fff; margin-bottom: 20px;
-  white-space: pre-wrap; min-height: 200px;
+  background: rgba(17, 17, 17, 0.9); padding: 25px; border-radius: 15px;
+  border: 2px solid #00e676; line-height: 1.8; font-size: 16px; color: #fff;
+  margin-bottom: 20px; white-space: pre-wrap; min-height: 200px;
+  position: relative; z-index: 10;
 }
 .cursor-blink {
   display: inline-block; width: 8px; height: 18px; background: #00e676;
@@ -114,6 +125,16 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
 
+/* КАНВАС ДОЖДЯ НА ФОНЕ */
+#rain-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* МЕМ 67 */
 #meme-67 {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0, 0, 0, 0.95); display: flex; flex-direction: column;
@@ -129,6 +150,28 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer;
 }
 
+/* СИНИЙ ЭКРАН СМЕРТИ */
+#bsod {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #0078d7; color: #fff; z-index: 5000;
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center; padding: 40px; text-align: center;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+#bsod .sad {
+  font-size: 80px; margin-bottom: 30px;
+}
+#bsod h1 {
+  font-size: 28px; font-weight: 400; margin-bottom: 30px; line-height: 1.4;
+}
+#bsod p {
+  font-size: 16px; line-height: 1.6; margin-bottom: 15px; max-width: 600px;
+}
+#bsod .percent {
+  font-size: 60px; margin-top: 30px; font-weight: 300;
+}
+
+/* УБЕГАЮЩАЯ КНОПКА */
 #next-btn.runaway {
   position: fixed; z-index: 1500;
   transition: top 0.4s, left 0.4s;
@@ -194,6 +237,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </div>
 
 <div id="screen-final" class="hidden page">
+  <canvas id="rain-canvas"></canvas>
   <div id="final-text"></div>
   <button id="bonus-btn" class="hidden">🎁 Бонусная комната</button>
   <button id="back-btn-3" class="back-btn">← Назад к видео</button>
@@ -218,11 +262,22 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   <button id="meme-67-close">Закрыть</button>
 </div>
 
+<div id="bsod" class="hidden">
+  <div class="sad">:(</div>
+  <h1>На твоём устройстве возникла проблема, и его необходимо перезагрузить. Мы собираем некоторые сведения об ошибке, после чего выполним перезагрузку.</h1>
+  <p>0% завершено</p>
+  <p style="font-size:12px; opacity:0.8; margin-top:40px;">Код ошибки: CRITICAL_PROCESS_DIED</p>
+  <p style="font-size:12px; opacity:0.8;">Файл: kirill_drysh.exe</p>
+</div>
+
 <audio id="bg-music" loop>
   <source src="https://insane-famq.github.io/birthday-kirill/MORGENSHTERN_-_Novyjj_Merin_66404393.mp3" type="audio/mpeg">
 </audio>
 <audio id="sad-music" loop>
   <source src="https://insane-famq.github.io/birthday-kirill/gorestnyie-vospominaniya-242.mp3" type="audio/mpeg">
+</audio>
+<audio id="rain-music" loop>
+  <source src="https://insane-famq.github.io/birthday-kirill/Sound_85608500 1628867202.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -239,6 +294,7 @@ const screenFinal = document.getElementById('screen-final');
 const screenBonus = document.getElementById('screen-bonus');
 const bgMusic = document.getElementById('bg-music');
 const sadMusic = document.getElementById('sad-music');
+const rainMusic = document.getElementById('rain-music');
 const galleryImg = document.getElementById('gallery-img');
 const prevBtn = document.getElementById('prev-btn');
 const nextPhotoBtn = document.getElementById('next-photo-btn');
@@ -264,11 +320,13 @@ const meme67Close = document.getElementById('meme-67-close');
 const loadingScreen = document.getElementById('loading-screen');
 const loadingText = document.getElementById('loading-text');
 const loadingBar = document.getElementById('loading-bar');
+const bsod = document.getElementById('bsod');
 
 const titleCanvas = document.getElementById('title-canvas');
 const titleCanvas2 = document.getElementById('title-canvas-2');
 const counterCanvas = document.getElementById('counter-canvas');
 const counterCanvas2 = document.getElementById('counter-canvas-2');
+const rainCanvas = document.getElementById('rain-canvas');
 
 const CORRECT_LOGIN = 'cutecut';
 const CORRECT_PASSWORD = '32177gay';
@@ -284,6 +342,7 @@ const BONUS = [
 ];
 
 let clicks = 0;
+let bsodShown = false;
 
 const COLOR_STAGES = [
   { color: '#888888', shadow: null },
@@ -376,6 +435,89 @@ function renderAll() {
 
 window.addEventListener('resize', renderAll);
 
+// ==== ДОЖДЬ НА ФОНЕ ФИНАЛА ====
+let rainFrame = null;
+let drops = [];
+let lightningTimer = null;
+
+function initRain() {
+  const ctx = rainCanvas.getContext('2d');
+  rainCanvas.width = window.innerWidth;
+  rainCanvas.height = window.innerHeight;
+  drops = [];
+  const dropCount = Math.floor((rainCanvas.width * rainCanvas.height) / 4000);
+  for (let i = 0; i < dropCount; i++) {
+    drops.push({
+      x: Math.random() * rainCanvas.width,
+      y: Math.random() * rainCanvas.height,
+      len: 10 + Math.random() * 20,
+      speed: 15 + Math.random() * 15,
+      opacity: 0.1 + Math.random() * 0.4
+    });
+  }
+}
+
+function drawRain() {
+  const ctx = rainCanvas.getContext('2d');
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+  ctx.fillRect(0, 0, rainCanvas.width, rainCanvas.height);
+
+  ctx.strokeStyle = 'rgba(150, 200, 255, 0.6)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  for (let i = 0; i < drops.length; i++) {
+    const d = drops[i];
+    ctx.moveTo(d.x, d.y);
+    ctx.lineTo(d.x, d.y + d.len);
+    d.y += d.speed;
+    if (d.y > rainCanvas.height) {
+      d.y = -d.len;
+      d.x = Math.random() * rainCanvas.width;
+    }
+  }
+  ctx.stroke();
+  rainFrame = requestAnimationFrame(drawRain);
+}
+
+function triggerLightning() {
+  rainCanvas.style.transition = 'none';
+  rainCanvas.style.filter = 'brightness(3)';
+  setTimeout(() => {
+    rainCanvas.style.filter = 'brightness(1)';
+    setTimeout(() => {
+      rainCanvas.style.filter = 'brightness(2.5)';
+      setTimeout(() => { rainCanvas.style.filter = 'brightness(1)'; }, 80);
+    }, 60);
+  }, 50);
+}
+
+function scheduleLightning() {
+  const delay = 5000 + Math.random() * 8000;
+  lightningTimer = setTimeout(() => {
+    if (!screenFinal.classList.contains('hidden')) {
+      triggerLightning();
+      scheduleLightning();
+    }
+  }, delay);
+}
+
+function startRain() {
+  initRain();
+  if (rainFrame) cancelAnimationFrame(rainFrame);
+  drawRain();
+  scheduleLightning();
+}
+
+function stopRain() {
+  if (rainFrame) { cancelAnimationFrame(rainFrame); rainFrame = null; }
+  if (lightningTimer) { clearTimeout(lightningTimer); lightningTimer = null; }
+  rainCanvas.style.filter = 'brightness(1)';
+}
+
+window.addEventListener('resize', () => {
+  if (!screenFinal.classList.contains('hidden')) initRain();
+});
+
 const PHOTOS = [
   BASE+'Photo2.jpg',BASE+'Photo3.jpg',BASE+'Photo4.jpg',BASE+'Photo6.jpg',BASE+'Photo7.jpg',
   BASE+'Photo8.jpg',BASE+'Photo9.jpg',BASE+'Photo10.jpg',BASE+'Photo11.jpg',BASE+'Photo12.jpg',
@@ -430,7 +572,7 @@ const FINAL_MESSAGE = `И снова здравствуй мой старый д
 
 — Твой вонючий дрыщ качок`;
 
-// ЭКРАН ЗАГРУЗКИ
+// ==== ЭКРАН ЗАГРУЗКИ ====
 const loadingSteps = [
   { text: 'УСТАНОВКА СВЯЗИ...', percent: 10, delay: 400 },
   { text: 'ПРОВЕРКА КАНАЛА...', percent: 30, delay: 500 },
@@ -458,11 +600,13 @@ function runLoading() {
 
 runLoading();
 
+// ==== СТАРТ ====
 startBtn.addEventListener('click', () => {
   screenStart.classList.add('hidden');
   screenLogin.classList.remove('hidden');
 });
 
+// ==== ВХОД ====
 loginBtn.addEventListener('click', () => {
   const login = loginInput.value.trim();
   const password = passwordInput.value.trim();
@@ -470,7 +614,7 @@ loginBtn.addEventListener('click', () => {
   if (login === CORRECT_LOGIN && password === CORRECT_PASSWORD) {
     screenLogin.classList.add('hidden');
     screenPage1.classList.remove('hidden');
-    bgMusic.volume = 0.2;
+    bgMusic.volume = 0.5;
     bgMusic.play().catch(e => console.log('Музыка:', e));
     showPhoto(0);
     showVideo(0);
@@ -482,6 +626,7 @@ loginBtn.addEventListener('click', () => {
   }
 });
 
+// ==== ФОТО ====
 let currentPhoto = 0;
 function showPhoto(index) {
   galleryImg.src = PHOTOS[index];
@@ -494,6 +639,7 @@ function showPhoto(index) {
 prevBtn.addEventListener('click', () => { if (currentPhoto > 0) { currentPhoto--; showPhoto(currentPhoto); } });
 nextPhotoBtn.addEventListener('click', () => { if (currentPhoto < PHOTOS.length - 1) { currentPhoto++; showPhoto(currentPhoto); } });
 
+// ==== ВИДЕО ====
 let currentVideo = 0;
 function showVideo(index) {
   videoPlayer.src = VIDEOS[index];
@@ -509,6 +655,7 @@ videoPlayer.addEventListener('play', () => bgMusic.pause());
 videoPlayer.addEventListener('pause', () => bgMusic.play());
 videoPlayer.addEventListener('ended', () => bgMusic.play());
 
+// ==== БОНУС ====
 let currentBonus = 0;
 function showBonus(index) {
   bonusAudio.src = BONUS[index];
@@ -518,9 +665,10 @@ function showBonus(index) {
 }
 prevBonusBtn.addEventListener('click', () => { if (currentBonus > 0) { currentBonus--; showBonus(currentBonus); } });
 nextBonusBtn.addEventListener('click', () => { if (currentBonus < BONUS.length - 1) { currentBonus++; showBonus(currentBonus); } });
-bonusAudio.addEventListener('play', () => { bgMusic.pause(); sadMusic.pause(); });
-bonusAudio.addEventListener('ended', () => { sadMusic.play(); });
+bonusAudio.addEventListener('play', () => { bgMusic.pause(); sadMusic.pause(); rainMusic.pause(); });
+bonusAudio.addEventListener('ended', () => { if (screenBonus.classList.contains('hidden')) return; });
 
+// ==== УБЕГАЮЩАЯ КНОПКА ====
 let nextBtnAttempts = 0;
 function moveNextBtn() {
   const bw = nextBtn.offsetWidth || 200;
@@ -555,6 +703,8 @@ backBtn3.addEventListener('click', () => {
   screenFinal.classList.add('hidden');
   screenPage2.classList.remove('hidden');
   sadMusic.pause();
+  rainMusic.pause();
+  stopRain();
   bgMusic.play();
   window.scrollTo(0, 0);
 });
@@ -563,7 +713,9 @@ bonusBtn.addEventListener('click', () => {
   screenFinal.classList.add('hidden');
   screenBonus.classList.remove('hidden');
   sadMusic.pause();
+  rainMusic.pause();
   bgMusic.pause();
+  stopRain();
   showBonus(0);
   window.scrollTo(0, 0);
 });
@@ -573,13 +725,25 @@ backBtn4.addEventListener('click', () => {
   screenFinal.classList.remove('hidden');
   bonusAudio.pause();
   sadMusic.play();
+  rainMusic.play();
+  startRain();
   window.scrollTo(0, 0);
 });
 
+// ==== СЧЁТЧИК ====
 function startClickCounter() {
   document.body.addEventListener('click', () => {
     clicks++;
     renderAll();
+
+    if (clicks === 50 && !bsodShown) {
+      bsodShown = true;
+      bsod.classList.remove('hidden');
+      setTimeout(() => {
+        bsod.classList.add('hidden');
+      }, 3000);
+    }
+
     if (clicks === 67) {
       meme67Img.src = MEME_67_URL;
       meme67.classList.remove('hidden');
@@ -591,6 +755,7 @@ meme67Close.addEventListener('click', () => {
   meme67.classList.add('hidden');
 });
 
+// ==== КНОПКА УЕБИ МЕНЯ ====
 let killCount = 0;
 killBtn.addEventListener('click', () => {
   killCount++;
@@ -602,13 +767,17 @@ killBtn.addEventListener('click', () => {
     screenPage2.classList.add('hidden');
     screenFinal.classList.remove('hidden');
     bgMusic.pause();
-    sadMusic.volume = 0.3;
+    sadMusic.volume = 0.4;
     sadMusic.play().catch(e => console.log('Грустная музыка:', e));
+    rainMusic.volume = 0.15;
+    rainMusic.play().catch(e => console.log('Дождь:', e));
+    startRain();
     window.scrollTo(0, 0);
     typeFinalText();
   }
 });
 
+// ==== ПЕЧАТАЮЩИЙСЯ ТЕКСТ ====
 function typeFinalText() {
   finalText.innerHTML = '';
   const cursor = document.createElement('span');
@@ -621,7 +790,6 @@ function typeFinalText() {
   function type() {
     if (i >= FINAL_MESSAGE.length) {
       if (cursor.parentNode) cursor.parentNode.removeChild(cursor);
-      // Показываем кнопку Бонусная комната после завершения
       bonusBtn.classList.remove('hidden');
       return;
     }
@@ -636,4 +804,4 @@ function typeFinalText() {
 </script>
 
 </body>
-      </html>
+</html>
