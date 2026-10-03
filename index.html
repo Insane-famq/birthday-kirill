@@ -52,19 +52,17 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .title-red { color: #ff2b2b; text-shadow: 0 0 20px #ff2b2b; }
 .title-gold { color: #ffd700; text-shadow: 0 0 25px #ffd700; }
 
-/* РАДУЖНЫЙ ТЕКСТ */
+/* РАДУЖНЫЙ ТЕКСТ — ПЕРЕЛИВАЕТСЯ, через каждую букву */
 .title-rainbow, .counter-rainbow {
-  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: rainbowShift 2s linear infinite;
+  color: #ff0000;
 }
-@keyframes rainbowShift {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+.title-rainbow span, .counter-rainbow span {
+  display: inline-block;
+  animation: letterHue 2s linear infinite;
+}
+@keyframes letterHue {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
 }
 
 #click-counter, #click-counter-2 {
@@ -85,18 +83,16 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 #video-player { width: 100%; height: 60vh; max-height: 600px; border-radius: 10px; background: #000; }
 .gallery-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; gap: 10px; }
 .gallery-controls button {
-  background: #111; color: #00e676; border: 2px solid #00e676; padding: 12px 20px;
+  background: #00e676; color: #000; border: none; padding: 12px 20px;
   border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; flex: 1;
-  transition: color 0.5s, border-color 0.5s;
 }
-.gallery-controls button:disabled { color: #333; border-color: #333; cursor: not-allowed; }
+.gallery-controls button:disabled { background: #333; color: #666; cursor: not-allowed; }
 #photo-counter, #video-counter { color: #888; font-size: 14px; text-align: center; min-width: 80px; }
 
 #next-btn, #kill-btn {
-  display: block; width: 100%; padding: 20px; background: #111; color: #00e676;
-  border: 2px solid #00e676; border-radius: 15px; font-size: 20px; font-weight: bold;
+  display: block; width: 100%; padding: 20px; background: #00e676; color: #000;
+  border: none; border-radius: 15px; font-size: 20px; font-weight: bold;
   cursor: pointer; margin-bottom: 20px;
-  transition: color 0.5s, border-color 0.5s;
 }
 #kill-btn { padding: 25px; line-height: 1.4; }
 
@@ -123,27 +119,8 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #meme-67 img { max-width: 90%; max-height: 60%; border-radius: 15px; }
 #meme-67 button {
-  margin-top: 20px; padding: 15px 40px; background: #111; color: #00e676;
-  border: 2px solid #00e676; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer;
-}
-
-/* ЦВЕТА БУКВ КНОПОК */
-.btn-grey { color: #888 !important; border-color: #888 !important; }
-.btn-green { color: #00e676 !important; border-color: #00e676 !important; }
-.btn-purple { color: #b14aff !important; border-color: #b14aff !important; }
-.btn-red { color: #ff2b2b !important; border-color: #ff2b2b !important; }
-.btn-gold { color: #ffd700 !important; border-color: #ffd700 !important; }
-
-/* РАДУЖНЫЕ БУКВЫ КНОПОК */
-.btn-rainbow {
-  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000) !important;
-  background-size: 200% auto !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  color: transparent !important;
-  border-color: #ff00ff !important;
-  animation: rainbowShift 2s linear infinite;
+  margin-top: 20px; padding: 15px 40px; background: #00e676; color: #000;
+  border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer;
 }
 
 #next-btn.runaway {
@@ -186,12 +163,12 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   <div id="gallery">
     <img id="gallery-img" src="" alt="">
     <div class="gallery-controls">
-      <button id="prev-btn" class="btn-green">← Назад</button>
+      <button id="prev-btn">← Назад</button>
       <span id="photo-counter">1 / 1</span>
-      <button id="next-photo-btn" class="btn-green">Вперёд →</button>
+      <button id="next-photo-btn">Вперёд →</button>
     </div>
   </div>
-  <button id="next-btn" class="hidden btn-green">Дальше →</button>
+  <button id="next-btn" class="hidden">Дальше →</button>
 </div>
 
 <div id="screen-page2" class="hidden page">
@@ -200,12 +177,12 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   <div id="video-gallery">
     <video id="video-player" controls></video>
     <div class="gallery-controls">
-      <button id="prev-video-btn" class="btn-green">← Назад</button>
+      <button id="prev-video-btn">← Назад</button>
       <span id="video-counter">1 / 1</span>
-      <button id="next-video-btn" class="btn-green">Вперёд →</button>
+      <button id="next-video-btn">Вперёд →</button>
     </div>
   </div>
-  <button id="kill-btn" class="hidden btn-green">уеби меня</button>
+  <button id="kill-btn" class="hidden">уеби меня</button>
   <button id="back-btn-2" class="back-btn">← Назад к фото</button>
 </div>
 
@@ -217,7 +194,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 <div id="meme-67" class="hidden">
   <div id="meme-67-text">хорош блять наебашил 67 кликов</div>
   <img id="meme-67-img" src="" alt="67">
-  <button id="meme-67-close" class="btn-green">Закрыть</button>
+  <button id="meme-67-close">Закрыть</button>
 </div>
 
 <audio id="bg-music" loop>
@@ -506,36 +483,35 @@ backBtn3.addEventListener('click', () => {
 let clicks = 0;
 let rainbowMode = false;
 
+// Оборачиваем каждую букву в span для радужного переливания
+function wrapLetters(element) {
+  const text = element.textContent;
+  element.innerHTML = '';
+  for (let i = 0; i < text.length; i++) {
+    const span = document.createElement('span');
+    span.textContent = text[i];
+    span.style.animationDelay = (i * 0.1) + 's';
+    element.appendChild(span);
+  }
+}
+
 function updateColors() {
   mainTitle.className = mainTitle2.className = 'main-title title-grey';
   clickCounter.className = clickCounter2.className = 'counter-grey';
-  setButtonsClass('btn-grey');
 
   if (clicks >= 11 && clicks <= 25) {
     mainTitle.className = mainTitle2.className = 'main-title title-green';
     clickCounter.className = clickCounter2.className = 'counter-green';
-    setButtonsClass('btn-green');
   } else if (clicks >= 26 && clicks <= 40) {
     mainTitle.className = mainTitle2.className = 'main-title title-purple';
     clickCounter.className = clickCounter2.className = 'counter-purple';
-    setButtonsClass('btn-purple');
   } else if (clicks >= 41 && clicks <= 55) {
     mainTitle.className = mainTitle2.className = 'main-title title-red';
     clickCounter.className = clickCounter2.className = 'counter-red';
-    setButtonsClass('btn-red');
   } else if (clicks >= 56 && clicks <= 66) {
     mainTitle.className = mainTitle2.className = 'main-title title-gold';
     clickCounter.className = clickCounter2.className = 'counter-gold';
-    setButtonsClass('btn-gold');
   }
-}
-
-function setButtonsClass(cls) {
-  const allBtns = [prevBtn, nextPhotoBtn, nextBtn, prevVideoBtn, nextVideoBtn, killBtn, meme67Close];
-  allBtns.forEach(b => {
-    b.classList.remove('btn-grey', 'btn-green', 'btn-purple', 'btn-red', 'btn-gold', 'btn-rainbow');
-    b.classList.add(cls);
-  });
 }
 
 function startClickCounter() {
@@ -548,9 +524,14 @@ function startClickCounter() {
       meme67Img.src = MEME_67_URL;
       meme67.classList.remove('hidden');
       rainbowMode = true;
+
+      // Заголовки и счётчики — радужные по буквам
       mainTitle.className = mainTitle2.className = 'main-title title-rainbow';
       clickCounter.className = clickCounter2.className = 'counter-rainbow';
-      setButtonsClass('btn-rainbow');
+      wrapLetters(mainTitle);
+      wrapLetters(mainTitle2);
+      wrapLetters(clickCounter);
+      wrapLetters(clickCounter2);
     } else if (!rainbowMode) {
       updateColors();
     }
@@ -583,4 +564,4 @@ killBtn.addEventListener('click', () => {
 </script>
 
 </body>
-        </html>
+    </html>
