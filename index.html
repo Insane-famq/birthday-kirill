@@ -9,7 +9,6 @@
 body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .hidden { display: none !important; }
 
-/* ЭКРАН ЗАГРУЗКИ */
 #loading-screen {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #000; display: flex; flex-direction: column;
@@ -32,7 +31,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   transition: width 0.2s;
 }
 
-/* СТАРТ */
 #screen-start {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #fff; display: flex; justify-content: center; align-items: center;
@@ -45,7 +43,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #start-btn:active { transform: scale(0.95); }
 
-/* ВХОД */
 #screen-login {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #fff; display: flex; justify-content: center; align-items: center;
@@ -64,7 +61,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #login-error { color: #ff0000; margin-top: 15px; font-size: 14px; font-weight: bold; }
 
-/* ОБЩИЕ */
 .page { padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 1s ease-in; padding-bottom: 60px; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -72,16 +68,13 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 #title-canvas { display: block; margin: 0 auto; max-width: 100%; }
 #counter-canvas { display: block; margin: 0 auto 25px; max-width: 100%; }
 
-/* ГАЛЕРЕЯ */
 #gallery, #video-gallery, #bonus-gallery {
   background: #111; border-radius: 15px; padding: 15px; margin-bottom: 25px;
   border: 2px solid #222;
 }
 #gallery-img { width: 100%; height: 60vh; max-height: 600px; object-fit: contain; border-radius: 10px; background: #000; }
 #video-player { width: 100%; height: 60vh; max-height: 600px; border-radius: 10px; background: #000; }
-#bonus-audio {
-  width: 100%; margin: 20px 0; border-radius: 10px;
-}
+#bonus-audio { width: 100%; margin: 20px 0; border-radius: 10px; }
 .bonus-label {
   text-align: center; color: #00e676; font-size: 18px;
   font-weight: bold; margin-bottom: 15px; text-shadow: 0 0 15px #00e676;
@@ -94,7 +87,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .gallery-controls button:disabled { background: #333; color: #666; cursor: not-allowed; }
 #photo-counter, #video-counter, #bonus-counter { color: #888; font-size: 14px; text-align: center; min-width: 80px; }
 
-/* КНОПКИ */
 #next-btn, #kill-btn, #bonus-btn {
   display: block; width: 100%; padding: 20px; background: #00e676; color: #000;
   border: none; border-radius: 15px; font-size: 20px; font-weight: bold;
@@ -109,7 +101,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   cursor: pointer; margin-bottom: 20px;
 }
 
-/* ФИНАЛ */
 #screen-final { padding: 30px 20px; max-width: 800px; margin: 0 auto; min-height: 100vh; }
 #final-text {
   background: #111; padding: 25px; border-radius: 15px; border: 2px solid #00e676;
@@ -123,7 +114,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
 
-/* МЕМ 67 */
 #meme-67 {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0, 0, 0, 0.95); display: flex; flex-direction: column;
@@ -139,7 +129,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer;
 }
 
-/* УБЕГАЮЩАЯ КНОПКА */
 #next-btn.runaway {
   position: fixed; z-index: 1500;
   transition: top 0.4s, left 0.4s;
@@ -155,7 +144,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </head>
 <body>
 
-<!-- ЭКРАН ЗАГРУЗКИ -->
 <div id="loading-screen">
   <div id="loading-text">УСТАНОВКА СВЯЗИ...</div>
   <div id="loading-bar-wrap"><div id="loading-bar"></div></div>
@@ -207,7 +195,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 
 <div id="screen-final" class="hidden page">
   <div id="final-text"></div>
-  <button id="bonus-btn">🎁 Бонусная комната</button>
+  <button id="bonus-btn" class="hidden">🎁 Бонусная комната</button>
   <button id="back-btn-3" class="back-btn">← Назад к видео</button>
 </div>
 
@@ -442,7 +430,7 @@ const FINAL_MESSAGE = `И снова здравствуй мой старый д
 
 — Твой вонючий дрыщ качок`;
 
-// ==== ЭКРАН ЗАГРУЗКИ ====
+// ЭКРАН ЗАГРУЗКИ
 const loadingSteps = [
   { text: 'УСТАНОВКА СВЯЗИ...', percent: 10, delay: 400 },
   { text: 'ПРОВЕРКА КАНАЛА...', percent: 30, delay: 500 },
@@ -470,13 +458,11 @@ function runLoading() {
 
 runLoading();
 
-// ==== СТАРТ ====
 startBtn.addEventListener('click', () => {
   screenStart.classList.add('hidden');
   screenLogin.classList.remove('hidden');
 });
 
-// ==== ВХОД ====
 loginBtn.addEventListener('click', () => {
   const login = loginInput.value.trim();
   const password = passwordInput.value.trim();
@@ -496,7 +482,6 @@ loginBtn.addEventListener('click', () => {
   }
 });
 
-// ==== ФОТО ====
 let currentPhoto = 0;
 function showPhoto(index) {
   galleryImg.src = PHOTOS[index];
@@ -509,7 +494,6 @@ function showPhoto(index) {
 prevBtn.addEventListener('click', () => { if (currentPhoto > 0) { currentPhoto--; showPhoto(currentPhoto); } });
 nextPhotoBtn.addEventListener('click', () => { if (currentPhoto < PHOTOS.length - 1) { currentPhoto++; showPhoto(currentPhoto); } });
 
-// ==== ВИДЕО ====
 let currentVideo = 0;
 function showVideo(index) {
   videoPlayer.src = VIDEOS[index];
@@ -525,7 +509,6 @@ videoPlayer.addEventListener('play', () => bgMusic.pause());
 videoPlayer.addEventListener('pause', () => bgMusic.play());
 videoPlayer.addEventListener('ended', () => bgMusic.play());
 
-// ==== БОНУС ====
 let currentBonus = 0;
 function showBonus(index) {
   bonusAudio.src = BONUS[index];
@@ -535,12 +518,9 @@ function showBonus(index) {
 }
 prevBonusBtn.addEventListener('click', () => { if (currentBonus > 0) { currentBonus--; showBonus(currentBonus); } });
 nextBonusBtn.addEventListener('click', () => { if (currentBonus < BONUS.length - 1) { currentBonus++; showBonus(currentBonus); } });
-
 bonusAudio.addEventListener('play', () => { bgMusic.pause(); sadMusic.pause(); });
-bonusAudio.addEventListener('pause', () => { if (screenBonus.classList.contains('hidden')) return; });
 bonusAudio.addEventListener('ended', () => { sadMusic.play(); });
 
-// ==== УБЕГАЮЩАЯ КНОПКА ====
 let nextBtnAttempts = 0;
 function moveNextBtn() {
   const bw = nextBtn.offsetWidth || 200;
@@ -596,7 +576,6 @@ backBtn4.addEventListener('click', () => {
   window.scrollTo(0, 0);
 });
 
-// ==== СЧЁТЧИК ====
 function startClickCounter() {
   document.body.addEventListener('click', () => {
     clicks++;
@@ -612,7 +591,6 @@ meme67Close.addEventListener('click', () => {
   meme67.classList.add('hidden');
 });
 
-// ==== КНОПКА УЕБИ МЕНЯ ====
 let killCount = 0;
 killBtn.addEventListener('click', () => {
   killCount++;
@@ -631,33 +609,7 @@ killBtn.addEventListener('click', () => {
   }
 });
 
-// ==== ПЕЧАТАЮЩИЙСЯ ТЕКСТ + ЗВУК ПЕЧАТИ ====
-let audioCtx = null;
-
-function initAudioCtx() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-}
-
-function playTypeSound() {
-  if (!audioCtx) return;
-  const now = audioCtx.currentTime;
-  const osc = audioCtx.createOscillator();
-  const gain = audioCtx.createGain();
-  osc.type = 'square';
-  osc.frequency.value = 1200 + Math.random() * 400;
-  gain.gain.setValueAtTime(0.04, now);
-  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
-  osc.connect(gain);
-  gain.connect(audioCtx.destination);
-  osc.start(now);
-  osc.stop(now + 0.05);
-}
-
 function typeFinalText() {
-  initAudioCtx();
   finalText.innerHTML = '';
   const cursor = document.createElement('span');
   cursor.className = 'cursor-blink';
@@ -669,20 +621,19 @@ function typeFinalText() {
   function type() {
     if (i >= FINAL_MESSAGE.length) {
       if (cursor.parentNode) cursor.parentNode.removeChild(cursor);
+      // Показываем кнопку Бонусная комната после завершения
+      bonusBtn.classList.remove('hidden');
       return;
     }
     const ch = FINAL_MESSAGE[i];
     const textNode = document.createTextNode(ch);
     finalText.insertBefore(textNode, cursor);
-
-    if (ch !== ' ' && ch !== '\n') playTypeSound();
-
     i++;
-    setTimeout(type, ch === '.' || ch === '\n' ? speed * 5 : speed);
+    setTimeout(type, (ch === '.' || ch === '\n') ? speed * 5 : speed);
   }
   type();
 }
 </script>
 
 </body>
-</html>
+      </html>
