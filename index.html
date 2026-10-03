@@ -5,250 +5,131 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>С ДР, Кирилл</title>
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
+.hidden { display: none !important; }
 
-body {
-  background: #000;
-  color: #fff;
-  overflow-x: hidden;
-  min-height: 100vh;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* ЭКРАН 1 */
 #screen-start {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-  padding: 20px;
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #fff; display: flex; justify-content: center; align-items: center;
+  z-index: 999; padding: 20px;
 }
-
 #start-btn {
-  background: #000;
-  color: #fff;
-  border: none;
-  padding: 40px 50px;
-  font-size: 24px;
-  font-weight: bold;
-  border-radius: 20px;
-  cursor: pointer;
-  text-align: center;
-  max-width: 90%;
-  line-height: 1.3;
-  transition: transform 0.2s;
+  background: #000; color: #fff; border: none; padding: 40px 50px;
+  font-size: 24px; font-weight: bold; border-radius: 20px; cursor: pointer;
+  text-align: center; max-width: 90%; line-height: 1.3;
 }
+#start-btn:active { transform: scale(0.95); }
 
-#start-btn:active {
-  transform: scale(0.95);
-}
-
-/* ЭКРАН 2 */
 #screen-login {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 998;
-  padding: 20px;
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #fff; display: flex; justify-content: center; align-items: center;
+  z-index: 998; padding: 20px;
 }
-
-.login-box {
-  background: #fff;
-  padding: 20px;
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-}
-
+.login-box { background: #fff; padding: 20px; width: 100%; max-width: 400px; text-align: center; }
 .login-box input {
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 8px;
-  background: #f0f0f0;
-  border: 2px solid #000;
-  border-radius: 10px;
-  color: #000;
-  font-size: 16px;
+  width: 100%; padding: 15px; margin-bottom: 8px; background: #f0f0f0;
+  border: 2px solid #000; border-radius: 10px; color: #000; font-size: 16px;
 }
-
-.login-box input:focus {
-  outline: none;
-  border-color: #00e676;
-}
-
-.hint {
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 15px;
-  text-align: left;
-  line-height: 1.4;
-}
-
+.login-box input:focus { outline: none; border-color: #00e676; }
+.hint { font-size: 12px; color: #666; margin-bottom: 15px; text-align: left; line-height: 1.4; }
 #login-btn {
-  width: 100%;
-  padding: 15px;
-  background: #000;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
+  width: 100%; padding: 15px; background: #000; color: #fff; border: none;
+  border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px;
 }
+#login-error { color: #ff0000; margin-top: 15px; font-size: 14px; font-weight: bold; }
 
-#login-btn:active {
-  transform: scale(0.97);
-}
-
-#login-error {
-  color: #ff0000;
-  margin-top: 15px;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-/* ЭКРАН 3 */
-#screen-main {
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-  animation: fadeIn 1s ease-in;
-  padding-bottom: 60px;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+.page { padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 1s ease-in; padding-bottom: 60px; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .main-title {
-  text-align: center;
-  color: #00e676;
-  font-size: 28px;
-  margin: 20px 0 20px;
-  text-shadow: 0 0 20px #00e676;
+  text-align: center; font-size: 28px; margin: 20px 0 20px; font-weight: bold;
+  transition: color 0.5s, text-shadow 0.5s;
+}
+.title-grey { color: #888; }
+.title-green { color: #00e676; text-shadow: 0 0 20px #00e676; }
+.title-purple { color: #b14aff; text-shadow: 0 0 20px #b14aff; }
+.title-red { color: #ff2b2b; text-shadow: 0 0 20px #ff2b2b; }
+.title-gold { color: #ffd700; text-shadow: 0 0 25px #ffd700; }
+.title-rainbow {
+  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000);
+  background-size: 400% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 3s linear infinite;
+}
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 400% 50%; }
 }
 
-#click-counter {
-  text-align: center;
-  color: #888;
-  margin-bottom: 25px;
-  font-size: 14px;
+#click-counter, #click-counter-2 {
+  text-align: center; margin-bottom: 25px; font-size: 16px; font-weight: bold;
+  transition: color 0.5s, text-shadow 0.5s;
+}
+.counter-grey { color: #888; }
+.counter-green { color: #00e676; text-shadow: 0 0 15px #00e676; }
+.counter-purple { color: #b14aff; text-shadow: 0 0 15px #b14aff; }
+.counter-red { color: #ff2b2b; text-shadow: 0 0 15px #ff2b2b; }
+.counter-gold { color: #ffd700; text-shadow: 0 0 20px #ffd700; }
+.counter-rainbow {
+  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000);
+  background-size: 400% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 3s linear infinite;
 }
 
-#gallery {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-bottom: 25px;
-}
-
-#gallery img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.3s;
+#gallery, #video-gallery {
+  background: #111; border-radius: 15px; padding: 15px; margin-bottom: 25px;
   border: 2px solid #222;
 }
+#gallery-img { width: 100%; height: 60vh; max-height: 600px; object-fit: contain; border-radius: 10px; background: #000; }
+#video-player { width: 100%; height: 60vh; max-height: 600px; border-radius: 10px; background: #000; }
+.gallery-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; gap: 10px; }
+.gallery-controls button {
+  background: #00e676; color: #000; border: none; padding: 12px 20px;
+  border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; flex: 1;
+}
+.gallery-controls button:disabled { background: #333; color: #666; cursor: not-allowed; }
+#photo-counter, #video-counter { color: #888; font-size: 14px; text-align: center; min-width: 80px; }
 
-#gallery img:active {
-  transform: scale(0.95);
+#next-btn, #kill-btn {
+  display: block; width: 100%; padding: 20px; background: #00e676; color: #000;
+  border: none; border-radius: 15px; font-size: 20px; font-weight: bold;
+  cursor: pointer; margin-bottom: 20px;
+}
+#kill-btn { padding: 25px; line-height: 1.4; }
+
+.back-btn {
+  display: block; width: 100%; padding: 15px; background: #333; color: #fff;
+  border: none; border-radius: 10px; font-size: 16px; font-weight: bold;
+  cursor: pointer; margin-bottom: 20px;
 }
 
-.photo-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.95);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  padding: 20px;
-}
-
-.photo-modal img {
-  max-width: 100%;
-  max-height: 90%;
-  border-radius: 10px;
-}
-
-#videos {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-bottom: 30px;
-}
-
-#videos video {
-  width: 100%;
-  border-radius: 10px;
-  border: 2px solid #222;
-}
-
-#kill-btn {
-  display: block;
-  width: 100%;
-  padding: 25px;
-  background: #00e676;
-  color: #000;
-  border: none;
-  border-radius: 15px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 40px;
-  line-height: 1.4;
-  transition: transform 0.2s;
-}
-
-#kill-btn:active {
-  transform: scale(0.97);
-}
-
-/* ЭКРАН 4 */
-#screen-final {
-  padding: 30px 20px;
-  max-width: 800px;
-  margin: 0 auto;
-  animation: fadeIn 1.5s ease-in;
-  min-height: 100vh;
-}
-
+#screen-final { padding: 30px 20px; max-width: 800px; margin: 0 auto; min-height: 100vh; }
 #final-text {
-  background: #111;
-  padding: 25px;
-  border-radius: 15px;
-  border: 2px solid #00e676;
-  line-height: 1.8;
-  white-space: pre-line;
-  font-size: 16px;
-  color: #fff;
+  background: #111; padding: 25px; border-radius: 15px; border: 2px solid #00e676;
+  line-height: 1.8; white-space: pre-line; font-size: 16px; color: #fff; margin-bottom: 20px;
+}
+
+#meme-67 {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.95); display: flex; flex-direction: column;
+  justify-content: center; align-items: center; z-index: 2000; padding: 20px;
+}
+#meme-67 img { max-width: 90%; max-height: 70%; border-radius: 15px; }
+#meme-67 button {
+  margin-top: 20px; padding: 15px 40px; background: #00e676; color: #000;
+  border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .main-title { font-size: 42px; }
+  #gallery-img, #video-player { height: 70vh; }
+  #final-text { font-size: 18px; padding: 35px; }
 }
 </style>
 </head>
@@ -269,20 +150,50 @@ body {
   </div>
 </div>
 
-<div id="screen-main" class="hidden">
-  <h1 class="main-title">Алоооо дрыыыыыыыщ</h1>
-  <div id="click-counter">Ты нажал 0 раз, дрыщ</div>
-  <div id="gallery"></div>
-  <div id="videos"></div>
-  <button id="kill-btn">уеби меня</button>
+<div id="screen-page1" class="hidden page">
+  <h1 id="main-title" class="main-title title-grey">Алоооо дрыыыыыыыщ</h1>
+  <div id="click-counter" class="counter-grey">Ты нажал 0 раз, дрыщ</div>
+  <div id="gallery">
+    <img id="gallery-img" src="" alt="">
+    <div class="gallery-controls">
+      <button id="prev-btn">← Назад</button>
+      <span id="photo-counter">1 / 1</span>
+      <button id="next-photo-btn">Вперёд →</button>
+    </div>
+  </div>
+  <button id="next-btn" class="hidden">Дальше →</button>
 </div>
 
-<div id="screen-final" class="hidden">
+<div id="screen-page2" class="hidden page">
+  <h1 id="main-title-2" class="main-title title-grey">Алоооо дрыыыыыыыщ</h1>
+  <div id="click-counter-2" class="counter-grey">Ты нажал 0 раз, дрыщ</div>
+  <div id="video-gallery">
+    <video id="video-player" controls></video>
+    <div class="gallery-controls">
+      <button id="prev-video-btn">← Назад</button>
+      <span id="video-counter">1 / 1</span>
+      <button id="next-video-btn">Вперёд →</button>
+    </div>
+  </div>
+  <button id="kill-btn" class="hidden">уеби меня</button>
+  <button id="back-btn-2" class="back-btn">← Назад к фото</button>
+</div>
+
+<div id="screen-final" class="hidden page">
   <div id="final-text"></div>
+  <button id="back-btn-3" class="back-btn">← Назад к видео</button>
+</div>
+
+<div id="meme-67" class="hidden">
+  <img id="meme-67-img" src="" alt="67">
+  <button id="meme-67-close">Закрыть</button>
 </div>
 
 <audio id="bg-music" loop>
   <source src="https://insane-famq.github.io/birthday-kirill/MORGENSHTERN_-_Novyjj_Merin_66404393.mp3" type="audio/mpeg">
+</audio>
+<audio id="sad-music" loop>
+  <source src="https://insane-famq.github.io/birthday-kirill/gorestnyie-vospominaniya-242.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -293,127 +204,142 @@ const loginBtn = document.getElementById('login-btn');
 const loginInput = document.getElementById('login-input');
 const passwordInput = document.getElementById('password-input');
 const loginError = document.getElementById('login-error');
-const screenMain = document.getElementById('screen-main');
+const screenPage1 = document.getElementById('screen-page1');
+const screenPage2 = document.getElementById('screen-page2');
 const screenFinal = document.getElementById('screen-final');
 const bgMusic = document.getElementById('bg-music');
+const sadMusic = document.getElementById('sad-music');
 const clickCounter = document.getElementById('click-counter');
-const gallery = document.getElementById('gallery');
-const videos = document.getElementById('videos');
+const clickCounter2 = document.getElementById('click-counter-2');
+const mainTitle = document.getElementById('main-title');
+const mainTitle2 = document.getElementById('main-title-2');
+const galleryImg = document.getElementById('gallery-img');
+const prevBtn = document.getElementById('prev-btn');
+const nextPhotoBtn = document.getElementById('next-photo-btn');
+const photoCounter = document.getElementById('photo-counter');
+const nextBtn = document.getElementById('next-btn');
+const videoPlayer = document.getElementById('video-player');
+const prevVideoBtn = document.getElementById('prev-video-btn');
+const nextVideoBtn = document.getElementById('next-video-btn');
+const videoCounter = document.getElementById('video-counter');
 const finalText = document.getElementById('final-text');
 const killBtn = document.getElementById('kill-btn');
+const backBtn2 = document.getElementById('back-btn-2');
+const backBtn3 = document.getElementById('back-btn-3');
+const meme67 = document.getElementById('meme-67');
+const meme67Img = document.getElementById('meme-67-img');
+const meme67Close = document.getElementById('meme-67-close');
 
 const CORRECT_LOGIN = 'cutecut';
 const CORRECT_PASSWORD = '32177gay';
+const MEME_67_URL = 'https://insane-famq.github.io/birthday-kirill/67.jpg';
 
 const PHOTOS = [
-  'https://insane-famq.github.io/birthday-kirill/-MjTr5PqvP0.jpg',
-  'https://insane-famq.github.io/birthday-kirill/-ezhoLw1yJw.jpg',
-  'https://insane-famq.github.io/birthday-kirill/-rmA_lL7bKs.jpg',
-  'https://insane-famq.github.io/birthday-kirill/0Gj3Kif4cBU.jpg',
-  'https://insane-famq.github.io/birthday-kirill/0RCs20JGCes.jpg',
-  'https://insane-famq.github.io/birthday-kirill/0yX4Kys2nK4.jpg',
-  'https://insane-famq.github.io/birthday-kirill/29xgk_lRvok.jpg',
-  'https://insane-famq.github.io/birthday-kirill/3eVLOTezAd4.jpg',
-  'https://insane-famq.github.io/birthday-kirill/3jciQ6sgBbc.jpg',
-  'https://insane-famq.github.io/birthday-kirill/4Vc3XsgAoHo.jpg',
-  'https://insane-famq.github.io/birthday-kirill/4oKyWi3teSk.jpg',
-  'https://insane-famq.github.io/birthday-kirill/5KzcrQzvaIU.jpg',
-  'https://insane-famq.github.io/birthday-kirill/7fh7PdCheok.jpg',
-  'https://insane-famq.github.io/birthday-kirill/7jvUalBQ8iA.jpg',
-  'https://insane-famq.github.io/birthday-kirill/8UHIvxGHCek.jpg',
-  'https://insane-famq.github.io/birthday-kirill/9LNCeiO2VAY.jpg',
-  'https://insane-famq.github.io/birthday-kirill/9qPLSIfTelw.jpg',
-  'https://insane-famq.github.io/birthday-kirill/AIdxdWHkluA.jpg',
-  'https://insane-famq.github.io/birthday-kirill/B9Df8j7XNsc.jpg',
-  'https://insane-famq.github.io/birthday-kirill/BKhNv2zhScc.jpg',
-  'https://insane-famq.github.io/birthday-kirill/CDcdsvwpsss.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Ck8Bnoro8is.jpg',
-  'https://insane-famq.github.io/birthday-kirill/CmOEQUWJiIw.jpg',
-  'https://insane-famq.github.io/birthday-kirill/DosvIx-zidA.jpg',
-  'https://insane-famq.github.io/birthday-kirill/DyAKzYm9E5A.jpg',
-  'https://insane-famq.github.io/birthday-kirill/FAouEynyGG4.jpg',
-  'https://insane-famq.github.io/birthday-kirill/FyXHu7ZJEZ4.jpg',
-  'https://insane-famq.github.io/birthday-kirill/GJXpHJGzqFc.jpg',
-  'https://insane-famq.github.io/birthday-kirill/GU9B0SmiyaI.jpg',
-  'https://insane-famq.github.io/birthday-kirill/H_3NTP7-ZDE.jpg',
-  'https://insane-famq.github.io/birthday-kirill/IloBEvcXv-0.jpg',
-  'https://insane-famq.github.io/birthday-kirill/JjUL4PI2gQc.jpg',
-  'https://insane-famq.github.io/birthday-kirill/K_c6RVxz_GY.jpg',
-  'https://insane-famq.github.io/birthday-kirill/L5WtzkkQkoc.jpg',
-  'https://insane-famq.github.io/birthday-kirill/MDY8lojpBEw.jpg',
-  'https://insane-famq.github.io/birthday-kirill/MU5WtYjD1m4.jpg',
-  'https://insane-famq.github.io/birthday-kirill/NQIACwrIGTQ.jpg',
-  'https://insane-famq.github.io/birthday-kirill/OgsC2vCv34Q.jpg',
-  'https://insane-famq.github.io/birthday-kirill/OxNCHnLLmAw.jpg',
-  'https://insane-famq.github.io/birthday-kirill/PgYFxU0-8eU.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Pm7vRQSnVbA.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Q3KHOjp-VnE.jpg',
-  'https://insane-famq.github.io/birthday-kirill/SOLNuM4YHqg.jpg',
-  'https://insane-famq.github.io/birthday-kirill/SQRL1pXX_54.jpg',
-  'https://insane-famq.github.io/birthday-kirill/SU6IFzlpY4c.jpg',
-  'https://insane-famq.github.io/birthday-kirill/TYhvHioluAs.jpg',
-  'https://insane-famq.github.io/birthday-kirill/TzpmHph5818.jpg',
-  'https://insane-famq.github.io/birthday-kirill/U3BqTojuyIY.jpg',
-  'https://insane-famq.github.io/birthday-kirill/UGZmMi_t8mI.jpg',
-  'https://insane-famq.github.io/birthday-kirill/UIxgVAsVHc0.jpg',
-  'https://insane-famq.github.io/birthday-kirill/UhNMe08zAIc.jpg',
-  'https://insane-famq.github.io/birthday-kirill/VjjMLJ71vJ4.jpg',
-  'https://insane-famq.github.io/birthday-kirill/X1AgZzo_u7Q.jpg',
-  'https://insane-famq.github.io/birthday-kirill/XMMIfovq0sk.jpg',
-  'https://insane-famq.github.io/birthday-kirill/XxDfauRVxg4.jpg',
-  'https://insane-famq.github.io/birthday-kirill/YV2M4fe8JAE.jpg',
-  'https://insane-famq.github.io/birthday-kirill/YlB0Xn5VDxQ.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Z_7nNLoh3sw.jpg',
-  'https://insane-famq.github.io/birthday-kirill/_GvE3EQ-Soc.jpg',
-  'https://insane-famq.github.io/birthday-kirill/_k5QJ5jcHAY.jpg',
-  'https://insane-famq.github.io/birthday-kirill/b6r0cO7Us-g.jpg',
-  'https://insane-famq.github.io/birthday-kirill/bIVA7o2Oj7w.jpg',
-  'https://insane-famq.github.io/birthday-kirill/cgTjtsUqq9I.jpg',
-  'https://insane-famq.github.io/birthday-kirill/cuyQwn6DxO8-1.jpg',
-  'https://insane-famq.github.io/birthday-kirill/cuyQwn6DxO8.jpg',
-  'https://insane-famq.github.io/birthday-kirill/d9ixhF3Jnxw.jpg',
-  'https://insane-famq.github.io/birthday-kirill/dJWMEC5r3iQ.jpg',
-  'https://insane-famq.github.io/birthday-kirill/fPufUf2yqws.jpg',
-  'https://insane-famq.github.io/birthday-kirill/frZXbkG8PWE.jpg',
-  'https://insane-famq.github.io/birthday-kirill/gqfgcpUaLpc.jpg',
-  'https://insane-famq.github.io/birthday-kirill/hFsIVr3fjRQ.jpg',
-  'https://insane-famq.github.io/birthday-kirill/htrL79RC5ws.jpg',
-  'https://insane-famq.github.io/birthday-kirill/i6l7UcG7yq4.jpg',
-  'https://insane-famq.github.io/birthday-kirill/iKB5t167dP0.jpg',
-  'https://insane-famq.github.io/birthday-kirill/jiOFXo2lebg.jpg',
-  'https://insane-famq.github.io/birthday-kirill/l6BDs_p64Zg.jpg',
-  'https://insane-famq.github.io/birthday-kirill/mKMsvAFdyP4.jpg',
-  'https://insane-famq.github.io/birthday-kirill/muSvk7esbNM.jpg',
-  'https://insane-famq.github.io/birthday-kirill/nmaYbYWJc3w.jpg',
-  'https://insane-famq.github.io/birthday-kirill/oxgM8x_DEnk.jpg',
-  'https://insane-famq.github.io/birthday-kirill/pAakUn5SvyA.jpg',
-  'https://insane-famq.github.io/birthday-kirill/pEhuU3Znrbw.jpg',
-  'https://insane-famq.github.io/birthday-kirill/q3BxVzxqQ8E.jpg',
-  'https://insane-famq.github.io/birthday-kirill/tSL9rcjNvWo.jpg',
-  'https://insane-famq.github.io/birthday-kirill/tYRllXLFo1Y.jpg',
-  'https://insane-famq.github.io/birthday-kirill/tbMHrlDweVM.jpg',
-  'https://insane-famq.github.io/birthday-kirill/uGfUN_WZ6DE.jpg',
-  'https://insane-famq.github.io/birthday-kirill/uafX-mrAY0k.jpg',
-  'https://insane-famq.github.io/birthday-kirill/vz1pd4e04RQ.jpg',
-  'https://insane-famq.github.io/birthday-kirill/wH874wAMF6k.jpg',
-  'https://insane-famq.github.io/birthday-kirill/wlnNYqXHdQw.jpg',
-  'https://insane-famq.github.io/birthday-kirill/zPvDfE9Xj9Y.jpg'
+  'https://insane-famq.github.io/birthday-kirill/Photo2.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo3.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo4.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo6.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo7.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo8.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo9.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo10.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo11.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo12.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo15.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo16.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo17.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo18.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo20.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo21.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo22.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo23.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo24.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo25.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo26.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo27.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo28.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo29.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo30.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo31.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo32.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo33.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo34.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo35.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo36.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo37.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo38.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo39.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo40.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo41.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo42.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo43.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo44.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo45.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo47.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo48.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo49.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo50.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo51.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo52.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo53.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo54.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo55.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo56.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo57.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo58.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo59.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo60.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo61.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo62.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo63.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo64.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo65.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo66.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo67.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo68.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo69.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo70.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo71.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo72.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo73.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo75.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo76.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo77.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo78.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo79.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo80.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo81.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo82.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo83.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo84.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo85.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo86.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo87.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo88.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo89.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo90.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo91.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo92.jpg',
+  'https://insane-famq.github.io/birthday-kirill/Photo93.jpg'
 ];
 
 const VIDEOS = [
   'https://insane-famq.github.io/birthday-kirill/199673894_456239431.mp4',
-  'https://insane-famq.github.io/birthday-kirill/246654095_456239806.mp4',
-  'https://insane-famq.github.io/birthday-kirill/246654095_456239831.mp4',
-  'https://insane-famq.github.io/birthday-kirill/246654095_456239894.mp4',
-  'https://insane-famq.github.io/birthday-kirill/246654095_456240005.mp4',
-  'https://insane-famq.github.io/birthday-kirill/246654095_456240006.mp4',
-  'https://insane-famq.github.io/birthday-kirill/521509956_456239116.mp4',
-  'https://insane-famq.github.io/birthday-kirill/521509956_456239133.mp4',
-  'https://insane-famq.github.io/birthday-kirill/521509956_456239134.mp4',
-  'https://insane-famq.github.io/birthday-kirill/521509956_456239135.mp4'
+  'https://insane-famq.github.io/birthday-kirill/Media1.mp4',
+  'https://insane-famq.github.io/birthday-kirill/Media2.mp4',
+  'https://insane-famq.github.io/birthday-kirill/Media3.mp4',
+  'https://insane-famq.github.io/birthday-kirill/Media4.mp4',
+  'https://insane-famq.github.io/birthday-kirill/Media5.mp4',
+  'https://insane-famq.github.io/birthday-kirill/Media6.mp4',
+  'https://insane-famq.github.io/birthday-kirill/Media7.mp4',
+  'https://insane-famq.github.io/birthday-kirill/Media8.mp4',
+  'https://insane-famq.github.io/birthday-kirill/Media9.mp4',
+  'https://insane-famq.github.io/birthday-kirill/Media10.mp4',
+  'https://insane-famq.github.io/birthday-kirill/Media11.mp4',
+  'https://insane-famq.github.io/birthday-kirill/Media12.mp4'
 ];
 
-const FINAL_MESSAGE = `Алоооо дрыыыыыыыщ…
+const FINAL_MESSAGE = `И снова здравствуй мой старый друг…
 
 Этот сайт я сделал специально для тебя, чтобы поздравить тебя с днём рождения. Ведь именно в этот день на свет появился ты - мой лучший друг, не идеальный, но ахуенный.
 
@@ -433,69 +359,166 @@ const FINAL_MESSAGE = `Алоооо дрыыыыыыыщ…
 
 В общем… я рад что мы познакомились и были вместе несмотря ни на что.
 
-Я не знаю будем ли мы ещё когда нибудь общаться, но знай даже если мы больше никогда уже не будем общаться я тебя не забуду ни за что…
+Я не знаю будем ли мы ещё когда нибудь общаться, но знай даже если мы больше никогда уже не будем общаться я тебя не забуду никогда…
 
-Ещё раз с днём рождения тебя, дрыщ мой. Ты лучший... ну почти))
+С днём рождения тебя, дрыщ мой. Ты лучший... ну почти))
 
 — Твой вонючий дрыщ качок`;
 
+// СТАРТ
 startBtn.addEventListener('click', () => {
   screenStart.classList.add('hidden');
   screenLogin.classList.remove('hidden');
 });
 
+// ВХОД
 loginBtn.addEventListener('click', () => {
   const login = loginInput.value.trim();
   const password = passwordInput.value.trim();
 
   if (login === CORRECT_LOGIN && password === CORRECT_PASSWORD) {
     screenLogin.classList.add('hidden');
-    screenMain.classList.remove('hidden');
+    screenPage1.classList.remove('hidden');
     bgMusic.volume = 0.2;
     bgMusic.play().catch(e => console.log('Музыка:', e));
-    loadContent();
+    showPhoto(0);
+    showVideo(0);
+    startClickCounter();
   } else {
     loginError.textContent = 'не правильно, попробуй ещё раз дрыщятина ванючая';
   }
 });
 
-function loadContent() {
-  PHOTOS.forEach(src => {
-    const img = document.createElement('img');
-    img.src = src;
-    img.loading = 'lazy';
-    img.addEventListener('click', () => openPhoto(src));
-    gallery.appendChild(img);
-  });
+// ФОТО
+let currentPhoto = 0;
 
-  VIDEOS.forEach(src => {
-    const video = document.createElement('video');
-    video.src = src;
-    video.controls = true;
-    video.preload = 'none';
-    video.addEventListener('play', () => bgMusic.pause());
-    video.addEventListener('pause', () => bgMusic.play());
-    video.addEventListener('ended', () => bgMusic.play());
-    videos.appendChild(video);
-  });
+function showPhoto(index) {
+  galleryImg.src = PHOTOS[index];
+  photoCounter.textContent = `${index + 1} / ${PHOTOS.length}`;
+  prevBtn.disabled = index === 0;
+  nextPhotoBtn.disabled = index === PHOTOS.length - 1;
+  if (index === PHOTOS.length - 1) nextBtn.classList.remove('hidden');
+  else nextBtn.classList.add('hidden');
+}
 
-  let clicks = 0;
+prevBtn.addEventListener('click', () => {
+  if (currentPhoto > 0) { currentPhoto--; showPhoto(currentPhoto); }
+});
+nextPhotoBtn.addEventListener('click', () => {
+  if (currentPhoto < PHOTOS.length - 1) { currentPhoto++; showPhoto(currentPhoto); }
+});
+
+// ВИДЕО
+let currentVideo = 0;
+
+function showVideo(index) {
+  videoPlayer.src = VIDEOS[index];
+  videoCounter.textContent = `${index + 1} / ${VIDEOS.length}`;
+  prevVideoBtn.disabled = index === 0;
+  nextVideoBtn.disabled = index === VIDEOS.length - 1;
+  if (index === VIDEOS.length - 1) killBtn.classList.remove('hidden');
+  else killBtn.classList.add('hidden');
+}
+
+prevVideoBtn.addEventListener('click', () => {
+  if (currentVideo > 0) { currentVideo--; showVideo(currentVideo); }
+});
+nextVideoBtn.addEventListener('click', () => {
+  if (currentVideo < VIDEOS.length - 1) { currentVideo++; showVideo(currentVideo); }
+});
+
+videoPlayer.addEventListener('play', () => bgMusic.pause());
+videoPlayer.addEventListener('pause', () => bgMusic.play());
+videoPlayer.addEventListener('ended', () => bgMusic.play());
+
+// УБЕГАЮЩАЯ КНОПКА
+let nextBtnAttempts = 0;
+
+nextBtn.addEventListener('mouseenter', () => {
+  if (nextBtnAttempts < 3) {
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 200 - 100;
+    nextBtn.style.transform = `translate(${x}px, ${y}px)`;
+  }
+});
+
+nextBtn.addEventListener('click', (e) => {
+  if (nextBtnAttempts < 3) {
+    e.preventDefault();
+    nextBtnAttempts++;
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 200 - 100;
+    nextBtn.style.transform = `translate(${x}px, ${y}px)`;
+  } else {
+    screenPage1.classList.add('hidden');
+    screenPage2.classList.remove('hidden');
+    window.scrollTo(0, 0);
+  }
+});
+
+// НАЗАД
+backBtn2.addEventListener('click', () => {
+  screenPage2.classList.add('hidden');
+  screenPage1.classList.remove('hidden');
+  window.scrollTo(0, 0);
+});
+
+backBtn3.addEventListener('click', () => {
+  screenFinal.classList.add('hidden');
+  screenPage2.classList.remove('hidden');
+  sadMusic.pause();
+  bgMusic.play();
+  window.scrollTo(0, 0);
+});
+
+// СЧЁТЧИК
+let clicks = 0;
+let rainbowMode = false;
+
+function updateColors() {
+  clickCounter.className = 'counter-grey';
+  clickCounter2.className = 'counter-grey';
+  mainTitle.className = 'main-title title-grey';
+  mainTitle2.className = 'main-title title-grey';
+
+  if (clicks >= 11 && clicks <= 25) {
+    clickCounter.className = clickCounter2.className = 'counter-green';
+    mainTitle.className = mainTitle2.className = 'main-title title-green';
+  } else if (clicks >= 26 && clicks <= 40) {
+    clickCounter.className = clickCounter2.className = 'counter-purple';
+    mainTitle.className = mainTitle2.className = 'main-title title-purple';
+  } else if (clicks >= 41 && clicks <= 55) {
+    clickCounter.className = clickCounter2.className = 'counter-red';
+    mainTitle.className = mainTitle2.className = 'main-title title-red';
+  } else if (clicks >= 56 && clicks <= 66) {
+    clickCounter.className = clickCounter2.className = 'counter-gold';
+    mainTitle.className = mainTitle2.className = 'main-title title-gold';
+  }
+}
+
+function startClickCounter() {
   document.body.addEventListener('click', () => {
     clicks++;
     clickCounter.textContent = `Ты нажал ${clicks} раз, дрыщ`;
+    clickCounter2.textContent = `Ты нажал ${clicks} раз, дрыщ`;
+
+    if (clicks === 67 && !rainbowMode) {
+      meme67Img.src = MEME_67_URL;
+      meme67.classList.remove('hidden');
+      rainbowMode = true;
+      clickCounter.className = clickCounter2.className = 'counter-rainbow';
+      mainTitle.className = mainTitle2.className = 'main-title title-rainbow';
+    } else if (!rainbowMode) {
+      updateColors();
+    }
   });
 }
 
-function openPhoto(src) {
-  const modal = document.createElement('div');
-  modal.className = 'photo-modal';
-  const img = document.createElement('img');
-  img.src = src;
-  modal.appendChild(img);
-  modal.addEventListener('click', () => modal.remove());
-  document.body.appendChild(modal);
-}
+meme67Close.addEventListener('click', () => {
+  meme67.classList.add('hidden');
+});
 
+// КНОПКА УЕБИ МЕНЯ
 let killCount = 0;
 
 killBtn.addEventListener('click', () => {
@@ -506,9 +529,12 @@ killBtn.addEventListener('click', () => {
   } else if (killCount === 2) {
     killBtn.textContent = 'пиздец нахуй таким дрыщом стал а ну ка убеи меня так чтоб я ахуел блять';
   } else if (killCount === 3) {
-    screenMain.classList.add('hidden');
+    screenPage2.classList.add('hidden');
     screenFinal.classList.remove('hidden');
     finalText.textContent = FINAL_MESSAGE;
+    bgMusic.pause();
+    sadMusic.volume = 0.3;
+    sadMusic.play().catch(e => console.log('Грустная музыка:', e));
     window.scrollTo(0, 0);
   }
 });
