@@ -52,19 +52,14 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .title-red { color: #ff2b2b; text-shadow: 0 0 20px #ff2b2b; }
 .title-gold { color: #ffd700; text-shadow: 0 0 25px #ffd700; }
 
-/* РАДУЖНЫЙ ТЕКСТ */
+/* РАДУЖНЫЙ ТЕКСТ — через hue-rotate, работает везде */
 .title-rainbow, .counter-rainbow {
-  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: rainbowText 2s linear infinite;
+  color: #ff0000 !important;
+  animation: hueShift 3s linear infinite;
 }
-@keyframes rainbowText {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
+@keyframes hueShift {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
 }
 
 #click-counter, #click-counter-2 {
@@ -134,12 +129,11 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .btn-red { background: #ff2b2b !important; color: #fff !important; box-shadow: 0 0 15px #ff2b2b; }
 .btn-gold { background: #ffd700 !important; color: #000 !important; box-shadow: 0 0 20px #ffd700; }
 
-/* РАДУЖНЫЕ КНОПКИ — РЕАЛЬНО ПЕРЕЛИВАЮТСЯ */
+/* РАДУЖНЫЕ КНОПКИ — hue-rotate, переливаются сами */
 .btn-rainbow {
-  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff) !important;
-  background-size: 200% 100% !important;
-  color: #000 !important;
-  animation: rainbowText 2s linear infinite !important;
+  background: #ff0000 !important;
+  color: #fff !important;
+  animation: hueShift 3s linear infinite !important;
 }
 
 #next-btn.runaway {
@@ -579,4 +573,4 @@ killBtn.addEventListener('click', () => {
 </script>
 
 </body>
-  </html>
+        </html>
