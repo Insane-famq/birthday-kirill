@@ -9,6 +9,30 @@
 body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .hidden { display: none !important; }
 
+/* ЭКРАН ЗАГРУЗКИ */
+#loading-screen {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #000; display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  z-index: 3000; padding: 20px;
+}
+#loading-text {
+  color: #00e676; font-size: 20px; font-weight: bold; text-align: center;
+  text-shadow: 0 0 20px #00e676; margin-bottom: 20px;
+  font-family: 'Courier New', monospace;
+}
+#loading-bar-wrap {
+  width: 80%; max-width: 400px; height: 20px;
+  background: #111; border: 2px solid #00e676; border-radius: 10px;
+  overflow: hidden;
+}
+#loading-bar {
+  height: 100%; width: 0%;
+  background: #00e676; box-shadow: 0 0 15px #00e676;
+  transition: width 0.2s;
+}
+
+/* СТАРТ */
 #screen-start {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #fff; display: flex; justify-content: center; align-items: center;
@@ -21,6 +45,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #start-btn:active { transform: scale(0.95); }
 
+/* ВХОД */
 #screen-login {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #fff; display: flex; justify-content: center; align-items: center;
@@ -39,39 +64,44 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #login-error { color: #ff0000; margin-top: 15px; font-size: 14px; font-weight: bold; }
 
+/* ОБЩИЕ */
 .page { padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 1s ease-in; padding-bottom: 60px; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-.title-wrap {
-  text-align: center; margin: 20px 0 10px;
-}
-#title-canvas {
-  display: block; margin: 0 auto; max-width: 100%;
-}
-#counter-canvas {
-  display: block; margin: 0 auto 25px; max-width: 100%;
-}
+.title-wrap { text-align: center; margin: 20px 0 10px; }
+#title-canvas { display: block; margin: 0 auto; max-width: 100%; }
+#counter-canvas { display: block; margin: 0 auto 25px; max-width: 100%; }
 
-#gallery, #video-gallery {
+/* ГАЛЕРЕЯ */
+#gallery, #video-gallery, #bonus-gallery {
   background: #111; border-radius: 15px; padding: 15px; margin-bottom: 25px;
   border: 2px solid #222;
 }
 #gallery-img { width: 100%; height: 60vh; max-height: 600px; object-fit: contain; border-radius: 10px; background: #000; }
 #video-player { width: 100%; height: 60vh; max-height: 600px; border-radius: 10px; background: #000; }
+#bonus-audio {
+  width: 100%; margin: 20px 0; border-radius: 10px;
+}
+.bonus-label {
+  text-align: center; color: #00e676; font-size: 18px;
+  font-weight: bold; margin-bottom: 15px; text-shadow: 0 0 15px #00e676;
+}
 .gallery-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; gap: 10px; }
 .gallery-controls button {
   background: #00e676; color: #000; border: none; padding: 12px 20px;
   border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; flex: 1;
 }
 .gallery-controls button:disabled { background: #333; color: #666; cursor: not-allowed; }
-#photo-counter, #video-counter { color: #888; font-size: 14px; text-align: center; min-width: 80px; }
+#photo-counter, #video-counter, #bonus-counter { color: #888; font-size: 14px; text-align: center; min-width: 80px; }
 
-#next-btn, #kill-btn {
+/* КНОПКИ */
+#next-btn, #kill-btn, #bonus-btn {
   display: block; width: 100%; padding: 20px; background: #00e676; color: #000;
   border: none; border-radius: 15px; font-size: 20px; font-weight: bold;
   cursor: pointer; margin-bottom: 20px;
 }
 #kill-btn { padding: 25px; line-height: 1.4; }
+#bonus-btn { margin-top: 30px; }
 
 .back-btn {
   display: block; width: 100%; padding: 15px; background: #333; color: #fff;
@@ -79,12 +109,21 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   cursor: pointer; margin-bottom: 20px;
 }
 
+/* ФИНАЛ */
 #screen-final { padding: 30px 20px; max-width: 800px; margin: 0 auto; min-height: 100vh; }
 #final-text {
   background: #111; padding: 25px; border-radius: 15px; border: 2px solid #00e676;
-  line-height: 1.8; white-space: pre-line; font-size: 16px; color: #fff; margin-bottom: 20px;
+  line-height: 1.8; font-size: 16px; color: #fff; margin-bottom: 20px;
+  white-space: pre-wrap; min-height: 200px;
 }
+.cursor-blink {
+  display: inline-block; width: 8px; height: 18px; background: #00e676;
+  margin-left: 2px; vertical-align: middle;
+  animation: blink 0.8s infinite;
+}
+@keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
 
+/* МЕМ 67 */
 #meme-67 {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0, 0, 0, 0.95); display: flex; flex-direction: column;
@@ -100,13 +139,11 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer;
 }
 
+/* УБЕГАЮЩАЯ КНОПКА */
 #next-btn.runaway {
-  position: fixed;
-  z-index: 1500;
+  position: fixed; z-index: 1500;
   transition: top 0.4s, left 0.4s;
-  max-width: 300px;
-  left: 50%;
-  transform: translateX(-50%);
+  max-width: 300px; left: 50%; transform: translateX(-50%);
 }
 
 @media (min-width: 768px) {
@@ -118,7 +155,13 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </head>
 <body>
 
-<div id="screen-start">
+<!-- ЭКРАН ЗАГРУЗКИ -->
+<div id="loading-screen">
+  <div id="loading-text">УСТАНОВКА СВЯЗИ...</div>
+  <div id="loading-bar-wrap"><div id="loading-bar"></div></div>
+</div>
+
+<div id="screen-start" class="hidden">
   <button id="start-btn">нажми на меня если качок</button>
 </div>
 
@@ -134,9 +177,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </div>
 
 <div id="screen-page1" class="hidden page">
-  <div class="title-wrap">
-    <canvas id="title-canvas"></canvas>
-  </div>
+  <div class="title-wrap"><canvas id="title-canvas"></canvas></div>
   <canvas id="counter-canvas"></canvas>
   <div id="gallery">
     <img id="gallery-img" src="" alt="">
@@ -150,9 +191,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </div>
 
 <div id="screen-page2" class="hidden page">
-  <div class="title-wrap">
-    <canvas id="title-canvas-2"></canvas>
-  </div>
+  <div class="title-wrap"><canvas id="title-canvas-2"></canvas></div>
   <canvas id="counter-canvas-2"></canvas>
   <div id="video-gallery">
     <video id="video-player" controls></video>
@@ -168,7 +207,21 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 
 <div id="screen-final" class="hidden page">
   <div id="final-text"></div>
+  <button id="bonus-btn">🎁 Бонусная комната</button>
   <button id="back-btn-3" class="back-btn">← Назад к видео</button>
+</div>
+
+<div id="screen-bonus" class="hidden page">
+  <div class="bonus-label">🎧 Бонусная комната</div>
+  <div id="bonus-gallery">
+    <audio id="bonus-audio" controls></audio>
+    <div class="gallery-controls">
+      <button id="prev-bonus-btn">← Назад</button>
+      <span id="bonus-counter">1 / 1</span>
+      <button id="next-bonus-btn">Вперёд →</button>
+    </div>
+  </div>
+  <button id="back-btn-4" class="back-btn">← Назад к поздравлению</button>
 </div>
 
 <div id="meme-67" class="hidden">
@@ -195,6 +248,7 @@ const loginError = document.getElementById('login-error');
 const screenPage1 = document.getElementById('screen-page1');
 const screenPage2 = document.getElementById('screen-page2');
 const screenFinal = document.getElementById('screen-final');
+const screenBonus = document.getElementById('screen-bonus');
 const bgMusic = document.getElementById('bg-music');
 const sadMusic = document.getElementById('sad-music');
 const galleryImg = document.getElementById('gallery-img');
@@ -210,9 +264,18 @@ const finalText = document.getElementById('final-text');
 const killBtn = document.getElementById('kill-btn');
 const backBtn2 = document.getElementById('back-btn-2');
 const backBtn3 = document.getElementById('back-btn-3');
+const backBtn4 = document.getElementById('back-btn-4');
+const bonusBtn = document.getElementById('bonus-btn');
+const bonusAudio = document.getElementById('bonus-audio');
+const prevBonusBtn = document.getElementById('prev-bonus-btn');
+const nextBonusBtn = document.getElementById('next-bonus-btn');
+const bonusCounter = document.getElementById('bonus-counter');
 const meme67 = document.getElementById('meme-67');
 const meme67Img = document.getElementById('meme-67-img');
 const meme67Close = document.getElementById('meme-67-close');
+const loadingScreen = document.getElementById('loading-screen');
+const loadingText = document.getElementById('loading-text');
+const loadingBar = document.getElementById('loading-bar');
 
 const titleCanvas = document.getElementById('title-canvas');
 const titleCanvas2 = document.getElementById('title-canvas-2');
@@ -222,9 +285,17 @@ const counterCanvas2 = document.getElementById('counter-canvas-2');
 const CORRECT_LOGIN = 'cutecut';
 const CORRECT_PASSWORD = '32177gay';
 const MEME_67_URL = 'https://insane-famq.github.io/birthday-kirill/67.jpg';
+const BASE = 'https://insane-famq.github.io/birthday-kirill/';
+
+const BONUS = [
+  BASE + 'Bonus1.ogg', BASE + 'Bonus2.ogg', BASE + 'Bonus3.ogg',
+  BASE + 'Bonus4.ogg', BASE + 'Bonus5.ogg', BASE + 'Bonus6.ogg',
+  BASE + 'Bonus7.ogg', BASE + 'Bonus8.ogg', BASE + 'Bonus9.ogg',
+  BASE + 'Bonus10.ogg', BASE + 'Bonus11.ogg', BASE + 'Bonus12.ogg',
+  BASE + 'Bonus13.ogg', BASE + 'Bonus14.ogg'
+];
 
 let clicks = 0;
-let currentColorIndex = 0;
 
 const COLOR_STAGES = [
   { color: '#888888', shadow: null },
@@ -240,30 +311,25 @@ function getStage() {
   if (clicks <= 40) return 2;
   if (clicks <= 55) return 3;
   if (clicks <= 66) return 4;
-  return 5; // rainbow
+  return 5;
 }
 
-// Рисует текст с радугой по буквам
 function drawRainbowText(canvas, text, fontSize) {
   const ctx = canvas.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
   const maxWidth = Math.min(window.innerWidth - 40, 760);
-  
   canvas.width = maxWidth * dpr;
   canvas.height = fontSize * 1.5 * dpr;
   canvas.style.width = maxWidth + 'px';
   canvas.style.height = (fontSize * 1.5) + 'px';
-  
   ctx.scale(dpr, dpr);
   ctx.font = 'bold ' + fontSize + 'px Arial';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  
   const time = Date.now() / 300;
   const totalWidth = ctx.measureText(text).width;
   const startX = (maxWidth - totalWidth) / 2;
   let x = startX;
-  
   for (let i = 0; i < text.length; i++) {
     const ch = text[i];
     const charWidth = ctx.measureText(ch).width;
@@ -276,22 +342,18 @@ function drawRainbowText(canvas, text, fontSize) {
   }
 }
 
-// Рисует текст сплошным цветом
 function drawSolidText(canvas, text, fontSize, color, shadow) {
   const ctx = canvas.getContext('2d');
   const dpr = window.devicePixelRatio || 1;
   const maxWidth = Math.min(window.innerWidth - 40, 760);
-  
   canvas.width = maxWidth * dpr;
   canvas.height = fontSize * 1.5 * dpr;
   canvas.style.width = maxWidth + 'px';
   canvas.style.height = (fontSize * 1.5) + 'px';
-  
   ctx.scale(dpr, dpr);
   ctx.font = 'bold ' + fontSize + 'px Arial';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  
   ctx.fillStyle = color;
   ctx.shadowColor = shadow || 'transparent';
   ctx.shadowBlur = shadow ? 20 : 0;
@@ -306,7 +368,6 @@ function renderAll() {
   const counterSize = window.innerWidth < 500 ? 14 : 18;
 
   if (stage === 5) {
-    // Радуга — рисуем постоянно
     function loop() {
       drawRainbowText(titleCanvas, 'Алоооо дрыыыыыыыщ', titleSize);
       drawRainbowText(titleCanvas2, 'Алоооо дрыыыыыыыщ', titleSize);
@@ -328,108 +389,31 @@ function renderAll() {
 window.addEventListener('resize', renderAll);
 
 const PHOTOS = [
-  'https://insane-famq.github.io/birthday-kirill/Photo2.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo3.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo4.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo6.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo7.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo8.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo9.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo10.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo11.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo12.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo15.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo16.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo17.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo18.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo20.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo21.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo22.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo23.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo24.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo25.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo26.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo27.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo28.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo29.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo30.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo31.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo32.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo33.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo34.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo35.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo36.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo37.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo38.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo39.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo40.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo41.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo42.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo43.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo44.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo45.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo47.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo48.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo49.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo50.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo51.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo52.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo53.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo54.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo55.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo56.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo57.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo58.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo59.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo60.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo61.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo62.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo63.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo64.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo65.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo66.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo67.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo68.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo69.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo70.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo71.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo72.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo73.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo75.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo76.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo77.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo78.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo79.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo80.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo81.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo82.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo83.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo84.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo85.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo86.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo87.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo88.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo89.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo90.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo91.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo92.jpg',
-  'https://insane-famq.github.io/birthday-kirill/Photo93.jpg'
+  BASE+'Photo2.jpg',BASE+'Photo3.jpg',BASE+'Photo4.jpg',BASE+'Photo6.jpg',BASE+'Photo7.jpg',
+  BASE+'Photo8.jpg',BASE+'Photo9.jpg',BASE+'Photo10.jpg',BASE+'Photo11.jpg',BASE+'Photo12.jpg',
+  BASE+'Photo15.jpg',BASE+'Photo16.jpg',BASE+'Photo17.jpg',BASE+'Photo18.jpg',BASE+'Photo20.jpg',
+  BASE+'Photo21.jpg',BASE+'Photo22.jpg',BASE+'Photo23.jpg',BASE+'Photo24.jpg',BASE+'Photo25.jpg',
+  BASE+'Photo26.jpg',BASE+'Photo27.jpg',BASE+'Photo28.jpg',BASE+'Photo29.jpg',BASE+'Photo30.jpg',
+  BASE+'Photo31.jpg',BASE+'Photo32.jpg',BASE+'Photo33.jpg',BASE+'Photo34.jpg',BASE+'Photo35.jpg',
+  BASE+'Photo36.jpg',BASE+'Photo37.jpg',BASE+'Photo38.jpg',BASE+'Photo39.jpg',BASE+'Photo40.jpg',
+  BASE+'Photo41.jpg',BASE+'Photo42.jpg',BASE+'Photo43.jpg',BASE+'Photo44.jpg',BASE+'Photo45.jpg',
+  BASE+'Photo47.jpg',BASE+'Photo48.jpg',BASE+'Photo49.jpg',BASE+'Photo50.jpg',BASE+'Photo51.jpg',
+  BASE+'Photo52.jpg',BASE+'Photo53.jpg',BASE+'Photo54.jpg',BASE+'Photo55.jpg',BASE+'Photo56.jpg',
+  BASE+'Photo57.jpg',BASE+'Photo58.jpg',BASE+'Photo59.jpg',BASE+'Photo60.jpg',BASE+'Photo61.jpg',
+  BASE+'Photo62.jpg',BASE+'Photo63.jpg',BASE+'Photo64.jpg',BASE+'Photo65.jpg',BASE+'Photo66.jpg',
+  BASE+'Photo67.jpg',BASE+'Photo68.jpg',BASE+'Photo69.jpg',BASE+'Photo70.jpg',BASE+'Photo71.jpg',
+  BASE+'Photo72.jpg',BASE+'Photo73.jpg',BASE+'Photo75.jpg',BASE+'Photo76.jpg',BASE+'Photo77.jpg',
+  BASE+'Photo78.jpg',BASE+'Photo79.jpg',BASE+'Photo80.jpg',BASE+'Photo81.jpg',BASE+'Photo82.jpg',
+  BASE+'Photo83.jpg',BASE+'Photo84.jpg',BASE+'Photo85.jpg',BASE+'Photo86.jpg',BASE+'Photo87.jpg',
+  BASE+'Photo88.jpg',BASE+'Photo89.jpg',BASE+'Photo90.jpg',BASE+'Photo91.jpg',BASE+'Photo92.jpg',
+  BASE+'Photo93.jpg'
 ];
 
 const VIDEOS = [
-  'https://insane-famq.github.io/birthday-kirill/199673894_456239431.mp4',
-  'https://insane-famq.github.io/birthday-kirill/Media1.mp4',
-  'https://insane-famq.github.io/birthday-kirill/Media2.mp4',
-  'https://insane-famq.github.io/birthday-kirill/Media3.mp4',
-  'https://insane-famq.github.io/birthday-kirill/Media4.mp4',
-  'https://insane-famq.github.io/birthday-kirill/Media5.mp4',
-  'https://insane-famq.github.io/birthday-kirill/Media6.mp4',
-  'https://insane-famq.github.io/birthday-kirill/Media7.mp4',
-  'https://insane-famq.github.io/birthday-kirill/Media8.mp4',
-  'https://insane-famq.github.io/birthday-kirill/Media9.mp4',
-  'https://insane-famq.github.io/birthday-kirill/Media10.mp4',
-  'https://insane-famq.github.io/birthday-kirill/Media11.mp4',
-  'https://insane-famq.github.io/birthday-kirill/Media12.mp4'
+  BASE+'199673894_456239431.mp4',
+  BASE+'Media1.mp4',BASE+'Media2.mp4',BASE+'Media3.mp4',BASE+'Media4.mp4',BASE+'Media5.mp4',
+  BASE+'Media6.mp4',BASE+'Media7.mp4',BASE+'Media8.mp4',BASE+'Media9.mp4',BASE+'Media10.mp4',
+  BASE+'Media11.mp4',BASE+'Media12.mp4'
 ];
 
 const FINAL_MESSAGE = `И снова здравствуй мой старый друг…
@@ -458,11 +442,41 @@ const FINAL_MESSAGE = `И снова здравствуй мой старый д
 
 — Твой вонючий дрыщ качок`;
 
+// ==== ЭКРАН ЗАГРУЗКИ ====
+const loadingSteps = [
+  { text: 'УСТАНОВКА СВЯЗИ...', percent: 10, delay: 400 },
+  { text: 'ПРОВЕРКА КАНАЛА...', percent: 30, delay: 500 },
+  { text: 'ПОИСК ИМЕНИННИКА...', percent: 60, delay: 700 },
+  { text: 'ЗАГРУЗКА ВОСПОМИНАНИЙ...', percent: 85, delay: 600 },
+  { text: 'СВЯЗЬ УСТАНОВЛЕНА ✓', percent: 100, delay: 500 }
+];
+
+function runLoading() {
+  let i = 0;
+  function next() {
+    if (i >= loadingSteps.length) {
+      loadingScreen.classList.add('hidden');
+      screenStart.classList.remove('hidden');
+      return;
+    }
+    const step = loadingSteps[i];
+    loadingText.textContent = step.text;
+    loadingBar.style.width = step.percent + '%';
+    i++;
+    setTimeout(next, step.delay);
+  }
+  next();
+}
+
+runLoading();
+
+// ==== СТАРТ ====
 startBtn.addEventListener('click', () => {
   screenStart.classList.add('hidden');
   screenLogin.classList.remove('hidden');
 });
 
+// ==== ВХОД ====
 loginBtn.addEventListener('click', () => {
   const login = loginInput.value.trim();
   const password = passwordInput.value.trim();
@@ -474,6 +488,7 @@ loginBtn.addEventListener('click', () => {
     bgMusic.play().catch(e => console.log('Музыка:', e));
     showPhoto(0);
     showVideo(0);
+    showBonus(0);
     renderAll();
     startClickCounter();
   } else {
@@ -481,8 +496,8 @@ loginBtn.addEventListener('click', () => {
   }
 });
 
+// ==== ФОТО ====
 let currentPhoto = 0;
-
 function showPhoto(index) {
   galleryImg.src = PHOTOS[index];
   photoCounter.textContent = `${index + 1} / ${PHOTOS.length}`;
@@ -491,16 +506,11 @@ function showPhoto(index) {
   if (index === PHOTOS.length - 1) nextBtn.classList.remove('hidden');
   else nextBtn.classList.add('hidden');
 }
+prevBtn.addEventListener('click', () => { if (currentPhoto > 0) { currentPhoto--; showPhoto(currentPhoto); } });
+nextPhotoBtn.addEventListener('click', () => { if (currentPhoto < PHOTOS.length - 1) { currentPhoto++; showPhoto(currentPhoto); } });
 
-prevBtn.addEventListener('click', () => {
-  if (currentPhoto > 0) { currentPhoto--; showPhoto(currentPhoto); }
-});
-nextPhotoBtn.addEventListener('click', () => {
-  if (currentPhoto < PHOTOS.length - 1) { currentPhoto++; showPhoto(currentPhoto); }
-});
-
+// ==== ВИДЕО ====
 let currentVideo = 0;
-
 function showVideo(index) {
   videoPlayer.src = VIDEOS[index];
   videoCounter.textContent = `${index + 1} / ${VIDEOS.length}`;
@@ -509,36 +519,39 @@ function showVideo(index) {
   if (index === VIDEOS.length - 1) killBtn.classList.remove('hidden');
   else killBtn.classList.add('hidden');
 }
-
-prevVideoBtn.addEventListener('click', () => {
-  if (currentVideo > 0) { currentVideo--; showVideo(currentVideo); }
-});
-nextVideoBtn.addEventListener('click', () => {
-  if (currentVideo < VIDEOS.length - 1) { currentVideo++; showVideo(currentVideo); }
-});
-
+prevVideoBtn.addEventListener('click', () => { if (currentVideo > 0) { currentVideo--; showVideo(currentVideo); } });
+nextVideoBtn.addEventListener('click', () => { if (currentVideo < VIDEOS.length - 1) { currentVideo++; showVideo(currentVideo); } });
 videoPlayer.addEventListener('play', () => bgMusic.pause());
 videoPlayer.addEventListener('pause', () => bgMusic.play());
 videoPlayer.addEventListener('ended', () => bgMusic.play());
 
-let nextBtnAttempts = 0;
+// ==== БОНУС ====
+let currentBonus = 0;
+function showBonus(index) {
+  bonusAudio.src = BONUS[index];
+  bonusCounter.textContent = `${index + 1} / ${BONUS.length}`;
+  prevBonusBtn.disabled = index === 0;
+  nextBonusBtn.disabled = index === BONUS.length - 1;
+}
+prevBonusBtn.addEventListener('click', () => { if (currentBonus > 0) { currentBonus--; showBonus(currentBonus); } });
+nextBonusBtn.addEventListener('click', () => { if (currentBonus < BONUS.length - 1) { currentBonus++; showBonus(currentBonus); } });
 
+bonusAudio.addEventListener('play', () => { bgMusic.pause(); sadMusic.pause(); });
+bonusAudio.addEventListener('pause', () => { if (screenBonus.classList.contains('hidden')) return; });
+bonusAudio.addEventListener('ended', () => { sadMusic.play(); });
+
+// ==== УБЕГАЮЩАЯ КНОПКА ====
+let nextBtnAttempts = 0;
 function moveNextBtn() {
-  const btnWidth = nextBtn.offsetWidth || 200;
-  const btnHeight = nextBtn.offsetHeight || 60;
-  const maxX = window.innerWidth - btnWidth - 20;
-  const maxY = window.innerHeight - btnHeight - 20;
-  const x = Math.random() * maxX;
-  const y = Math.random() * maxY;
-  nextBtn.style.left = x + 'px';
-  nextBtn.style.top = y + 'px';
+  const bw = nextBtn.offsetWidth || 200;
+  const bh = nextBtn.offsetHeight || 60;
+  const maxX = window.innerWidth - bw - 20;
+  const maxY = window.innerHeight - bh - 20;
+  nextBtn.style.left = (Math.random() * maxX) + 'px';
+  nextBtn.style.top = (Math.random() * maxY) + 'px';
   nextBtn.style.transform = 'none';
 }
-
-nextBtn.addEventListener('mouseenter', () => {
-  if (nextBtnAttempts < 3) moveNextBtn();
-});
-
+nextBtn.addEventListener('mouseenter', () => { if (nextBtnAttempts < 3) moveNextBtn(); });
 nextBtn.addEventListener('click', (e) => {
   if (nextBtnAttempts < 3) {
     e.preventDefault();
@@ -566,11 +579,28 @@ backBtn3.addEventListener('click', () => {
   window.scrollTo(0, 0);
 });
 
+bonusBtn.addEventListener('click', () => {
+  screenFinal.classList.add('hidden');
+  screenBonus.classList.remove('hidden');
+  sadMusic.pause();
+  bgMusic.pause();
+  showBonus(0);
+  window.scrollTo(0, 0);
+});
+
+backBtn4.addEventListener('click', () => {
+  screenBonus.classList.add('hidden');
+  screenFinal.classList.remove('hidden');
+  bonusAudio.pause();
+  sadMusic.play();
+  window.scrollTo(0, 0);
+});
+
+// ==== СЧЁТЧИК ====
 function startClickCounter() {
   document.body.addEventListener('click', () => {
     clicks++;
     renderAll();
-
     if (clicks === 67) {
       meme67Img.src = MEME_67_URL;
       meme67.classList.remove('hidden');
@@ -582,11 +612,10 @@ meme67Close.addEventListener('click', () => {
   meme67.classList.add('hidden');
 });
 
+// ==== КНОПКА УЕБИ МЕНЯ ====
 let killCount = 0;
-
 killBtn.addEventListener('click', () => {
   killCount++;
-
   if (killCount === 1) {
     killBtn.textContent = 'хахаха ебать ты дрыщ нажми снова';
   } else if (killCount === 2) {
@@ -594,14 +623,66 @@ killBtn.addEventListener('click', () => {
   } else if (killCount === 3) {
     screenPage2.classList.add('hidden');
     screenFinal.classList.remove('hidden');
-    finalText.textContent = FINAL_MESSAGE;
     bgMusic.pause();
     sadMusic.volume = 0.3;
     sadMusic.play().catch(e => console.log('Грустная музыка:', e));
     window.scrollTo(0, 0);
+    typeFinalText();
   }
 });
+
+// ==== ПЕЧАТАЮЩИЙСЯ ТЕКСТ + ЗВУК ПЕЧАТИ ====
+let audioCtx = null;
+
+function initAudioCtx() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playTypeSound() {
+  if (!audioCtx) return;
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = 'square';
+  osc.frequency.value = 1200 + Math.random() * 400;
+  gain.gain.setValueAtTime(0.04, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start(now);
+  osc.stop(now + 0.05);
+}
+
+function typeFinalText() {
+  initAudioCtx();
+  finalText.innerHTML = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'cursor-blink';
+  finalText.appendChild(cursor);
+
+  let i = 0;
+  const speed = 35;
+
+  function type() {
+    if (i >= FINAL_MESSAGE.length) {
+      if (cursor.parentNode) cursor.parentNode.removeChild(cursor);
+      return;
+    }
+    const ch = FINAL_MESSAGE[i];
+    const textNode = document.createTextNode(ch);
+    finalText.insertBefore(textNode, cursor);
+
+    if (ch !== ' ' && ch !== '\n') playTypeSound();
+
+    i++;
+    setTimeout(type, ch === '.' || ch === '\n' ? speed * 5 : speed);
+  }
+  type();
+}
 </script>
 
 </body>
-  </html>
+</html>
