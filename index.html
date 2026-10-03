@@ -42,46 +42,14 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .page { padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 1s ease-in; padding-bottom: 60px; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-.main-title {
-  text-align: center; font-size: 28px; margin: 20px 0 20px; font-weight: bold;
-  transition: color 0.5s, text-shadow 0.5s;
+.title-wrap {
+  text-align: center; margin: 20px 0 10px;
 }
-.title-grey { color: #888; }
-.title-green { color: #00e676; text-shadow: 0 0 20px #00e676; }
-.title-purple { color: #b14aff; text-shadow: 0 0 20px #b14aff; }
-.title-red { color: #ff2b2b; text-shadow: 0 0 20px #ff2b2b; }
-.title-gold { color: #ffd700; text-shadow: 0 0 25px #ffd700; }
-.title-rainbow {
-  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000);
-  background-size: 400% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: rainbow 3s linear infinite;
+#title-canvas {
+  display: block; margin: 0 auto; max-width: 100%;
 }
-@keyframes rainbow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 400% 50%; }
-}
-
-#click-counter, #click-counter-2 {
-  text-align: center; margin-bottom: 25px; font-size: 16px; font-weight: bold;
-  transition: color 0.5s, text-shadow 0.5s;
-}
-.counter-grey { color: #888; }
-.counter-green { color: #00e676; text-shadow: 0 0 15px #00e676; }
-.counter-purple { color: #b14aff; text-shadow: 0 0 15px #b14aff; }
-.counter-red { color: #ff2b2b; text-shadow: 0 0 15px #ff2b2b; }
-.counter-gold { color: #ffd700; text-shadow: 0 0 20px #ffd700; }
-.counter-rainbow {
-  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000);
-  background-size: 400% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: rainbow 3s linear infinite;
+#counter-canvas {
+  display: block; margin: 0 auto 25px; max-width: 100%;
 }
 
 #gallery, #video-gallery {
@@ -142,7 +110,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 
 @media (min-width: 768px) {
-  .main-title { font-size: 42px; }
   #gallery-img, #video-player { height: 70vh; }
   #final-text { font-size: 18px; padding: 35px; }
   #meme-67-text { font-size: 32px; }
@@ -167,8 +134,10 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </div>
 
 <div id="screen-page1" class="hidden page">
-  <h1 id="main-title" class="main-title title-grey">Алоооо дрыыыыыыыщ</h1>
-  <div id="click-counter" class="counter-grey">Ты нажал 0 раз, дрыщ</div>
+  <div class="title-wrap">
+    <canvas id="title-canvas"></canvas>
+  </div>
+  <canvas id="counter-canvas"></canvas>
   <div id="gallery">
     <img id="gallery-img" src="" alt="">
     <div class="gallery-controls">
@@ -181,8 +150,10 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </div>
 
 <div id="screen-page2" class="hidden page">
-  <h1 id="main-title-2" class="main-title title-grey">Алоооо дрыыыыыыыщ</h1>
-  <div id="click-counter-2" class="counter-grey">Ты нажал 0 раз, дрыщ</div>
+  <div class="title-wrap">
+    <canvas id="title-canvas-2"></canvas>
+  </div>
+  <canvas id="counter-canvas-2"></canvas>
   <div id="video-gallery">
     <video id="video-player" controls></video>
     <div class="gallery-controls">
@@ -226,10 +197,6 @@ const screenPage2 = document.getElementById('screen-page2');
 const screenFinal = document.getElementById('screen-final');
 const bgMusic = document.getElementById('bg-music');
 const sadMusic = document.getElementById('sad-music');
-const clickCounter = document.getElementById('click-counter');
-const clickCounter2 = document.getElementById('click-counter-2');
-const mainTitle = document.getElementById('main-title');
-const mainTitle2 = document.getElementById('main-title-2');
 const galleryImg = document.getElementById('gallery-img');
 const prevBtn = document.getElementById('prev-btn');
 const nextPhotoBtn = document.getElementById('next-photo-btn');
@@ -247,9 +214,118 @@ const meme67 = document.getElementById('meme-67');
 const meme67Img = document.getElementById('meme-67-img');
 const meme67Close = document.getElementById('meme-67-close');
 
+const titleCanvas = document.getElementById('title-canvas');
+const titleCanvas2 = document.getElementById('title-canvas-2');
+const counterCanvas = document.getElementById('counter-canvas');
+const counterCanvas2 = document.getElementById('counter-canvas-2');
+
 const CORRECT_LOGIN = 'cutecut';
 const CORRECT_PASSWORD = '32177gay';
 const MEME_67_URL = 'https://insane-famq.github.io/birthday-kirill/67.jpg';
+
+let clicks = 0;
+let currentColorIndex = 0;
+
+const COLOR_STAGES = [
+  { color: '#888888', shadow: null },
+  { color: '#00e676', shadow: '#00e676' },
+  { color: '#b14aff', shadow: '#b14aff' },
+  { color: '#ff2b2b', shadow: '#ff2b2b' },
+  { color: '#ffd700', shadow: '#ffd700' }
+];
+
+function getStage() {
+  if (clicks <= 10) return 0;
+  if (clicks <= 25) return 1;
+  if (clicks <= 40) return 2;
+  if (clicks <= 55) return 3;
+  if (clicks <= 66) return 4;
+  return 5; // rainbow
+}
+
+// Рисует текст с радугой по буквам
+function drawRainbowText(canvas, text, fontSize) {
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const maxWidth = Math.min(window.innerWidth - 40, 760);
+  
+  canvas.width = maxWidth * dpr;
+  canvas.height = fontSize * 1.5 * dpr;
+  canvas.style.width = maxWidth + 'px';
+  canvas.style.height = (fontSize * 1.5) + 'px';
+  
+  ctx.scale(dpr, dpr);
+  ctx.font = 'bold ' + fontSize + 'px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  
+  const time = Date.now() / 300;
+  const totalWidth = ctx.measureText(text).width;
+  const startX = (maxWidth - totalWidth) / 2;
+  let x = startX;
+  
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    const charWidth = ctx.measureText(ch).width;
+    const hue = ((i * 40) + time * 60) % 360;
+    ctx.fillStyle = 'hsl(' + hue + ', 100%, 55%)';
+    ctx.shadowColor = 'hsl(' + hue + ', 100%, 55%)';
+    ctx.shadowBlur = 15;
+    ctx.fillText(ch, x + charWidth / 2, fontSize * 0.75);
+    x += charWidth;
+  }
+}
+
+// Рисует текст сплошным цветом
+function drawSolidText(canvas, text, fontSize, color, shadow) {
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const maxWidth = Math.min(window.innerWidth - 40, 760);
+  
+  canvas.width = maxWidth * dpr;
+  canvas.height = fontSize * 1.5 * dpr;
+  canvas.style.width = maxWidth + 'px';
+  canvas.style.height = (fontSize * 1.5) + 'px';
+  
+  ctx.scale(dpr, dpr);
+  ctx.font = 'bold ' + fontSize + 'px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  
+  ctx.fillStyle = color;
+  ctx.shadowColor = shadow || 'transparent';
+  ctx.shadowBlur = shadow ? 20 : 0;
+  ctx.fillText(text, maxWidth / 2, fontSize * 0.75);
+}
+
+let rainbowFrame = null;
+
+function renderAll() {
+  const stage = getStage();
+  const titleSize = window.innerWidth < 500 ? 26 : 42;
+  const counterSize = window.innerWidth < 500 ? 14 : 18;
+
+  if (stage === 5) {
+    // Радуга — рисуем постоянно
+    function loop() {
+      drawRainbowText(titleCanvas, 'Алоооо дрыыыыыыыщ', titleSize);
+      drawRainbowText(titleCanvas2, 'Алоооо дрыыыыыыыщ', titleSize);
+      drawRainbowText(counterCanvas, 'Ты нажал ' + clicks + ' раз, дрыщ', counterSize);
+      drawRainbowText(counterCanvas2, 'Ты нажал ' + clicks + ' раз, дрыщ', counterSize);
+      rainbowFrame = requestAnimationFrame(loop);
+    }
+    if (!rainbowFrame) loop();
+  } else {
+    if (rainbowFrame) { cancelAnimationFrame(rainbowFrame); rainbowFrame = null; }
+    const st = COLOR_STAGES[stage];
+    drawSolidText(titleCanvas, 'Алоооо дрыыыыыыыщ', titleSize, st.color, st.shadow);
+    drawSolidText(titleCanvas2, 'Алоооо дрыыыыыыыщ', titleSize, st.color, st.shadow);
+    drawSolidText(counterCanvas, 'Ты нажал ' + clicks + ' раз, дрыщ', counterSize, st.color, st.shadow);
+    drawSolidText(counterCanvas2, 'Ты нажал ' + clicks + ' раз, дрыщ', counterSize, st.color, st.shadow);
+  }
+}
+
+window.addEventListener('resize', renderAll);
 
 const PHOTOS = [
   'https://insane-famq.github.io/birthday-kirill/Photo2.jpg',
@@ -398,6 +474,7 @@ loginBtn.addEventListener('click', () => {
     bgMusic.play().catch(e => console.log('Музыка:', e));
     showPhoto(0);
     showVideo(0);
+    renderAll();
     startClickCounter();
   } else {
     loginError.textContent = 'не правильно, попробуй ещё раз дрыщятина ванючая';
@@ -489,42 +566,14 @@ backBtn3.addEventListener('click', () => {
   window.scrollTo(0, 0);
 });
 
-let clicks = 0;
-let rainbowMode = false;
-
-function updateColors() {
-  mainTitle.className = mainTitle2.className = 'main-title title-grey';
-  clickCounter.className = clickCounter2.className = 'counter-grey';
-
-  if (clicks >= 11 && clicks <= 25) {
-    mainTitle.className = mainTitle2.className = 'main-title title-green';
-    clickCounter.className = clickCounter2.className = 'counter-green';
-  } else if (clicks >= 26 && clicks <= 40) {
-    mainTitle.className = mainTitle2.className = 'main-title title-purple';
-    clickCounter.className = clickCounter2.className = 'counter-purple';
-  } else if (clicks >= 41 && clicks <= 55) {
-    mainTitle.className = mainTitle2.className = 'main-title title-red';
-    clickCounter.className = clickCounter2.className = 'counter-red';
-  } else if (clicks >= 56 && clicks <= 66) {
-    mainTitle.className = mainTitle2.className = 'main-title title-gold';
-    clickCounter.className = clickCounter2.className = 'counter-gold';
-  }
-}
-
 function startClickCounter() {
   document.body.addEventListener('click', () => {
     clicks++;
-    clickCounter.textContent = `Ты нажал ${clicks} раз, дрыщ`;
-    clickCounter2.textContent = `Ты нажал ${clicks} раз, дрыщ`;
+    renderAll();
 
-    if (clicks === 67 && !rainbowMode) {
+    if (clicks === 67) {
       meme67Img.src = MEME_67_URL;
       meme67.classList.remove('hidden');
-      rainbowMode = true;
-      mainTitle.className = mainTitle2.className = 'main-title title-rainbow';
-      clickCounter.className = clickCounter2.className = 'counter-rainbow';
-    } else if (!rainbowMode) {
-      updateColors();
     }
   });
 }
@@ -555,4 +604,4 @@ killBtn.addEventListener('click', () => {
 </script>
 
 </body>
-    </html>
+  </html>
