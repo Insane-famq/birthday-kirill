@@ -9,7 +9,6 @@
 body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .hidden { display: none !important; }
 
-/* СТАРТ */
 #screen-start {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #fff; display: flex; justify-content: center; align-items: center;
@@ -22,7 +21,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #start-btn:active { transform: scale(0.95); }
 
-/* ВХОД */
 #screen-login {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #fff; display: flex; justify-content: center; align-items: center;
@@ -41,11 +39,9 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #login-error { color: #ff0000; margin-top: 15px; font-size: 14px; font-weight: bold; }
 
-/* ОБЩИЕ */
 .page { padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 1s ease-in; padding-bottom: 60px; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* ЗАГОЛОВОК */
 .main-title {
   text-align: center; font-size: 28px; margin: 20px 0 20px; font-weight: bold;
   transition: color 0.5s, text-shadow 0.5s;
@@ -55,20 +51,20 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .title-purple { color: #b14aff; text-shadow: 0 0 20px #b14aff; }
 .title-red { color: #ff2b2b; text-shadow: 0 0 20px #ff2b2b; }
 .title-gold { color: #ffd700; text-shadow: 0 0 25px #ffd700; }
-.title-rainbow {
+
+.title-rainbow, .counter-rainbow {
   background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000);
-  background-size: 400% 100%;
+  background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: rainbow 3s linear infinite;
+  animation: rainbowMove 3s linear infinite;
 }
-@keyframes rainbow {
+@keyframes rainbowMove {
   0% { background-position: 0% 50%; }
-  100% { background-position: 400% 50%; }
+  100% { background-position: 300% 50%; }
 }
 
-/* СЧЁТЧИК */
 #click-counter, #click-counter-2 {
   text-align: center; margin-bottom: 25px; font-size: 16px; font-weight: bold;
   transition: color 0.5s, text-shadow 0.5s;
@@ -78,16 +74,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .counter-purple { color: #b14aff; text-shadow: 0 0 15px #b14aff; }
 .counter-red { color: #ff2b2b; text-shadow: 0 0 15px #ff2b2b; }
 .counter-gold { color: #ffd700; text-shadow: 0 0 20px #ffd700; }
-.counter-rainbow {
-  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000);
-  background-size: 400% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: rainbow 3s linear infinite;
-}
 
-/* ГАЛЕРЕЯ */
 #gallery, #video-gallery {
   background: #111; border-radius: 15px; padding: 15px; margin-bottom: 25px;
   border: 2px solid #222;
@@ -103,7 +90,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .gallery-controls button:disabled { background: #333; color: #666; cursor: not-allowed; }
 #photo-counter, #video-counter { color: #888; font-size: 14px; text-align: center; min-width: 80px; }
 
-/* КНОПКИ */
 #next-btn, #kill-btn {
   display: block; width: 100%; padding: 20px; background: #00e676; color: #000;
   border: none; border-radius: 15px; font-size: 20px; font-weight: bold;
@@ -129,30 +115,29 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   background: rgba(0, 0, 0, 0.95); display: flex; flex-direction: column;
   justify-content: center; align-items: center; z-index: 2000; padding: 20px;
 }
-#meme-67 img { max-width: 90%; max-height: 70%; border-radius: 15px; }
+#meme-67-text {
+  color: #00e676; font-size: 24px; font-weight: bold; text-align: center;
+  margin-bottom: 20px; text-shadow: 0 0 20px #00e676;
+}
+#meme-67 img { max-width: 90%; max-height: 60%; border-radius: 15px; }
 #meme-67 button {
   margin-top: 20px; padding: 15px 40px; background: #00e676; color: #000;
   border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer;
 }
 
-/* ЦВЕТА КНОПОК */
 .btn-grey { background: #888 !important; color: #000 !important; }
 .btn-green { background: #00e676 !important; color: #000 !important; box-shadow: 0 0 15px #00e676; }
 .btn-purple { background: #b14aff !important; color: #fff !important; box-shadow: 0 0 15px #b14aff; }
 .btn-red { background: #ff2b2b !important; color: #fff !important; box-shadow: 0 0 15px #ff2b2b; }
 .btn-gold { background: #ffd700 !important; color: #000 !important; box-shadow: 0 0 20px #ffd700; }
+
 .btn-rainbow {
   background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000) !important;
-  background-size: 400% 100% !important;
+  background-size: 300% 100% !important;
   color: #000 !important;
-  animation: rainbowBg 3s linear infinite;
-}
-@keyframes rainbowBg {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 400% 50%; }
+  animation: rainbowMove 3s linear infinite;
 }
 
-/* УБЕГАЮЩАЯ КНОПКА ДАЛЬШЕ */
 #next-btn.runaway {
   position: fixed;
   z-index: 1500;
@@ -166,6 +151,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   .main-title { font-size: 42px; }
   #gallery-img, #video-player { height: 70vh; }
   #final-text { font-size: 18px; padding: 35px; }
+  #meme-67-text { font-size: 32px; }
 }
 </style>
 </head>
@@ -221,6 +207,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </div>
 
 <div id="meme-67" class="hidden">
+  <div id="meme-67-text">хорош блять наебашил 67 кликов</div>
   <img id="meme-67-img" src="" alt="67">
   <button id="meme-67-close" class="btn-green">Закрыть</button>
 </div>
@@ -401,13 +388,11 @@ const FINAL_MESSAGE = `И снова здравствуй мой старый д
 
 — Твой вонючий дрыщ качок`;
 
-// СТАРТ
 startBtn.addEventListener('click', () => {
   screenStart.classList.add('hidden');
   screenLogin.classList.remove('hidden');
 });
 
-// ВХОД
 loginBtn.addEventListener('click', () => {
   const login = loginInput.value.trim();
   const password = passwordInput.value.trim();
@@ -425,7 +410,6 @@ loginBtn.addEventListener('click', () => {
   }
 });
 
-// ФОТО
 let currentPhoto = 0;
 
 function showPhoto(index) {
@@ -444,7 +428,6 @@ nextPhotoBtn.addEventListener('click', () => {
   if (currentPhoto < PHOTOS.length - 1) { currentPhoto++; showPhoto(currentPhoto); }
 });
 
-// ВИДЕО
 let currentVideo = 0;
 
 function showVideo(index) {
@@ -467,7 +450,6 @@ videoPlayer.addEventListener('play', () => bgMusic.pause());
 videoPlayer.addEventListener('pause', () => bgMusic.play());
 videoPlayer.addEventListener('ended', () => bgMusic.play());
 
-// УБЕГАЮЩАЯ КНОПКА ДАЛЬШЕ
 let nextBtnAttempts = 0;
 
 function moveNextBtn() {
@@ -499,7 +481,6 @@ nextBtn.addEventListener('click', (e) => {
   }
 });
 
-// НАЗАД
 backBtn2.addEventListener('click', () => {
   screenPage2.classList.add('hidden');
   screenPage1.classList.remove('hidden');
@@ -514,16 +495,12 @@ backBtn3.addEventListener('click', () => {
   window.scrollTo(0, 0);
 });
 
-// СЧЁТЧИК + ЦВЕТА ВСЕГО
 let clicks = 0;
 let rainbowMode = false;
 
 function updateColors() {
-  // Заголовки
   mainTitle.className = mainTitle2.className = 'main-title title-grey';
-  // Счётчики
   clickCounter.className = clickCounter2.className = 'counter-grey';
-  // Кнопки
   setButtonsClass('btn-grey');
 
   if (clicks >= 11 && clicks <= 25) {
@@ -576,7 +553,6 @@ meme67Close.addEventListener('click', () => {
   meme67.classList.add('hidden');
 });
 
-// КНОПКА УЕБИ МЕНЯ
 let killCount = 0;
 
 killBtn.addEventListener('click', () => {
@@ -599,4 +575,4 @@ killBtn.addEventListener('click', () => {
 </script>
 
 </body>
-</html>
+    </html>
