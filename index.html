@@ -55,16 +55,16 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 /* РАДУЖНЫЙ ТЕКСТ — рабочий способ */
 .title-rainbow, .counter-rainbow {
   background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000);
-  background-size: 200% auto;
+  background-size: 400% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  animation: rainbowShift 2s linear infinite;
+  animation: rainbow 3s linear infinite;
 }
-@keyframes rainbowShift {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 400% 50%; }
 }
 
 #click-counter, #click-counter-2 {
