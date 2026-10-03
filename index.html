@@ -52,14 +52,19 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .title-red { color: #ff2b2b; text-shadow: 0 0 20px #ff2b2b; }
 .title-gold { color: #ffd700; text-shadow: 0 0 25px #ffd700; }
 
-/* РАДУЖНЫЙ ТЕКСТ — через hue-rotate, работает везде */
+/* РАДУЖНЫЙ ТЕКСТ — как работало раньше */
 .title-rainbow, .counter-rainbow {
-  color: #ff0000 !important;
-  animation: hueShift 3s linear infinite;
+  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbowShift 2s linear infinite;
 }
-@keyframes hueShift {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
+@keyframes rainbowShift {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
 }
 
 #click-counter, #click-counter-2 {
@@ -122,18 +127,34 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer;
 }
 
-/* ЦВЕТА КНОПОК */
 .btn-grey { background: #888 !important; color: #000 !important; }
 .btn-green { background: #00e676 !important; color: #000 !important; box-shadow: 0 0 15px #00e676; }
 .btn-purple { background: #b14aff !important; color: #fff !important; box-shadow: 0 0 15px #b14aff; }
 .btn-red { background: #ff2b2b !important; color: #fff !important; box-shadow: 0 0 15px #ff2b2b; }
 .btn-gold { background: #ffd700 !important; color: #000 !important; box-shadow: 0 0 20px #ffd700; }
 
-/* РАДУЖНЫЕ КНОПКИ — hue-rotate, переливаются сами */
+/* РАДУЖНЫЕ КНОПКИ — через ::before с градиентом */
 .btn-rainbow {
+  position: relative !important;
+  overflow: hidden !important;
   background: #ff0000 !important;
-  color: #fff !important;
-  animation: hueShift 3s linear infinite !important;
+  color: #000 !important;
+  z-index: 1;
+}
+.btn-rainbow::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000);
+  background-size: 50% 100%;
+  animation: rainbowSlide 2s linear infinite;
+  z-index: -1;
+}
+@keyframes rainbowSlide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 #next-btn.runaway {
