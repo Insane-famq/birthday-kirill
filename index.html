@@ -52,7 +52,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .title-red { color: #ff2b2b; text-shadow: 0 0 20px #ff2b2b; }
 .title-gold { color: #ffd700; text-shadow: 0 0 25px #ffd700; }
 
-/* РАДУЖНЫЙ ТЕКСТ — как работало раньше */
+/* РАДУЖНЫЙ ТЕКСТ */
 .title-rainbow, .counter-rainbow {
   background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000);
   background-size: 200% auto;
@@ -85,18 +85,18 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 #video-player { width: 100%; height: 60vh; max-height: 600px; border-radius: 10px; background: #000; }
 .gallery-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; gap: 10px; }
 .gallery-controls button {
-  background: #00e676; color: #000; border: none; padding: 12px 20px;
+  background: #111; color: #00e676; border: 2px solid #00e676; padding: 12px 20px;
   border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; flex: 1;
-  transition: background 0.5s, box-shadow 0.5s;
+  transition: color 0.5s, border-color 0.5s;
 }
-.gallery-controls button:disabled { background: #333; color: #666; cursor: not-allowed; }
+.gallery-controls button:disabled { color: #333; border-color: #333; cursor: not-allowed; }
 #photo-counter, #video-counter { color: #888; font-size: 14px; text-align: center; min-width: 80px; }
 
 #next-btn, #kill-btn {
-  display: block; width: 100%; padding: 20px; background: #00e676; color: #000;
-  border: none; border-radius: 15px; font-size: 20px; font-weight: bold;
+  display: block; width: 100%; padding: 20px; background: #111; color: #00e676;
+  border: 2px solid #00e676; border-radius: 15px; font-size: 20px; font-weight: bold;
   cursor: pointer; margin-bottom: 20px;
-  transition: background 0.5s, box-shadow 0.5s;
+  transition: color 0.5s, border-color 0.5s;
 }
 #kill-btn { padding: 25px; line-height: 1.4; }
 
@@ -123,38 +123,27 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #meme-67 img { max-width: 90%; max-height: 60%; border-radius: 15px; }
 #meme-67 button {
-  margin-top: 20px; padding: 15px 40px; background: #00e676; color: #000;
-  border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer;
+  margin-top: 20px; padding: 15px 40px; background: #111; color: #00e676;
+  border: 2px solid #00e676; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer;
 }
 
-.btn-grey { background: #888 !important; color: #000 !important; }
-.btn-green { background: #00e676 !important; color: #000 !important; box-shadow: 0 0 15px #00e676; }
-.btn-purple { background: #b14aff !important; color: #fff !important; box-shadow: 0 0 15px #b14aff; }
-.btn-red { background: #ff2b2b !important; color: #fff !important; box-shadow: 0 0 15px #ff2b2b; }
-.btn-gold { background: #ffd700 !important; color: #000 !important; box-shadow: 0 0 20px #ffd700; }
+/* ЦВЕТА БУКВ КНОПОК */
+.btn-grey { color: #888 !important; border-color: #888 !important; }
+.btn-green { color: #00e676 !important; border-color: #00e676 !important; }
+.btn-purple { color: #b14aff !important; border-color: #b14aff !important; }
+.btn-red { color: #ff2b2b !important; border-color: #ff2b2b !important; }
+.btn-gold { color: #ffd700 !important; border-color: #ffd700 !important; }
 
-/* РАДУЖНЫЕ КНОПКИ — через ::before с градиентом */
+/* РАДУЖНЫЕ БУКВЫ КНОПОК */
 .btn-rainbow {
-  position: relative !important;
-  overflow: hidden !important;
-  background: #ff0000 !important;
-  color: #000 !important;
-  z-index: 1;
-}
-.btn-rainbow::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000);
-  background-size: 50% 100%;
-  animation: rainbowSlide 2s linear infinite;
-  z-index: -1;
-}
-@keyframes rainbowSlide {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  border-color: #ff00ff !important;
+  animation: rainbowShift 2s linear infinite;
 }
 
 #next-btn.runaway {
