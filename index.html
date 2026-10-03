@@ -52,17 +52,19 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .title-red { color: #ff2b2b; text-shadow: 0 0 20px #ff2b2b; }
 .title-gold { color: #ffd700; text-shadow: 0 0 25px #ffd700; }
 
-/* РАДУЖНЫЙ ТЕКСТ — ПЕРЕЛИВАЕТСЯ, через каждую букву */
+/* РАДУЖНЫЙ ТЕКСТ — рабочий способ */
 .title-rainbow, .counter-rainbow {
-  color: #ff0000;
+  background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: rainbowShift 2s linear infinite;
 }
-.title-rainbow span, .counter-rainbow span {
-  display: inline-block;
-  animation: letterHue 2s linear infinite;
-}
-@keyframes letterHue {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
+@keyframes rainbowShift {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
 }
 
 #click-counter, #click-counter-2 {
@@ -483,18 +485,6 @@ backBtn3.addEventListener('click', () => {
 let clicks = 0;
 let rainbowMode = false;
 
-// Оборачиваем каждую букву в span для радужного переливания
-function wrapLetters(element) {
-  const text = element.textContent;
-  element.innerHTML = '';
-  for (let i = 0; i < text.length; i++) {
-    const span = document.createElement('span');
-    span.textContent = text[i];
-    span.style.animationDelay = (i * 0.1) + 's';
-    element.appendChild(span);
-  }
-}
-
 function updateColors() {
   mainTitle.className = mainTitle2.className = 'main-title title-grey';
   clickCounter.className = clickCounter2.className = 'counter-grey';
@@ -524,14 +514,8 @@ function startClickCounter() {
       meme67Img.src = MEME_67_URL;
       meme67.classList.remove('hidden');
       rainbowMode = true;
-
-      // Заголовки и счётчики — радужные по буквам
       mainTitle.className = mainTitle2.className = 'main-title title-rainbow';
       clickCounter.className = clickCounter2.className = 'counter-rainbow';
-      wrapLetters(mainTitle);
-      wrapLetters(mainTitle2);
-      wrapLetters(clickCounter);
-      wrapLetters(clickCounter2);
     } else if (!rainbowMode) {
       updateColors();
     }
