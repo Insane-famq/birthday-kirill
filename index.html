@@ -4,48 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>С ДР, Кирилл</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
 body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .hidden { display: none !important; }
 
-/* ПРОГРЕСС-БАР */
-#progress-bar-wrap {
-  position: fixed; top: 0; left: 0; width: 100%; height: 30px;
-  background: rgba(0,0,0,0.9);
-  z-index: 8000;
-  display: flex; align-items: center;
-  padding: 0 12px;
-  transition: opacity 0.5s;
-  border-bottom: 1px solid #00e676;
-}
-#progress-bar-track {
-  flex: 1;
-  height: 8px;
-  background: #111;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-right: 12px;
-}
-#progress-bar-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #00e676, #00bcd4);
-  border-radius: 10px;
-  transition: width 1s cubic-bezier(0.4, 0.0, 0.2, 1);
-  box-shadow: 0 0 10px #00e676;
-}
-#progress-percent {
-  color: #00e676;
-  font-size: 13px;
-  font-weight: bold;
-  font-family: 'Courier New', monospace;
-  min-width: 45px;
-  text-align: right;
-  text-shadow: 0 0 8px #00e676;
-}
-
-/* ЗАГРУЗКА */
 #loading-screen {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #000; display: flex; flex-direction: column;
@@ -98,7 +62,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #login-error { color: #ff0000; margin-top: 15px; font-size: 14px; font-weight: bold; }
 
-.page { padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 1s ease-in; padding-bottom: 60px; position: relative; z-index: 10; padding-top: 45px; }
+.page { padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 1s ease-in; padding-bottom: 60px; position: relative; z-index: 10; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .title-wrap { text-align: center; margin: 20px 0 10px; }
@@ -141,7 +105,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 
 #screen-final {
   padding: 30px 20px; max-width: 800px; margin: 0 auto; min-height: 100vh;
-  position: relative; padding-top: 45px;
+  position: relative;
 }
 #rain-video {
   position: fixed;
@@ -202,7 +166,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer;
 }
 
-/* ===== МОДАЛКИ ===== */
+/* МОДАЛКИ */
 #browser-warning {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #c8102e; z-index: 9500;
@@ -225,10 +189,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   font-weight: bold; font-size: 18px; flex-shrink: 0;
   font-family: Arial, sans-serif; overflow: hidden;
 }
-.bw-title {
-  color: #c8102e; font-size: 22px; font-weight: bold;
-  line-height: 1.3; margin-bottom: 20px;
-}
+.bw-title { color: #c8102e; font-size: 22px; font-weight: bold; line-height: 1.3; margin-bottom: 20px; }
 .bw-text { color: #333; font-size: 14px; line-height: 1.5; margin-bottom: 15px; }
 .bw-button {
   display: inline-block; background: #ffd700; color: #000; border: none;
@@ -253,24 +214,15 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   cursor: pointer; font-family: inherit;
 }
 
-.error-modal {
+.confirm-modal {
   background: #fff; border-radius: 8px; max-width: 450px; width: 100%;
-  padding: 40px 30px; text-align: center; border: 3px solid #d32f2f;
+  padding: 30px 25px; text-align: center; border: 3px solid #ff8800;
   color: #000; animation: shakeIn 0.3s ease-out;
 }
 @keyframes shakeIn {
   0% { transform: scale(0.7); opacity: 0; }
   50% { transform: scale(1.05); }
   100% { transform: scale(1); opacity: 1; }
-}
-.error-modal .error-icon { font-size: 70px; margin-bottom: 20px; }
-.error-modal h2 { font-size: 22px; color: #d32f2f; margin-bottom: 15px; }
-.error-modal p { color: #555; font-size: 14px; margin-bottom: 10px; }
-
-.confirm-modal {
-  background: #fff; border-radius: 8px; max-width: 450px; width: 100%;
-  padding: 30px 25px; text-align: center; border: 3px solid #ff8800;
-  color: #000; animation: shakeIn 0.3s ease-out;
 }
 .confirm-modal .confirm-icon { font-size: 60px; margin-bottom: 15px; }
 .confirm-modal h2 { font-size: 22px; color: #ff8800; margin-bottom: 15px; }
@@ -299,7 +251,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 .btn-deny { background: #f0f0f0; color: #333; }
 .btn-allow { background: #0078d7; color: #fff; border-color: #0078d7; }
-.btn-close-sys { background: #555; color: #fff; border-color: #555; }
 
 .simple-notif {
   background: #fff; border-radius: 10px; max-width: 420px; width: 100%;
@@ -318,7 +269,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 /* РЕЙТИНГ */
 #screen-rating {
   padding: 40px 20px; max-width: 600px; margin: 0 auto;
-  text-align: center; padding-top: 60px;
+  text-align: center;
 }
 #screen-rating h1 {
   color: #00e676; font-size: 28px; margin-bottom: 20px;
@@ -351,9 +302,55 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   box-shadow: 0 0 15px #00e676;
 }
 #rating-result {
-  margin-top: 20px; font-size: 20px; font-weight: bold;
+  margin-top: 20px; font-size: 18px; font-weight: bold;
   color: #00e676; text-shadow: 0 0 15px #00e676;
   min-height: 30px;
+}
+#review-comment {
+  width: 100%; padding: 15px; margin-top: 25px;
+  background: #111; border: 2px solid #333; border-radius: 10px;
+  color: #fff; font-size: 14px; font-family: inherit;
+  min-height: 80px; resize: vertical;
+}
+#review-comment:focus { outline: none; border-color: #00e676; }
+#submit-review {
+  width: 100%; padding: 15px; margin-top: 15px;
+  background: #00e676; color: #000; border: none; border-radius: 10px;
+  font-size: 16px; font-weight: bold; cursor: pointer;
+  font-family: inherit;
+}
+#submit-review:disabled { background: #333; color: #666; cursor: not-allowed; }
+#review-status {
+  margin-top: 15px; font-size: 14px; color: #00e676;
+}
+
+/* АДМИНКА */
+#screen-admin {
+  padding: 30px 20px; max-width: 800px; margin: 0 auto;
+}
+#screen-admin h1 {
+  color: #00e676; font-size: 24px; margin-bottom: 25px;
+  text-shadow: 0 0 20px #00e676;
+  text-align: center;
+}
+.review-card {
+  background: #111; border: 2px solid #222; border-radius: 12px;
+  padding: 15px 18px; margin-bottom: 12px;
+}
+.review-stars {
+  color: #ffd700; font-size: 20px; margin-bottom: 8px;
+  text-shadow: 0 0 10px #ffd700;
+}
+.review-text {
+  color: #fff; font-size: 15px; line-height: 1.5;
+  margin-bottom: 8px;
+  word-wrap: break-word;
+}
+.review-date {
+  color: #666; font-size: 12px;
+}
+#no-reviews {
+  color: #666; text-align: center; font-size: 16px; padding: 40px 0;
 }
 
 .modal-overlay {
@@ -379,13 +376,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </head>
 <body>
 
-<!-- ПРОГРЕСС-БАР -->
-<div id="progress-bar-wrap" class="hidden">
-  <div id="progress-bar-track"><div id="progress-bar-fill"></div></div>
-  <div id="progress-percent">0%</div>
-</div>
-
-<!-- КРАСНЫЙ ЭКРАН -->
 <div id="browser-warning" class="hidden">
   <div style="max-width: 500px; width: 100%;">
     <div class="bw-card">
@@ -542,6 +532,16 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
     <button class="rating-num" data-value="5">5</button>
   </div>
   <div id="rating-result"></div>
+  <textarea id="review-comment" placeholder="Можешь написать комментарий..."></textarea>
+  <button id="submit-review" disabled>Отправить</button>
+  <div id="review-status"></div>
+</div>
+
+<div id="screen-admin" class="hidden">
+  <h1>📋 Все отзывы</h1>
+  <div id="reviews-list"></div>
+  <div id="no-reviews" class="hidden">Пока нет отзывов</div>
+  <button class="back-btn" id="back-from-admin" style="margin-top:30px;">← Выйти</button>
 </div>
 
 <div id="meme-67" class="hidden">
@@ -570,6 +570,13 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </audio>
 
 <script>
+const SUPABASE_URL = 'https://kibjraozvkdgdorlufff.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_B2YyRtPH6fMifdOIJDPHlQ_gJ1uen-5';
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const ADMIN_LOGIN = 'Maron228';
+const ADMIN_PASSWORD = 'KerillLir228';
+
 const screenStart = document.getElementById('screen-start');
 const startBtn = document.getElementById('start-btn');
 const screenLogin = document.getElementById('screen-login');
@@ -582,6 +589,7 @@ const screenPage2 = document.getElementById('screen-page2');
 const screenFinal = document.getElementById('screen-final');
 const screenBonus = document.getElementById('screen-bonus');
 const screenRating = document.getElementById('screen-rating');
+const screenAdmin = document.getElementById('screen-admin');
 const bgMusic = document.getElementById('bg-music');
 const sadMusic = document.getElementById('sad-music');
 const rainMusic = document.getElementById('rain-music');
@@ -607,6 +615,12 @@ const nextBonusBtn = document.getElementById('next-bonus-btn');
 const bonusCounter = document.getElementById('bonus-counter');
 const rateBtn = document.getElementById('rate-btn');
 const ratingResult = document.getElementById('rating-result');
+const reviewComment = document.getElementById('review-comment');
+const submitReview = document.getElementById('submit-review');
+const reviewStatus = document.getElementById('review-status');
+const reviewsList = document.getElementById('reviews-list');
+const noReviews = document.getElementById('no-reviews');
+const backFromAdmin = document.getElementById('back-from-admin');
 const meme67 = document.getElementById('meme-67');
 const meme67Img = document.getElementById('meme-67-img');
 const meme67Close = document.getElementById('meme-67-close');
@@ -616,10 +630,6 @@ const loadingBar = document.getElementById('loading-bar');
 const bsod = document.getElementById('bsod');
 const bsodPercent = document.getElementById('bsod-percent');
 const bsodContinue = document.getElementById('bsod-continue');
-
-const progressBarWrap = document.getElementById('progress-bar-wrap');
-const progressBarFill = document.getElementById('progress-bar-fill');
-const progressPercent = document.getElementById('progress-percent');
 
 const browserWarning = document.getElementById('browser-warning');
 const bwLogo = document.getElementById('bw-logo');
@@ -667,28 +677,6 @@ let bsodShown = false;
 let notif15Shown = false;
 let notif90Shown = false;
 
-// ==== ПРОГРЕСС ====
-let currentProgress = 0;
-let progressVisible = false;
-
-function setProgress(target) {
-  if (target > currentProgress) {
-    currentProgress = target;
-    if (progressVisible) {
-      progressBarFill.style.width = currentProgress + '%';
-      progressPercent.textContent = Math.round(currentProgress) + '%';
-    }
-  }
-}
-
-function showProgress() {
-  progressVisible = true;
-  progressBarWrap.classList.remove('hidden');
-  progressBarFill.style.width = currentProgress + '%';
-  progressPercent.textContent = Math.round(currentProgress) + '%';
-}
-
-// ==== БРАУЗЕР ====
 function detectBrowser() {
   const ua = navigator.userAgent;
   if (ua.indexOf('YaBrowser') !== -1) return { name: 'Яндекс Браузер', logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#fff"/><text x="50" y="74" font-size="70" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fc3f1d">Я</text></svg>' };
@@ -852,9 +840,8 @@ const FINAL_MESSAGE = `И снова здравствуй мой старый д
 
 — Твой вонючий дрыщ качок`;
 
-// ==== СТАРТ ====
+// СТАРТ
 browserWarning.classList.remove('hidden');
-setProgress(2);
 
 bwLeave.addEventListener('click', () => {
   browserWarning.classList.add('hidden');
@@ -869,7 +856,6 @@ btnRetry.addEventListener('click', () => {
 bwIgnore.addEventListener('click', () => {
   browserWarning.classList.add('hidden');
   modalConfirm.classList.remove('hidden');
-  setProgress(4);
 });
 
 btnNo.addEventListener('click', () => {
@@ -884,7 +870,6 @@ btnYes.addEventListener('click', () => {
 
 function startLoadingSequence() {
   loadingScreen.classList.remove('hidden');
-  setProgress(6);
   runLoading();
 }
 
@@ -902,7 +887,6 @@ function runLoading() {
     if (i >= loadingSteps.length) {
       loadingScreen.classList.add('hidden');
       screenStart.classList.remove('hidden');
-      setProgress(10);
       return;
     }
     const step = loadingSteps[i];
@@ -923,11 +907,17 @@ loginBtn.addEventListener('click', () => {
   const login = loginInput.value.trim();
   const password = passwordInput.value.trim();
 
+  if (login === ADMIN_LOGIN && password === ADMIN_PASSWORD) {
+    // АДМИН
+    screenLogin.classList.add('hidden');
+    screenAdmin.classList.remove('hidden');
+    loadAllReviews();
+    return;
+  }
+
   if (login === CORRECT_LOGIN && password === CORRECT_PASSWORD) {
     screenLogin.classList.add('hidden');
     screenPage1.classList.remove('hidden');
-    setProgress(15);
-    showProgress();
     bgMusic.volume = 0.5;
     bgMusic.play().catch(e => console.log('Музыка:', e));
     showPhoto(0);
@@ -940,6 +930,58 @@ loginBtn.addEventListener('click', () => {
   }
 });
 
+// АДМИНКА
+async function loadAllReviews() {
+  reviewsList.innerHTML = '';
+  noReviews.classList.add('hidden');
+
+  const { data, error } = await supabaseClient
+    .from('birthday_reviews')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    reviewsList.innerHTML = '<p style="color:#ff4444;text-align:center;">Ошибка загрузки: ' + error.message + '</p>';
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    noReviews.classList.remove('hidden');
+    return;
+  }
+
+  data.forEach(review => {
+    const card = document.createElement('div');
+    card.className = 'review-card';
+
+    const stars = document.createElement('div');
+    stars.className = 'review-stars';
+    stars.textContent = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating) + ' (' + review.rating + ')';
+
+    const text = document.createElement('div');
+    text.className = 'review-text';
+    text.textContent = review.comment || '(без комментария)';
+
+    const date = document.createElement('div');
+    date.className = 'review-date';
+    const d = new Date(review.created_at);
+    date.textContent = d.toLocaleString('ru-RU');
+
+    card.appendChild(stars);
+    card.appendChild(text);
+    card.appendChild(date);
+    reviewsList.appendChild(card);
+  });
+}
+
+backFromAdmin.addEventListener('click', () => {
+  screenAdmin.classList.add('hidden');
+  screenLogin.classList.remove('hidden');
+  loginInput.value = '';
+  passwordInput.value = '';
+  loginError.textContent = '';
+});
+
 // ФОТО
 let currentPhoto = 0;
 function showPhoto(index) {
@@ -949,9 +991,6 @@ function showPhoto(index) {
   nextPhotoBtn.disabled = index === PHOTOS.length - 1;
   if (index === PHOTOS.length - 1) nextBtn.classList.remove('hidden');
   else nextBtn.classList.add('hidden');
-  // Прогресс: от 15% до 50% за все фото
-  const photoProgress = 15 + (index / (PHOTOS.length - 1)) * 35;
-  setProgress(photoProgress);
 }
 prevBtn.addEventListener('click', () => { if (currentPhoto > 0) { currentPhoto--; showPhoto(currentPhoto); } });
 nextPhotoBtn.addEventListener('click', () => { if (currentPhoto < PHOTOS.length - 1) { currentPhoto++; showPhoto(currentPhoto); } });
@@ -965,9 +1004,6 @@ function showVideo(index) {
   nextVideoBtn.disabled = index === VIDEOS.length - 1;
   if (index === VIDEOS.length - 1) killBtn.classList.remove('hidden');
   else killBtn.classList.add('hidden');
-  // Прогресс: от 55% до 75%
-  const videoProgress = 55 + (index / (VIDEOS.length - 1)) * 20;
-  setProgress(videoProgress);
 }
 prevVideoBtn.addEventListener('click', () => { if (currentVideo > 0) { currentVideo--; showVideo(currentVideo); } });
 nextVideoBtn.addEventListener('click', () => { if (currentVideo < VIDEOS.length - 1) { currentVideo++; showVideo(currentVideo); } });
@@ -984,14 +1020,10 @@ function showBonus(index) {
   nextBonusBtn.disabled = index === BONUS.length - 1;
   if (index === BONUS.length - 1) rateBtn.classList.remove('hidden');
   else rateBtn.classList.add('hidden');
-  // Прогресс: от 90% до 95%
-  const bonusProgress = 90 + (index / (BONUS.length - 1)) * 5;
-  setProgress(bonusProgress);
 }
 prevBonusBtn.addEventListener('click', () => { if (currentBonus > 0) { currentBonus--; showBonus(currentBonus); } });
 nextBonusBtn.addEventListener('click', () => { if (currentBonus < BONUS.length - 1) { currentBonus++; showBonus(currentBonus); } });
 bonusAudio.addEventListener('play', () => { bgMusic.pause(); sadMusic.pause(); rainMusic.pause(); });
-bonusAudio.addEventListener('ended', () => { if (screenBonus.classList.contains('hidden')) return; });
 
 // УБЕГАЮЩАЯ КНОПКА
 let nextBtnAttempts = 0;
@@ -1021,7 +1053,6 @@ nextBtn.addEventListener('click', (e) => {
   } else {
     screenPage1.classList.add('hidden');
     screenPage2.classList.remove('hidden');
-    setProgress(55);
     window.scrollTo(0, 0);
   }
 });
@@ -1052,7 +1083,6 @@ bonusBtn.addEventListener('click', () => {
   bgMusic.pause();
   rainVideo.pause();
   showBonus(0);
-  setProgress(90);
   window.scrollTo(0, 0);
 });
 
@@ -1072,7 +1102,6 @@ let selectedRating = 0;
 rateBtn.addEventListener('click', () => {
   screenBonus.classList.add('hidden');
   screenRating.classList.remove('hidden');
-  setProgress(97);
   window.scrollTo(0, 0);
 });
 
@@ -1102,14 +1131,40 @@ document.querySelectorAll('.rating-num').forEach(num => {
   });
 });
 
+const RATING_TEXTS = {
+  1: 'да ты ахуел я так старался блять',
+  2: 'я был лучшего мнения о тебе',
+  3: 'не особо изменилось что то',
+  4: 'мог бы уже и 5 поставить',
+  5: 'я знал что тебе понравится, дрыщ блять'
+};
+
 function showRatingResult(value) {
-  if (value === 5) {
-    ratingResult.textContent = 'Ты поставил 5. Я знал. Ты же не дрыщ';
-  } else {
-    ratingResult.textContent = 'Ладно, дрыщ, я запомнил';
-  }
-  setProgress(100);
+  ratingResult.textContent = RATING_TEXTS[value];
+  submitReview.disabled = false;
 }
+
+submitReview.addEventListener('click', async () => {
+  if (selectedRating === 0) return;
+  submitReview.disabled = true;
+  submitReview.textContent = 'Отправка...';
+
+  const { error } = await supabaseClient
+    .from('birthday_reviews')
+    .insert([{ rating: selectedRating, comment: reviewComment.value.trim() || null }]);
+
+  if (error) {
+    reviewStatus.textContent = 'Ошибка: ' + error.message;
+    reviewStatus.style.color = '#ff4444';
+    submitReview.disabled = false;
+    submitReview.textContent = 'Отправить';
+  } else {
+    reviewStatus.textContent = '✓ Отзыв отправлен, спасибо!';
+    reviewStatus.style.color = '#00e676';
+    submitReview.textContent = 'Отправлено';
+    reviewComment.disabled = true;
+  }
+});
 
 // КАМЕРА
 btnDenyCam.addEventListener('click', () => {
@@ -1202,7 +1257,6 @@ killBtn.addEventListener('click', () => {
     rainVideo.muted = true;
     rainVideo.loop = true;
     rainVideo.play().catch(e => console.log('RainVideo:', e));
-    setProgress(80);
     window.scrollTo(0, 0);
     typeFinalText();
   }
@@ -1216,22 +1270,17 @@ function typeFinalText() {
 
   let i = 0;
   const speed = 35;
-  const totalChars = FINAL_MESSAGE.length;
 
   function type() {
     if (i >= FINAL_MESSAGE.length) {
       if (cursor.parentNode) cursor.parentNode.removeChild(cursor);
       bonusBtn.classList.remove('hidden');
-      setProgress(90);
       return;
     }
     const ch = FINAL_MESSAGE[i];
     const textNode = document.createTextNode(ch);
     finalText.insertBefore(textNode, cursor);
     i++;
-    // Прогресс от 80 до 90 по мере печати
-    const textProgress = 80 + (i / totalChars) * 10;
-    setProgress(textProgress);
     setTimeout(type, (ch === '.' || ch === '\n') ? speed * 5 : speed);
   }
   type();
@@ -1239,4 +1288,4 @@ function typeFinalText() {
 </script>
 
 </body>
-</html>
+  </html>
