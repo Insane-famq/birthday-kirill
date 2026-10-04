@@ -9,6 +9,7 @@
 body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .hidden { display: none !important; }
 
+/* ЗАГРУЗКА */
 #loading-screen {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #000; display: flex; flex-direction: column;
@@ -31,6 +32,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   transition: width 0.2s;
 }
 
+/* СТАРТ */
 #screen-start {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #fff; display: flex; justify-content: center; align-items: center;
@@ -43,6 +45,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #start-btn:active { transform: scale(0.95); }
 
+/* ВХОД */
 #screen-login {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #fff; display: flex; justify-content: center; align-items: center;
@@ -61,6 +64,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #login-error { color: #ff0000; margin-top: 15px; font-size: 14px; font-weight: bold; }
 
+/* ОБЩИЕ */
 .page { padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 1s ease-in; padding-bottom: 60px; position: relative; z-index: 10; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -167,49 +171,238 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   cursor: pointer;
 }
 
-/* ФЕЙКОВОЕ УВЕДОМЛЕНИЕ */
-#fake-notification {
-  position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-200px);
-  width: 90%; max-width: 420px;
-  background: #fff; color: #000;
-  border-radius: 15px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-  padding: 15px 20px;
-  z-index: 9999;
-  transition: transform 0.4s ease-out;
-  display: flex; align-items: center; gap: 15px;
+/* ===== ФЕЙКОВЫЕ УВЕДОМЛЕНИЯ ===== */
+
+/* Общий стиль модалок */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85); z-index: 9000;
+  display: flex; justify-content: center; align-items: center; padding: 20px;
 }
-#fake-notification.show {
-  transform: translateX(-50%) translateY(0);
-}
-#fake-notification .icon {
-  font-size: 32px;
-  flex-shrink: 0;
-}
-#fake-notification .content {
-  flex: 1;
-}
-#fake-notification .title {
-  font-weight: bold;
-  font-size: 14px;
-  margin-bottom: 4px;
-  color: #ff8800;
-}
-#fake-notification .text {
-  font-size: 13px;
-  color: #333;
-  line-height: 1.3;
-}
-#fake-notification .allow-btn {
-  background: #00e676;
-  color: #000;
-  border: none;
-  padding: 8px 14px;
+
+/* АНТИВИРУС - ОПАСНЫЙ САЙТ */
+.antivirus-modal {
+  background: #fff;
   border-radius: 8px;
-  font-size: 12px;
+  max-width: 450px;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+  border: 3px solid #d32f2f;
+  animation: shakeIn 0.3s ease-out;
+}
+@keyframes shakeIn {
+  0% { transform: scale(0.7); opacity: 0; }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.antivirus-header {
+  background: #d32f2f;
+  color: #fff;
+  padding: 15px 20px;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.antivirus-body {
+  padding: 25px 20px;
+  color: #000;
+}
+.antivirus-body .warn-icon {
+  font-size: 60px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.antivirus-body h2 {
+  font-size: 20px;
+  color: #d32f2f;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.antivirus-body p {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.antivirus-buttons {
+  display: flex;
+  gap: 10px;
+  padding: 0 20px 20px;
+}
+.antivirus-buttons button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-  flex-shrink: 0;
+  font-family: inherit;
+}
+.btn-leave {
+  background: #555;
+  color: #fff;
+}
+.btn-continue {
+  background: #d32f2f;
+  color: #fff;
+}
+
+/* ОШИБКА СОЕДИНЕНИЯ */
+.error-modal {
+  background: #fff;
+  border-radius: 8px;
+  max-width: 450px;
+  width: 100%;
+  padding: 40px 30px;
+  text-align: center;
+  border: 3px solid #d32f2f;
+  animation: shakeIn 0.3s ease-out;
+}
+.error-modal .error-icon {
+  font-size: 70px;
+  margin-bottom: 20px;
+}
+.error-modal h2 {
+  font-size: 22px;
+  color: #d32f2f;
+  margin-bottom: 15px;
+}
+.error-modal p {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* ТЫ УВЕРЕН? */
+.confirm-modal {
+  background: #fff;
+  border-radius: 8px;
+  max-width: 450px;
+  width: 100%;
+  padding: 30px 25px;
+  text-align: center;
+  border: 3px solid #ff8800;
+  animation: shakeIn 0.3s ease-out;
+}
+.confirm-modal .confirm-icon {
+  font-size: 60px;
+  margin-bottom: 15px;
+}
+.confirm-modal h2 {
+  font-size: 22px;
+  color: #ff8800;
+  margin-bottom: 15px;
+}
+.confirm-modal p {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+.confirm-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.confirm-buttons button {
+  padding: 14px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-no {
+  background: #555;
+  color: #fff;
+}
+.btn-yes {
+  background: #ff8800;
+  color: #fff;
+}
+
+/* УВЕДОМЛЕНИЕ СИСТЕМНОЕ (камера/микрофон) */
+.sysnotif-modal {
+  background: #fff;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 100%;
+  padding: 25px 25px 20px;
+  text-align: center;
+  border: 2px solid #ccc;
+  animation: shakeIn 0.3s ease-out;
+  color: #000;
+}
+.sysnotif-modal .sysnotif-icon {
+  font-size: 50px;
+  margin-bottom: 15px;
+}
+.sysnotif-modal h2 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+.sysnotif-modal p {
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+.sysnotif-buttons {
+  display: flex;
+  gap: 10px;
+}
+.sysnotif-buttons button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: inherit;
+  border: 1px solid #ccc;
+}
+.btn-deny {
+  background: #f0f0f0;
+  color: #333;
+}
+.btn-allow {
+  background: #0078d7;
+  color: #fff;
+  border-color: #0078d7;
+}
+
+/* ПРОСТОЕ УВЕДОМЛЕНИЕ БЕЗ КНОПОК */
+.simple-notif {
+  background: #fff;
+  border-radius: 10px;
+  max-width: 420px;
+  width: 100%;
+  padding: 25px;
+  text-align: center;
+  border: 2px solid #d32f2f;
+  animation: shakeIn 0.3s ease-out;
+  color: #000;
+}
+.simple-notif .notif-icon {
+  font-size: 60px;
+  margin-bottom: 15px;
+}
+.simple-notif h2 {
+  font-size: 18px;
+  color: #d32f2f;
+  margin-bottom: 15px;
+}
+.simple-notif p {
+  color: #333;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 #next-btn.runaway {
@@ -228,13 +421,82 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </head>
 <body>
 
-<div id="loading-screen">
-  <div id="loading-text">УСТАНОВКА СВЯЗИ...</div>
-  <div id="loading-bar-wrap"><div id="loading-bar"></div></div>
+<!-- МОДАЛКИ -->
+<div id="modal-warning" class="modal-overlay hidden">
+  <div class="antivirus-modal">
+    <div class="antivirus-header">
+      <span>🛡️</span>
+      <span>Внимание! Опасный сайт</span>
+    </div>
+    <div class="antivirus-body">
+      <div class="warn-icon">⚠️</div>
+      <h2>Опасный сайт</h2>
+      <p>Этот сайт может содержать нежелательное ПО, которое может навредить вашему устройству.</p>
+      <p>Рекомендуем немедленно покинуть сайт.</p>
+    </div>
+    <div class="antivirus-buttons">
+      <button class="btn-leave" id="btn-leave">Покинуть сайт</button>
+      <button class="btn-continue" id="btn-continue">Всё равно продолжить</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-error" class="modal-overlay hidden">
+  <div class="error-modal">
+    <div class="error-icon">🔌</div>
+    <h2>Соединение разорвано</h2>
+    <p>Не удалось установить безопасное соединение с сервером.</p>
+    <p>Повторная попытка...</p>
+  </div>
+</div>
+
+<div id="modal-confirm" class="modal-overlay hidden">
+  <div class="confirm-modal">
+    <div class="confirm-icon">❓</div>
+    <h2>Ты уверен?</h2>
+    <p>Этот сайт может быть опасен для твоего устройства. Точно хочешь продолжить?</p>
+    <div class="confirm-buttons">
+      <button class="btn-no" id="btn-no">Нет, я слабый дрыщ</button>
+      <button class="btn-yes" id="btn-yes">Да, я ебанутый качок</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-camera" class="modal-overlay hidden">
+  <div class="sysnotif-modal">
+    <div class="sysnotif-icon">📷</div>
+    <h2>Запрос доступа</h2>
+    <p>Сайт <b>insane-famq.github.io</b> запрашивает доступ к вашей камере.</p>
+    <div class="sysnotif-buttons">
+      <button class="btn-deny" id="btn-deny-cam">Запретить</button>
+      <button class="btn-allow" id="btn-allow-cam">Разрешить</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-camera-result" class="modal-overlay hidden">
+  <div class="simple-notif">
+    <div class="notif-icon">📷</div>
+    <h2>Доступ разрешён</h2>
+    <p>Сайт <b>insane-famq.github.io</b> успешно получил доступ к вашей камере.</p>
+  </div>
+</div>
+
+<div id="modal-location" class="modal-overlay hidden">
+  <div class="simple-notif">
+    <div class="notif-icon">📍</div>
+    <h2>Внимание!</h2>
+    <p>Сайт пытается передать ваше местоположение нежелательным лицам.</p>
+  </div>
 </div>
 
 <div id="screen-start" class="hidden">
   <button id="start-btn">нажми на меня если качок</button>
+</div>
+
+<div id="loading-screen" class="hidden">
+  <div id="loading-text">УСТАНОВКА СВЯЗИ...</div>
+  <div id="loading-bar-wrap"><div id="loading-bar"></div></div>
 </div>
 
 <div id="screen-login" class="hidden">
@@ -312,16 +574,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   <button id="bsod-continue" class="hidden">Продолжить</button>
 </div>
 
-<!-- ФЕЙКОВОЕ УВЕДОМЛЕНИЕ -->
-<div id="fake-notification">
-  <div class="icon">⚠️</div>
-  <div class="content">
-    <div class="title" id="notif-title">Внимание</div>
-    <div class="text" id="notif-text">Сайт пытается получить доступ к вашей камере</div>
-  </div>
-  <button class="allow-btn" id="allow-btn">Разрешить</button>
-</div>
-
 <audio id="bg-music" loop>
   <source src="https://insane-famq.github.io/birthday-kirill/MORGENSHTERN_-_Novyjj_Merin_66404393.mp3" type="audio/mpeg">
 </audio>
@@ -377,10 +629,19 @@ const bsod = document.getElementById('bsod');
 const bsodPercent = document.getElementById('bsod-percent');
 const bsodContinue = document.getElementById('bsod-continue');
 
-const fakeNotification = document.getElementById('fake-notification');
-const notifTitle = document.getElementById('notif-title');
-const notifText = document.getElementById('notif-text');
-const allowBtn = document.getElementById('allow-btn');
+const modalWarning = document.getElementById('modal-warning');
+const modalError = document.getElementById('modal-error');
+const modalConfirm = document.getElementById('modal-confirm');
+const modalCamera = document.getElementById('modal-camera');
+const modalCameraResult = document.getElementById('modal-camera-result');
+const modalLocation = document.getElementById('modal-location');
+
+const btnLeave = document.getElementById('btn-leave');
+const btnContinue = document.getElementById('btn-continue');
+const btnNo = document.getElementById('btn-no');
+const btnYes = document.getElementById('btn-yes');
+const btnDenyCam = document.getElementById('btn-deny-cam');
+const btnAllowCam = document.getElementById('btn-allow-cam');
 
 const titleCanvas = document.getElementById('title-canvas');
 const titleCanvas2 = document.getElementById('title-canvas-2');
@@ -553,6 +814,40 @@ const FINAL_MESSAGE = `И снова здравствуй мой старый д
 
 — Твой вонючий дрыщ качок`;
 
+// ==== СТАРТ С УВЕДОМЛЕНИЯ ====
+function initStart() {
+  modalWarning.classList.remove('hidden');
+}
+
+btnLeave.addEventListener('click', () => {
+  modalWarning.classList.add('hidden');
+  modalError.classList.remove('hidden');
+  setTimeout(() => {
+    modalError.classList.add('hidden');
+    startLoadingSequence();
+  }, 3000);
+});
+
+btnContinue.addEventListener('click', () => {
+  modalWarning.classList.add('hidden');
+  modalConfirm.classList.remove('hidden');
+});
+
+btnNo.addEventListener('click', () => {
+  modalConfirm.classList.add('hidden');
+  document.body.innerHTML = '<div style="background:#fff;width:100%;height:100vh;position:fixed;top:0;left:0;"></div>';
+});
+
+btnYes.addEventListener('click', () => {
+  modalConfirm.classList.add('hidden');
+  startLoadingSequence();
+});
+
+function startLoadingSequence() {
+  loadingScreen.classList.remove('hidden');
+  runLoading();
+}
+
 const loadingSteps = [
   { text: 'УСТАНОВКА СВЯЗИ...', percent: 10, delay: 400 },
   { text: 'ПРОВЕРКА КАНАЛА...', percent: 30, delay: 500 },
@@ -578,7 +873,7 @@ function runLoading() {
   next();
 }
 
-runLoading();
+initStart();
 
 startBtn.addEventListener('click', () => {
   screenStart.classList.add('hidden');
@@ -653,14 +948,12 @@ function moveNextBtn() {
   nextBtn.style.top = (Math.random() * maxY) + 'px';
   nextBtn.style.transform = 'none';
 }
-
 function resetNextBtn() {
   nextBtn.classList.remove('runaway');
   nextBtn.style.left = '';
   nextBtn.style.top = '';
   nextBtn.style.transform = '';
 }
-
 nextBtn.addEventListener('mouseenter', () => { if (nextBtnAttempts < 3) moveNextBtn(); });
 nextBtn.addEventListener('click', (e) => {
   if (nextBtnAttempts < 3) {
@@ -668,9 +961,7 @@ nextBtn.addEventListener('click', (e) => {
     nextBtnAttempts++;
     nextBtn.classList.add('runaway');
     moveNextBtn();
-    if (nextBtnAttempts === 3) {
-      setTimeout(resetNextBtn, 400);
-    }
+    if (nextBtnAttempts === 3) setTimeout(resetNextBtn, 400);
   } else {
     screenPage1.classList.add('hidden');
     screenPage2.classList.remove('hidden');
@@ -717,36 +1008,29 @@ backBtn4.addEventListener('click', () => {
   window.scrollTo(0, 0);
 });
 
-// ==== ФЕЙКОВОЕ УВЕДОМЛЕНИЕ ====
-function showFakeNotification(title, text, onAllow) {
-  notifTitle.textContent = title;
-  notifText.textContent = text;
-  allowBtn.onclick = onAllow;
-  fakeNotification.classList.add('show');
-  setTimeout(() => {
-    fakeNotification.classList.remove('show');
-  }, 3000);
-}
+// ==== КАМЕРА: разрешить/запретить ====
+btnDenyCam.addEventListener('click', () => {
+  modalCamera.classList.add('hidden');
+  modalCameraResult.classList.remove('hidden');
+  setTimeout(() => modalCameraResult.classList.add('hidden'), 10000);
+});
+btnAllowCam.addEventListener('click', () => {
+  modalCamera.classList.add('hidden');
+  modalCameraResult.classList.remove('hidden');
+  setTimeout(() => modalCameraResult.classList.add('hidden'), 10000);
+});
 
-// ==== СЧЁТЧИК + BSOD + УВЕДОМЛЕНИЯ ====
+// ==== СЧЁТЧИК ====
 function startClickCounter() {
   document.body.addEventListener('click', () => {
     clicks++;
     renderAll();
 
-    // 15 кликов — уведомление о камере
     if (clicks === 15 && !notif15Shown) {
       notif15Shown = true;
-      showFakeNotification(
-        'Внимание',
-        'Сайт пытается получить доступ к вашей камере',
-        () => {
-          alert('хахаха дрыщ ванючий это развод');
-        }
-      );
+      modalCamera.classList.remove('hidden');
     }
 
-    // 50 кликов — BSOD
     if (clicks === 50 && !bsodShown) {
       bsodShown = true;
       bsod.classList.remove('hidden');
@@ -773,44 +1057,30 @@ function startClickCounter() {
       }, stepMs);
     }
 
-    // 67 кликов — мем
     if (clicks === 67) {
       meme67Img.src = MEME_67_URL;
       meme67.classList.remove('hidden');
     }
 
-    // 90 кликов — уведомление о микрофоне
     if (clicks === 90 && !notif90Shown) {
       notif90Shown = true;
-      showFakeNotification(
-        'Внимание',
-        'Сайт пытается получить доступ к вашему микрофону',
-        () => {
-          alert('хахаха дрыщ ванючий это развод');
-        }
-      );
+      modalLocation.classList.remove('hidden');
+      setTimeout(() => modalLocation.classList.add('hidden'), 10000);
     }
   });
 }
 
 bsodContinue.addEventListener('click', () => {
   bsod.classList.add('hidden');
-  if (!screenPage1.classList.contains('hidden')) {
-    bgMusic.play();
-  } else if (!screenPage2.classList.contains('hidden')) {
-    bgMusic.play();
-  } else if (!screenFinal.classList.contains('hidden')) {
-    sadMusic.play();
-    rainMusic.play();
-    rainVideo.play();
-  }
+  if (!screenPage1.classList.contains('hidden')) bgMusic.play();
+  else if (!screenPage2.classList.contains('hidden')) bgMusic.play();
+  else if (!screenFinal.classList.contains('hidden')) { sadMusic.play(); rainMusic.play(); rainVideo.play(); }
 });
 
 meme67Close.addEventListener('click', () => {
   meme67.classList.add('hidden');
 });
 
-// ==== КНОПКА УЕБИ МЕНЯ ====
 let killCount = 0;
 killBtn.addEventListener('click', () => {
   killCount++;
