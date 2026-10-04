@@ -137,7 +137,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   position: relative; z-index: 20;
 }
 
-/* КРУЖОК */
 .kryg-wrap {
   display: flex; justify-content: center; align-items: center;
   margin: 20px 0; position: relative;
@@ -169,7 +168,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   font-size: 36px;
   display: flex; justify-content: center; align-items: center;
   cursor: pointer;
-  pointer-events: none;
   box-shadow: 0 0 20px #00e676;
   transition: opacity 0.2s;
 }
@@ -178,7 +176,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   pointer-events: none;
 }
 
-/* КАСТОМНЫЙ ПЛЕЕР */
 .custom-player {
   background: #0a0a0a; border: 2px solid #00e676; border-radius: 15px;
   padding: 20px; margin: 20px 0; box-shadow: 0 0 20px rgba(0,230,118,0.3);
@@ -295,7 +292,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer;
 }
 
-/* МОДАЛКИ */
 #browser-warning {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #c8102e; z-index: 9500;
@@ -391,7 +387,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   cursor: pointer; font-family: inherit;
 }
 
-/* РЕЙТИНГ */
 #screen-rating { padding: 40px 20px; max-width: 600px; margin: 0 auto; text-align: center; }
 #screen-rating h1 { color: #00e676; font-size: 28px; margin-bottom: 20px; text-shadow: 0 0 20px #00e676; }
 #screen-rating p { color: #aaa; font-size: 16px; margin-bottom: 40px; }
@@ -470,7 +465,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </style>
 </head>
 <body>
-
 <div id="browser-warning" class="hidden">
   <div style="max-width: 500px; width: 100%;">
     <div class="bw-card">
@@ -766,7 +760,6 @@ const bsod = document.getElementById('bsod');
 const bsodPercent = document.getElementById('bsod-percent');
 const bsodContinue = document.getElementById('bsod-continue');
 
-// ВИДЕО ПЛЕЕР
 const videoPlayer = document.getElementById('video-player');
 const videoPlayBtn = document.getElementById('video-play-btn');
 const videoPlayIcon = document.getElementById('video-play-icon');
@@ -779,7 +772,6 @@ const videoCounter = document.getElementById('video-counter');
 const prevVideoBtn = document.getElementById('prev-video-btn');
 const nextVideoBtn = document.getElementById('next-video-btn');
 
-// КРУЖКИ
 const krygVideo = document.getElementById('kryg-video');
 const krygPlayIcon = document.getElementById('kryg-play-icon');
 const prevKrygBtn = document.getElementById('prev-kryg-btn');
@@ -787,7 +779,6 @@ const nextKrygBtn = document.getElementById('next-kryg-btn');
 const krygCounter = document.getElementById('kryg-counter');
 const bonusWarning = document.getElementById('bonus-warning');
 
-// БОНУС
 const bonusPlayBtn = document.getElementById('bonus-play-btn');
 const bonusProgress = document.getElementById('bonus-progress');
 const bonusProgressWrap = document.getElementById('bonus-progress-wrap');
@@ -1010,7 +1001,6 @@ const FINAL_MESSAGE = `И снова здравствуй мой старый д
 
 — Твой вонючий дрыщ качок`;
 
-// СТАРТ
 browserWarning.classList.remove('hidden');
 
 bwLeave.addEventListener('click', () => {
@@ -1151,7 +1141,6 @@ backFromAdmin.addEventListener('click', () => {
   loginError.textContent = '';
 });
 
-// ФОТО
 let currentPhoto = 0;
 function showPhoto(index) {
   galleryImg.src = PHOTOS[index];
@@ -1164,7 +1153,6 @@ function showPhoto(index) {
 prevBtn.addEventListener('click', () => { if (currentPhoto > 0) { currentPhoto--; showPhoto(currentPhoto); } });
 nextPhotoBtn.addEventListener('click', () => { if (currentPhoto < PHOTOS.length - 1) { currentPhoto++; showPhoto(currentPhoto); } });
 
-// ВИДЕО ПЛЕЕР
 let currentVideo = 0;
 
 function formatTime(sec) {
@@ -1229,7 +1217,6 @@ videoProgressWrap.addEventListener('click', (e) => {
 prevVideoBtn.addEventListener('click', () => { if (currentVideo > 0) { currentVideo--; showVideo(currentVideo); } });
 nextVideoBtn.addEventListener('click', () => { if (currentVideo < VIDEOS.length - 1) { currentVideo++; showVideo(currentVideo); } });
 
-// КРУЖКИ
 let currentKryg = 0;
 function showKryg(index) {
   krygVideo.src = KRYG[index];
@@ -1264,7 +1251,6 @@ krygVideo.addEventListener('pause', () => {
   krygPlayIcon.classList.remove('hidden-icon');
 });
 
-// БОНУС
 let currentBonus = 0;
 let waveformBars = [];
 
@@ -1317,11 +1303,8 @@ prevBonusBtn.addEventListener('click', () => { if (currentBonus > 0) { currentBo
 nextBonusBtn.addEventListener('click', () => { if (currentBonus < BONUS.length - 1) { currentBonus++; showBonus(currentBonus); } });
 
 bonusPlayBtn.addEventListener('click', () => {
-  if (bonusAudio.paused) {
-    bonusAudio.play();
-  } else {
-    bonusAudio.pause();
-  }
+  if (bonusAudio.paused) bonusAudio.play();
+  else bonusAudio.pause();
 });
 
 bonusAudio.addEventListener('play', () => {
@@ -1355,7 +1338,6 @@ bonusAudio.addEventListener('ended', () => {
   bonusPlayBtn.textContent = '▶';
 });
 
-// УБЕГАЮЩАЯ КНОПКА
 let nextBtnAttempts = 0;
 function moveNextBtn() {
   const bw = nextBtn.offsetWidth || 200;
@@ -1429,7 +1411,6 @@ backBtn4.addEventListener('click', () => {
   window.scrollTo(0, 0);
 });
 
-// РЕЙТИНГ
 let selectedRating = 0;
 
 rateBtn.addEventListener('click', () => {
@@ -1499,7 +1480,6 @@ submitReview.addEventListener('click', async () => {
   }
 });
 
-// КАМЕРА
 btnDenyCam.addEventListener('click', () => {
   modalCamera.classList.add('hidden');
   modalCameraResult.classList.remove('hidden');
@@ -1515,7 +1495,6 @@ btnOkLocation.addEventListener('click', () => {
   modalLocation.classList.add('hidden');
 });
 
-// СЧЁТЧИК
 function startClickCounter() {
   document.body.addEventListener('click', () => {
     clicks++;
@@ -1623,5 +1602,8 @@ function typeFinalText() {
   type();
 }
 
-// Инициализация
 initWaveform();
+</script>
+
+</body>
+    </html>
