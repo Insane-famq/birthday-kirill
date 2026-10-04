@@ -167,6 +167,51 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   cursor: pointer;
 }
 
+/* ФЕЙКОВОЕ УВЕДОМЛЕНИЕ */
+#fake-notification {
+  position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-200px);
+  width: 90%; max-width: 420px;
+  background: #fff; color: #000;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  padding: 15px 20px;
+  z-index: 9999;
+  transition: transform 0.4s ease-out;
+  display: flex; align-items: center; gap: 15px;
+}
+#fake-notification.show {
+  transform: translateX(-50%) translateY(0);
+}
+#fake-notification .icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+#fake-notification .content {
+  flex: 1;
+}
+#fake-notification .title {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #ff8800;
+}
+#fake-notification .text {
+  font-size: 13px;
+  color: #333;
+  line-height: 1.3;
+}
+#fake-notification .allow-btn {
+  background: #00e676;
+  color: #000;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
 #next-btn.runaway {
   position: fixed; z-index: 1500;
   transition: top 0.4s, left 0.4s;
@@ -267,6 +312,16 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   <button id="bsod-continue" class="hidden">Продолжить</button>
 </div>
 
+<!-- ФЕЙКОВОЕ УВЕДОМЛЕНИЕ -->
+<div id="fake-notification">
+  <div class="icon">⚠️</div>
+  <div class="content">
+    <div class="title" id="notif-title">Внимание</div>
+    <div class="text" id="notif-text">Сайт пытается получить доступ к вашей камере</div>
+  </div>
+  <button class="allow-btn" id="allow-btn">Разрешить</button>
+</div>
+
 <audio id="bg-music" loop>
   <source src="https://insane-famq.github.io/birthday-kirill/MORGENSHTERN_-_Novyjj_Merin_66404393.mp3" type="audio/mpeg">
 </audio>
@@ -322,6 +377,11 @@ const bsod = document.getElementById('bsod');
 const bsodPercent = document.getElementById('bsod-percent');
 const bsodContinue = document.getElementById('bsod-continue');
 
+const fakeNotification = document.getElementById('fake-notification');
+const notifTitle = document.getElementById('notif-title');
+const notifText = document.getElementById('notif-text');
+const allowBtn = document.getElementById('allow-btn');
+
 const titleCanvas = document.getElementById('title-canvas');
 const titleCanvas2 = document.getElementById('title-canvas-2');
 const counterCanvas = document.getElementById('counter-canvas');
@@ -345,6 +405,8 @@ const BONUS = [
 
 let clicks = 0;
 let bsodShown = false;
+let notif15Shown = false;
+let notif90Shown = false;
 
 const COLOR_STAGES = [
   { color: '#888888', shadow: null },
@@ -581,7 +643,6 @@ nextBonusBtn.addEventListener('click', () => { if (currentBonus < BONUS.length -
 bonusAudio.addEventListener('play', () => { bgMusic.pause(); sadMusic.pause(); rainMusic.pause(); });
 bonusAudio.addEventListener('ended', () => { if (screenBonus.classList.contains('hidden')) return; });
 
-// ==== УБЕГАЮЩАЯ КНОПКА ДАЛЬШЕ ====
 let nextBtnAttempts = 0;
 function moveNextBtn() {
   const bw = nextBtn.offsetWidth || 200;
@@ -607,7 +668,6 @@ nextBtn.addEventListener('click', (e) => {
     nextBtnAttempts++;
     nextBtn.classList.add('runaway');
     moveNextBtn();
-    // После 3 прыжков — возвращаем на место
     if (nextBtnAttempts === 3) {
       setTimeout(resetNextBtn, 400);
     }
@@ -631,7 +691,6 @@ backBtn3.addEventListener('click', () => {
   rainMusic.pause();
   rainVideo.pause();
   bgMusic.play();
-  // СБРОС кнопки "уеби меня"
   killCount = 0;
   killBtn.textContent = 'уеби меня';
   window.scrollTo(0, 0);
@@ -658,11 +717,36 @@ backBtn4.addEventListener('click', () => {
   window.scrollTo(0, 0);
 });
 
+// ==== ФЕЙКОВОЕ УВЕДОМЛЕНИЕ ====
+function showFakeNotification(title, text, onAllow) {
+  notifTitle.textContent = title;
+  notifText.textContent = text;
+  allowBtn.onclick = onAllow;
+  fakeNotification.classList.add('show');
+  setTimeout(() => {
+    fakeNotification.classList.remove('show');
+  }, 3000);
+}
+
+// ==== СЧЁТЧИК + BSOD + УВЕДОМЛЕНИЯ ====
 function startClickCounter() {
   document.body.addEventListener('click', () => {
     clicks++;
     renderAll();
 
+    // 15 кликов — уведомление о камере
+    if (clicks === 15 && !notif15Shown) {
+      notif15Shown = true;
+      showFakeNotification(
+        'Внимание',
+        'Сайт пытается получить доступ к вашей камере',
+        () => {
+          alert('хахаха дрыщ ванючий это развод');
+        }
+      );
+    }
+
+    // 50 кликов — BSOD
     if (clicks === 50 && !bsodShown) {
       bsodShown = true;
       bsod.classList.remove('hidden');
@@ -689,9 +773,22 @@ function startClickCounter() {
       }, stepMs);
     }
 
+    // 67 кликов — мем
     if (clicks === 67) {
       meme67Img.src = MEME_67_URL;
       meme67.classList.remove('hidden');
+    }
+
+    // 90 кликов — уведомление о микрофоне
+    if (clicks === 90 && !notif90Shown) {
+      notif90Shown = true;
+      showFakeNotification(
+        'Внимание',
+        'Сайт пытается получить доступ к вашему микрофону',
+        () => {
+          alert('хахаха дрыщ ванючий это развод');
+        }
+      );
     }
   });
 }
@@ -763,4 +860,4 @@ function typeFinalText() {
 </script>
 
 </body>
-  </html>
+    </html>
