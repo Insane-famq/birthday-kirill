@@ -1566,9 +1566,9 @@ killBtn.addEventListener('click', () => {
     screenFinal.classList.remove('hidden');
     bgMusic.pause();
     videoPlayer.pause();
-    sadMusic.volume = 0.7;
+    sadMusic.volume = 0.6;
     sadMusic.play().catch(e => console.log('Грустная музыка:', e));
-    rainMusic.volume = 0.6;
+    rainMusic.volume = 1;
     rainMusic.play().catch(e => console.log('Дождь:', e));
     rainVideo.muted = true;
     rainVideo.loop = true;
