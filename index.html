@@ -9,7 +9,6 @@
 body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .hidden { display: none !important; }
 
-/* ЭКРАН ЗАГРУЗКИ */
 #loading-screen {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #000; display: flex; flex-direction: column;
@@ -32,7 +31,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   transition: width 0.2s;
 }
 
-/* СТАРТ */
 #screen-start {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #fff; display: flex; justify-content: center; align-items: center;
@@ -45,7 +43,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #start-btn:active { transform: scale(0.95); }
 
-/* ВХОД */
 #screen-login {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #fff; display: flex; justify-content: center; align-items: center;
@@ -64,7 +61,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #login-error { color: #ff0000; margin-top: 15px; font-size: 14px; font-weight: bold; }
 
-/* ОБЩИЕ */
 .page { padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 1s ease-in; padding-bottom: 60px; position: relative; z-index: 10; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -72,7 +68,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 #title-canvas { display: block; margin: 0 auto; max-width: 100%; }
 #counter-canvas { display: block; margin: 0 auto 25px; max-width: 100%; }
 
-/* ГАЛЕРЕЯ */
 #gallery, #video-gallery, #bonus-gallery {
   background: #111; border-radius: 15px; padding: 15px; margin-bottom: 25px;
   border: 2px solid #222;
@@ -92,7 +87,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .gallery-controls button:disabled { background: #333; color: #666; cursor: not-allowed; }
 #photo-counter, #video-counter, #bonus-counter { color: #888; font-size: 14px; text-align: center; min-width: 80px; }
 
-/* КНОПКИ */
 #next-btn, #kill-btn, #bonus-btn {
   display: block; width: 100%; padding: 20px; background: #00e676; color: #000;
   border: none; border-radius: 15px; font-size: 20px; font-weight: bold;
@@ -107,13 +101,21 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   cursor: pointer; margin-bottom: 20px;
 }
 
-/* ФИНАЛ + ДОЖДЬ */
+/* ФИНАЛ */
 #screen-final {
   padding: 30px 20px; max-width: 800px; margin: 0 auto; min-height: 100vh;
   position: relative;
 }
+#rain-video {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
 #final-text {
-  background: rgba(17, 17, 17, 0.9); padding: 25px; border-radius: 15px;
+  background: rgba(17, 17, 17, 0.85); padding: 25px; border-radius: 15px;
   border: 2px solid #00e676; line-height: 1.8; font-size: 16px; color: #fff;
   margin-bottom: 20px; white-space: pre-wrap; min-height: 200px;
   position: relative; z-index: 10;
@@ -125,16 +127,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
 
-/* КАНВАС ДОЖДЯ НА ФОНЕ */
-#rain-canvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* МЕМ 67 */
 #meme-67 {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0, 0, 0, 0.95); display: flex; flex-direction: column;
@@ -150,7 +142,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer;
 }
 
-/* СИНИЙ ЭКРАН СМЕРТИ */
+/* BSOD */
 #bsod {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #0078d7; color: #fff; z-index: 5000;
@@ -158,20 +150,15 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   align-items: center; padding: 40px; text-align: center;
   font-family: 'Segoe UI', 'Arial', sans-serif;
 }
-#bsod .sad {
-  font-size: 80px; margin-bottom: 30px;
+#bsod .sad { font-size: 80px; margin-bottom: 30px; }
+#bsod h1 { font-size: 24px; font-weight: 400; margin-bottom: 30px; line-height: 1.4; }
+#bsod p { font-size: 14px; line-height: 1.6; margin-bottom: 10px; max-width: 600px; }
+#bsod .tap-hint {
+  position: absolute; bottom: 40px; font-size: 16px; opacity: 0.7;
+  animation: pulse 1.5s infinite;
 }
-#bsod h1 {
-  font-size: 28px; font-weight: 400; margin-bottom: 30px; line-height: 1.4;
-}
-#bsod p {
-  font-size: 16px; line-height: 1.6; margin-bottom: 15px; max-width: 600px;
-}
-#bsod .percent {
-  font-size: 60px; margin-top: 30px; font-weight: 300;
-}
+@keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-/* УБЕГАЮЩАЯ КНОПКА */
 #next-btn.runaway {
   position: fixed; z-index: 1500;
   transition: top 0.4s, left 0.4s;
@@ -237,7 +224,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </div>
 
 <div id="screen-final" class="hidden page">
-  <canvas id="rain-canvas"></canvas>
+  <video id="rain-video" muted loop playsinline preload="none"></video>
   <div id="final-text"></div>
   <button id="bonus-btn" class="hidden">🎁 Бонусная комната</button>
   <button id="back-btn-3" class="back-btn">← Назад к видео</button>
@@ -268,6 +255,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   <p>0% завершено</p>
   <p style="font-size:12px; opacity:0.8; margin-top:40px;">Код ошибки: CRITICAL_PROCESS_DIED</p>
   <p style="font-size:12px; opacity:0.8;">Файл: kirill_drysh.exe</p>
+  <div class="tap-hint">нажми 2 раза чтобы продолжить</div>
 </div>
 
 <audio id="bg-music" loop>
@@ -295,6 +283,7 @@ const screenBonus = document.getElementById('screen-bonus');
 const bgMusic = document.getElementById('bg-music');
 const sadMusic = document.getElementById('sad-music');
 const rainMusic = document.getElementById('rain-music');
+const rainVideo = document.getElementById('rain-video');
 const galleryImg = document.getElementById('gallery-img');
 const prevBtn = document.getElementById('prev-btn');
 const nextPhotoBtn = document.getElementById('next-photo-btn');
@@ -326,12 +315,14 @@ const titleCanvas = document.getElementById('title-canvas');
 const titleCanvas2 = document.getElementById('title-canvas-2');
 const counterCanvas = document.getElementById('counter-canvas');
 const counterCanvas2 = document.getElementById('counter-canvas-2');
-const rainCanvas = document.getElementById('rain-canvas');
 
 const CORRECT_LOGIN = 'cutecut';
 const CORRECT_PASSWORD = '32177gay';
 const MEME_67_URL = 'https://insane-famq.github.io/birthday-kirill/67.jpg';
 const BASE = 'https://insane-famq.github.io/birthday-kirill/';
+const RAIN_VIDEO_URL = BASE + 'RainVideo.mp4';
+
+rainVideo.src = RAIN_VIDEO_URL;
 
 const BONUS = [
   BASE + 'Bonus1.ogg', BASE + 'Bonus2.ogg', BASE + 'Bonus3.ogg',
@@ -343,6 +334,7 @@ const BONUS = [
 
 let clicks = 0;
 let bsodShown = false;
+let bsodTaps = 0;
 
 const COLOR_STAGES = [
   { color: '#888888', shadow: null },
@@ -434,89 +426,6 @@ function renderAll() {
 }
 
 window.addEventListener('resize', renderAll);
-
-// ==== ДОЖДЬ НА ФОНЕ ФИНАЛА ====
-let rainFrame = null;
-let drops = [];
-let lightningTimer = null;
-
-function initRain() {
-  const ctx = rainCanvas.getContext('2d');
-  rainCanvas.width = window.innerWidth;
-  rainCanvas.height = window.innerHeight;
-  drops = [];
-  const dropCount = Math.floor((rainCanvas.width * rainCanvas.height) / 4000);
-  for (let i = 0; i < dropCount; i++) {
-    drops.push({
-      x: Math.random() * rainCanvas.width,
-      y: Math.random() * rainCanvas.height,
-      len: 10 + Math.random() * 20,
-      speed: 15 + Math.random() * 15,
-      opacity: 0.1 + Math.random() * 0.4
-    });
-  }
-}
-
-function drawRain() {
-  const ctx = rainCanvas.getContext('2d');
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-  ctx.fillRect(0, 0, rainCanvas.width, rainCanvas.height);
-
-  ctx.strokeStyle = 'rgba(150, 200, 255, 0.6)';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  for (let i = 0; i < drops.length; i++) {
-    const d = drops[i];
-    ctx.moveTo(d.x, d.y);
-    ctx.lineTo(d.x, d.y + d.len);
-    d.y += d.speed;
-    if (d.y > rainCanvas.height) {
-      d.y = -d.len;
-      d.x = Math.random() * rainCanvas.width;
-    }
-  }
-  ctx.stroke();
-  rainFrame = requestAnimationFrame(drawRain);
-}
-
-function triggerLightning() {
-  rainCanvas.style.transition = 'none';
-  rainCanvas.style.filter = 'brightness(3)';
-  setTimeout(() => {
-    rainCanvas.style.filter = 'brightness(1)';
-    setTimeout(() => {
-      rainCanvas.style.filter = 'brightness(2.5)';
-      setTimeout(() => { rainCanvas.style.filter = 'brightness(1)'; }, 80);
-    }, 60);
-  }, 50);
-}
-
-function scheduleLightning() {
-  const delay = 5000 + Math.random() * 8000;
-  lightningTimer = setTimeout(() => {
-    if (!screenFinal.classList.contains('hidden')) {
-      triggerLightning();
-      scheduleLightning();
-    }
-  }, delay);
-}
-
-function startRain() {
-  initRain();
-  if (rainFrame) cancelAnimationFrame(rainFrame);
-  drawRain();
-  scheduleLightning();
-}
-
-function stopRain() {
-  if (rainFrame) { cancelAnimationFrame(rainFrame); rainFrame = null; }
-  if (lightningTimer) { clearTimeout(lightningTimer); lightningTimer = null; }
-  rainCanvas.style.filter = 'brightness(1)';
-}
-
-window.addEventListener('resize', () => {
-  if (!screenFinal.classList.contains('hidden')) initRain();
-});
 
 const PHOTOS = [
   BASE+'Photo2.jpg',BASE+'Photo3.jpg',BASE+'Photo4.jpg',BASE+'Photo6.jpg',BASE+'Photo7.jpg',
@@ -704,7 +613,7 @@ backBtn3.addEventListener('click', () => {
   screenPage2.classList.remove('hidden');
   sadMusic.pause();
   rainMusic.pause();
-  stopRain();
+  rainVideo.pause();
   bgMusic.play();
   window.scrollTo(0, 0);
 });
@@ -715,7 +624,7 @@ bonusBtn.addEventListener('click', () => {
   sadMusic.pause();
   rainMusic.pause();
   bgMusic.pause();
-  stopRain();
+  rainVideo.pause();
   showBonus(0);
   window.scrollTo(0, 0);
 });
@@ -726,7 +635,7 @@ backBtn4.addEventListener('click', () => {
   bonusAudio.pause();
   sadMusic.play();
   rainMusic.play();
-  startRain();
+  rainVideo.play();
   window.scrollTo(0, 0);
 });
 
@@ -739,9 +648,12 @@ function startClickCounter() {
     if (clicks === 50 && !bsodShown) {
       bsodShown = true;
       bsod.classList.remove('hidden');
-      setTimeout(() => {
-        bsod.classList.add('hidden');
-      }, 3000);
+      bsodTaps = 0;
+      // Останавливаем всю музыку
+      bgMusic.pause();
+      sadMusic.pause();
+      rainMusic.pause();
+      rainVideo.pause();
     }
 
     if (clicks === 67) {
@@ -750,6 +662,15 @@ function startClickCounter() {
     }
   });
 }
+
+// ==== BSOD: 2 тапа ====
+bsod.addEventListener('click', () => {
+  bsodTaps++;
+  if (bsodTaps >= 2) {
+    bsod.classList.add('hidden');
+    bsodTaps = 0;
+  }
+});
 
 meme67Close.addEventListener('click', () => {
   meme67.classList.add('hidden');
@@ -771,7 +692,10 @@ killBtn.addEventListener('click', () => {
     sadMusic.play().catch(e => console.log('Грустная музыка:', e));
     rainMusic.volume = 0.15;
     rainMusic.play().catch(e => console.log('Дождь:', e));
-    startRain();
+    // Запуск видео с дождём
+    rainVideo.muted = true;
+    rainVideo.loop = true;
+    rainVideo.play().catch(e => console.log('RainVideo:', e));
     window.scrollTo(0, 0);
     typeFinalText();
   }
@@ -804,4 +728,4 @@ function typeFinalText() {
 </script>
 
 </body>
-</html>
+  </html>
