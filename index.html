@@ -169,7 +169,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 
 /* ===== МОДАЛКИ ===== */
 
-/* КРАСНЫЙ ЭКРАН БРАУЗЕРА "ОПАСНЫЙ САЙТ" */
 #browser-warning {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #c8102e; z-index: 9500;
@@ -190,13 +189,15 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   font-size: 16px; color: #333;
 }
 .bw-logo {
-  width: 32px; height: 32px;
+  width: 36px; height: 36px;
   border-radius: 50%;
-  background: #4285f4;
   color: #fff;
   display: flex; justify-content: center; align-items: center;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
+  flex-shrink: 0;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 .bw-title {
   color: #c8102e;
@@ -249,7 +250,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   opacity: 0.8;
 }
 
-/* СООБЩЕНИЕ "СЛАБЫЙ" */
 .weak-modal {
   background: #fff;
   border-radius: 10px;
@@ -277,7 +277,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   font-family: inherit;
 }
 
-/* ОШИБКА СОЕДИНЕНИЯ */
 .error-modal {
   background: #fff;
   border-radius: 8px;
@@ -298,7 +297,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .error-modal h2 { font-size: 22px; color: #d32f2f; margin-bottom: 15px; }
 .error-modal p { color: #555; font-size: 14px; margin-bottom: 10px; }
 
-/* ТЫ УВЕРЕН? */
 .confirm-modal {
   background: #fff;
   border-radius: 8px;
@@ -321,7 +319,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .btn-no { background: #555; color: #fff; }
 .btn-yes { background: #ff8800; color: #fff; }
 
-/* СИСТЕМНОЕ УВЕДОМЛЕНИЕ */
 .sysnotif-modal {
   background: #fff; border-radius: 10px;
   max-width: 400px; width: 100%;
@@ -344,7 +341,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .btn-allow { background: #0078d7; color: #fff; border-color: #0078d7; }
 .btn-close-sys { background: #555; color: #fff; border-color: #555; }
 
-/* ПРОСТОЕ УВЕДОМЛЕНИЕ */
 .simple-notif {
   background: #fff; border-radius: 10px;
   max-width: 420px; width: 100%;
@@ -355,7 +351,18 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 .simple-notif .notif-icon { font-size: 60px; margin-bottom: 15px; }
 .simple-notif h2 { font-size: 18px; color: #d32f2f; margin-bottom: 15px; }
-.simple-notif p { color: #333; font-size: 14px; line-height: 1.5; }
+.simple-notif p { color: #333; font-size: 14px; line-height: 1.5; margin-bottom: 15px; }
+.simple-notif button {
+  background: #0078d7;
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: inherit;
+}
 
 .modal-overlay {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -379,7 +386,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </head>
 <body>
 
-<!-- КРАСНЫЙ ЭКРАН БРАУЗЕРА -->
 <div id="browser-warning" class="hidden">
   <div style="max-width: 500px; width: 100%;">
     <div class="bw-card">
@@ -399,7 +405,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   </div>
 </div>
 
-<!-- СЛАБЫЙ -->
 <div id="modal-weak" class="modal-overlay hidden">
   <div class="weak-modal">
     <h2>хахаха ебать ты слабый</h2>
@@ -407,7 +412,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   </div>
 </div>
 
-<!-- ОШИБКА -->
 <div id="modal-error" class="modal-overlay hidden">
   <div class="error-modal">
     <div class="error-icon">🔌</div>
@@ -417,7 +421,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   </div>
 </div>
 
-<!-- ТЫ УВЕРЕН -->
 <div id="modal-confirm" class="modal-overlay hidden">
   <div class="confirm-modal">
     <div class="confirm-icon">❓</div>
@@ -430,7 +433,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   </div>
 </div>
 
-<!-- КАМЕРА -->
+<!-- КАМЕРА: ЗАПРОС -->
 <div id="modal-camera" class="modal-overlay hidden">
   <div class="sysnotif-modal">
     <div class="sysnotif-icon">📷</div>
@@ -440,18 +443,16 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
       <button class="btn-deny" id="btn-deny-cam">Запретить</button>
       <button class="btn-allow" id="btn-allow-cam">Разрешить</button>
     </div>
-    <div id="camera-close-wrap" class="hidden" style="margin-top:15px;">
-      <button class="btn-close-sys" id="btn-close-cam" style="width:100%;padding:12px;border-radius:5px;font-weight:bold;cursor:pointer;font-family:inherit;">Закрыть</button>
-    </div>
   </div>
 </div>
 
-<!-- КАМЕРА РЕЗУЛЬТАТ -->
+<!-- КАМЕРА: РЕЗУЛЬТАТ -->
 <div id="modal-camera-result" class="modal-overlay hidden">
   <div class="simple-notif">
     <div class="notif-icon">📷</div>
     <h2>Доступ разрешён</h2>
     <p>Сайт <b>insane-famq.github.io</b> успешно получил доступ к вашей камере.</p>
+    <button id="btn-close-result">Закрыть</button>
   </div>
 </div>
 
@@ -461,6 +462,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
     <div class="notif-icon">📍</div>
     <h2>Внимание!</h2>
     <p>Сайт пытается передать ваше местоположение посторонним лицам.</p>
+    <button id="btn-ok-location">Понятно</button>
   </div>
 </div>
 
@@ -617,11 +619,10 @@ const modalCamera = document.getElementById('modal-camera');
 const modalCameraResult = document.getElementById('modal-camera-result');
 const modalLocation = document.getElementById('modal-location');
 
-const cameraButtons = document.getElementById('camera-buttons');
-const cameraCloseWrap = document.getElementById('camera-close-wrap');
 const btnDenyCam = document.getElementById('btn-deny-cam');
 const btnAllowCam = document.getElementById('btn-allow-cam');
-const btnCloseCam = document.getElementById('btn-close-cam');
+const btnCloseResult = document.getElementById('btn-close-result');
+const btnOkLocation = document.getElementById('btn-ok-location');
 
 const btnNo = document.getElementById('btn-no');
 const btnYes = document.getElementById('btn-yes');
@@ -652,22 +653,63 @@ let bsodShown = false;
 let notif15Shown = false;
 let notif90Shown = false;
 
-// ==== ОПРЕДЕЛЯЕМ БРАУЗЕР ====
+// ==== ОПРЕДЕЛЕНИЕ БРАУЗЕРА (правильный порядок) ====
 function detectBrowser() {
   const ua = navigator.userAgent;
-  if (ua.indexOf('YaBrowser') !== -1) return { name: 'Яндекс Браузер', logo: 'Я', color: '#fc3f1d' };
-  if (ua.indexOf('Firefox') !== -1) return { name: 'Firefox', logo: 'F', color: '#ff7139' };
-  if (ua.indexOf('Edg') !== -1) return { name: 'Microsoft Edge', logo: 'E', color: '#0078d7' };
-  if (ua.indexOf('OPR') !== -1 || ua.indexOf('Opera') !== -1) return { name: 'Opera', logo: 'O', color: '#ff1b2d' };
-  if (ua.indexOf('SamsungBrowser') !== -1) return { name: 'Samsung Internet', logo: 'S', color: '#1428a0' };
-  if (ua.indexOf('Chrome') !== -1) return { name: 'Google Chrome', logo: 'G', color: '#4285f4' };
-  if (ua.indexOf('Safari') !== -1) return { name: 'Safari', logo: 'S', color: '#007aff' };
-  return { name: 'Браузер', logo: 'B', color: '#666' };
+
+  // Яндекс — первым (он маскируется под Chrome)
+  if (ua.indexOf('YaBrowser') !== -1) {
+    return {
+      name: 'Яндекс Браузер',
+      logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#fff"/><text x="50" y="74" font-size="70" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fc3f1d">Я</text></svg>'
+    };
+  }
+  if (ua.indexOf('SamsungBrowser') !== -1) {
+    return {
+      name: 'Samsung Internet',
+      logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#1428a0"/><text x="50" y="72" font-size="60" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">S</text></svg>'
+    };
+  }
+  if (ua.indexOf('OPR') !== -1 || ua.indexOf('Opera') !== -1) {
+    return {
+      name: 'Opera',
+      logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#ff1b2d"/><text x="50" y="74" font-size="70" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">O</text></svg>'
+    };
+  }
+  if (ua.indexOf('Edg') !== -1) {
+    return {
+      name: 'Microsoft Edge',
+      logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#0078d7"/><text x="50" y="72" font-size="60" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">e</text></svg>'
+    };
+  }
+  if (ua.indexOf('Firefox') !== -1) {
+    return {
+      name: 'Firefox',
+      logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#ff7139"/><text x="50" y="72" font-size="60" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">F</text></svg>'
+    };
+  }
+  if (ua.indexOf('Chrome') !== -1) {
+    return {
+      name: 'Google Chrome',
+      logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#fff"/><path d="M50 50 L50 0 A50 50 0 0 1 100 50 Z" fill="#ea4335"/><path d="M50 50 L100 50 A50 50 0 0 1 50 100 Z" fill="#fbbc04"/><path d="M50 50 L50 100 A50 50 0 0 1 0 50 Z" fill="#34a853"/><circle cx="50" cy="50" r="22" fill="#4285f4"/><circle cx="50" cy="50" r="18" fill="#fff"/><circle cx="50" cy="50" r="14" fill="#4285f4"/></svg>'
+    };
+  }
+  if (ua.indexOf('Safari') !== -1) {
+    return {
+      name: 'Safari',
+      logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#007aff"/><circle cx="50" cy="50" r="42" fill="#fff"/><polygon points="50,20 60,50 50,80 40,50" fill="#ff3b30"/><polygon points="50,20 60,50 40,50" fill="#fff"/></svg>'
+    };
+  }
+  return {
+    name: 'Браузер',
+    logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#666"/><text x="50" y="74" font-size="70" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">B</text></svg>'
+  };
 }
 
 const browserInfo = detectBrowser();
-bwLogo.textContent = browserInfo.logo;
-bwLogo.style.background = browserInfo.color;
+bwLogo.innerHTML = browserInfo.logo;
+bwLogo.style.background = 'transparent';
+bwLogo.style.padding = '0';
 bwBrowserName.textContent = browserInfo.name;
 
 const COLOR_STAGES = [
@@ -1006,26 +1048,23 @@ backBtn4.addEventListener('click', () => {
   window.scrollTo(0, 0);
 });
 
-// ==== КАМЕРА ====
-function hideCameraModal() {
-  modalCamera.classList.add('hidden');
-  // сброс кнопок
-  cameraButtons.classList.remove('hidden');
-  cameraCloseWrap.classList.add('hidden');
-}
-
+// ==== КАМЕРА: обе кнопки ведут к результату ====
 btnDenyCam.addEventListener('click', () => {
-  cameraButtons.classList.add('hidden');
-  cameraCloseWrap.classList.remove('hidden');
+  modalCamera.classList.add('hidden');
+  modalCameraResult.classList.remove('hidden');
 });
 
 btnAllowCam.addEventListener('click', () => {
-  cameraButtons.classList.add('hidden');
-  cameraCloseWrap.classList.remove('hidden');
+  modalCamera.classList.add('hidden');
+  modalCameraResult.classList.remove('hidden');
 });
 
-btnCloseCam.addEventListener('click', () => {
-  hideCameraModal();
+btnCloseResult.addEventListener('click', () => {
+  modalCameraResult.classList.add('hidden');
+});
+
+btnOkLocation.addEventListener('click', () => {
+  modalLocation.classList.add('hidden');
 });
 
 // ==== СЧЁТЧИК ====
@@ -1036,8 +1075,6 @@ function startClickCounter() {
 
     if (clicks === 15 && !notif15Shown) {
       notif15Shown = true;
-      cameraButtons.classList.remove('hidden');
-      cameraCloseWrap.classList.add('hidden');
       modalCamera.classList.remove('hidden');
     }
 
@@ -1075,7 +1112,6 @@ function startClickCounter() {
     if (clicks === 90 && !notif90Shown) {
       notif90Shown = true;
       modalLocation.classList.remove('hidden');
-      setTimeout(() => modalLocation.classList.add('hidden'), 10000);
     }
   });
 }
@@ -1140,4 +1176,4 @@ function typeFinalText() {
 </script>
 
 </body>
-    </html>
+        </html>
