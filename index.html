@@ -121,20 +121,21 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   pointer-events: none;
 }
 #final-text {
-  background: transparent; padding: 25px; border-radius: 15px;
-  border: 2px solid #00e676; line-height: 1.8; font-size: 16px; color: #fff;
+  background: transparent;
+  padding: 25px;
+  border: none;
+  line-height: 1.8; font-size: 16px; color: #fff;
   margin-bottom: 20px; white-space: pre-wrap; min-height: 200px;
   position: relative; z-index: 10;
   text-shadow: 0 0 8px rgba(0,0,0,0.9), 0 0 12px rgba(0,0,0,0.7);
 }
 .cursor-blink {
-  display: inline-block; width: 8px; height: 18px; background: #00e676;
+  display: inline-block; width: 3px; height: 18px; background: #000;
   margin-left: 2px; vertical-align: middle;
   animation: blink 0.8s infinite;
 }
 @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
 
-/* Финальные кнопки поверх дождя */
 #bonus-btn, #back-btn-3 {
   position: relative; z-index: 20;
 }
@@ -168,6 +169,11 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 #bsod p { font-size: 14px; line-height: 1.6; margin-bottom: 10px; max-width: 600px; }
 #bsod .percent {
   font-size: 50px; margin-top: 40px; font-weight: 300;
+}
+#bsod-continue {
+  margin-top: 40px; padding: 15px 50px; background: #fff; color: #0078d7;
+  border: none; border-radius: 5px; font-size: 18px; font-weight: bold;
+  cursor: pointer;
 }
 
 /* УБЕГАЮЩАЯ КНОПКА */
@@ -268,6 +274,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   <p style="font-size:12px; opacity:0.8;">Код ошибки: CRITICAL_PROCESS_DIED</p>
   <p style="font-size:12px; opacity:0.8;">Файл: kirill_drysh.exe</p>
   <div class="percent" id="bsod-percent">1%</div>
+  <button id="bsod-continue" class="hidden">Продолжить</button>
 </div>
 
 <audio id="bg-music" loop>
@@ -323,6 +330,7 @@ const loadingText = document.getElementById('loading-text');
 const loadingBar = document.getElementById('loading-bar');
 const bsod = document.getElementById('bsod');
 const bsodPercent = document.getElementById('bsod-percent');
+const bsodContinue = document.getElementById('bsod-continue');
 
 const titleCanvas = document.getElementById('title-canvas');
 const titleCanvas2 = document.getElementById('title-canvas-2');
@@ -660,37 +668,28 @@ function startClickCounter() {
     if (clicks === 50 && !bsodShown) {
       bsodShown = true;
       bsod.classList.remove('hidden');
+      bsodContinue.classList.add('hidden');
       bgMusic.pause();
       sadMusic.pause();
       rainMusic.pause();
       rainVideo.pause();
 
-      // Загрузка 10 секунд от 1% до 100%
+      // Загрузка 15 секунд от 1% до 100%
       let percent = 1;
       bsodPercent.textContent = percent + '%';
+      const totalMs = 15000;
+      const stepMs = totalMs / 99;
       const interval = setInterval(() => {
         percent++;
         if (percent >= 100) {
           percent = 100;
           bsodPercent.textContent = percent + '%';
           clearInterval(interval);
-          setTimeout(() => {
-            bsod.classList.add('hidden');
-            // Возвращаем музыку
-            if (!screenPage1.classList.contains('hidden')) {
-              bgMusic.play();
-            } else if (!screenPage2.classList.contains('hidden')) {
-              bgMusic.play();
-            } else if (!screenFinal.classList.contains('hidden')) {
-              sadMusic.play();
-              rainMusic.play();
-              rainVideo.play();
-            }
-          }, 500);
+          bsodContinue.classList.remove('hidden');
           return;
         }
         bsodPercent.textContent = percent + '%';
-      }, 100);
+      }, stepMs);
     }
 
     if (clicks === 67) {
@@ -699,6 +698,21 @@ function startClickCounter() {
     }
   });
 }
+
+// ==== BSOD КНОПКА ПРОДОЛЖИТЬ ====
+bsodContinue.addEventListener('click', () => {
+  bsod.classList.add('hidden');
+  // Возвращаем музыку
+  if (!screenPage1.classList.contains('hidden')) {
+    bgMusic.play();
+  } else if (!screenPage2.classList.contains('hidden')) {
+    bgMusic.play();
+  } else if (!screenFinal.classList.contains('hidden')) {
+    sadMusic.play();
+    rainMusic.play();
+    rainVideo.play();
+  }
+});
 
 meme67Close.addEventListener('click', () => {
   meme67.classList.add('hidden');
@@ -755,4 +769,4 @@ function typeFinalText() {
 </script>
 
 </body>
-  </html>
+                            </html>
