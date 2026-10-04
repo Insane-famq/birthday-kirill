@@ -9,6 +9,43 @@
 body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .hidden { display: none !important; }
 
+/* ПРОГРЕСС-БАР */
+#progress-bar-wrap {
+  position: fixed; top: 0; left: 0; width: 100%; height: 30px;
+  background: rgba(0,0,0,0.9);
+  z-index: 8000;
+  display: flex; align-items: center;
+  padding: 0 12px;
+  transition: opacity 0.5s;
+  border-bottom: 1px solid #00e676;
+}
+#progress-bar-track {
+  flex: 1;
+  height: 8px;
+  background: #111;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-right: 12px;
+}
+#progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00e676, #00bcd4);
+  border-radius: 10px;
+  transition: width 1s cubic-bezier(0.4, 0.0, 0.2, 1);
+  box-shadow: 0 0 10px #00e676;
+}
+#progress-percent {
+  color: #00e676;
+  font-size: 13px;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+  min-width: 45px;
+  text-align: right;
+  text-shadow: 0 0 8px #00e676;
+}
+
+/* ЗАГРУЗКА */
 #loading-screen {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #000; display: flex; flex-direction: column;
@@ -61,7 +98,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 #login-error { color: #ff0000; margin-top: 15px; font-size: 14px; font-weight: bold; }
 
-.page { padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 1s ease-in; padding-bottom: 60px; position: relative; z-index: 10; }
+.page { padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 1s ease-in; padding-bottom: 60px; position: relative; z-index: 10; padding-top: 45px; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .title-wrap { text-align: center; margin: 20px 0 10px; }
@@ -87,13 +124,14 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .gallery-controls button:disabled { background: #333; color: #666; cursor: not-allowed; }
 #photo-counter, #video-counter, #bonus-counter { color: #888; font-size: 14px; text-align: center; min-width: 80px; }
 
-#next-btn, #kill-btn, #bonus-btn {
+#next-btn, #kill-btn, #bonus-btn, #rate-btn {
   display: block; width: 100%; padding: 20px; background: #00e676; color: #000;
   border: none; border-radius: 15px; font-size: 20px; font-weight: bold;
   cursor: pointer; margin-bottom: 20px;
 }
 #kill-btn { padding: 25px; line-height: 1.4; }
 #bonus-btn { margin-top: 30px; }
+#rate-btn { margin-top: 30px; background: #ffd700; }
 
 .back-btn {
   display: block; width: 100%; padding: 15px; background: #333; color: #fff;
@@ -103,7 +141,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 
 #screen-final {
   padding: 30px 20px; max-width: 800px; margin: 0 auto; min-height: 100vh;
-  position: relative;
+  position: relative; padding-top: 45px;
 }
 #rain-video {
   position: fixed;
@@ -158,135 +196,67 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 #bsod .sad { font-size: 80px; margin-bottom: 30px; }
 #bsod h1 { font-size: 22px; font-weight: 400; margin-bottom: 30px; line-height: 1.4; max-width: 600px; }
 #bsod p { font-size: 14px; line-height: 1.6; margin-bottom: 10px; max-width: 600px; }
-#bsod .percent {
-  font-size: 50px; margin-top: 40px; font-weight: 300;
-}
+#bsod .percent { font-size: 50px; margin-top: 40px; font-weight: 300; }
 #bsod-continue {
   margin-top: 40px; padding: 15px 50px; background: #fff; color: #0078d7;
-  border: none; border-radius: 5px; font-size: 18px; font-weight: bold;
-  cursor: pointer;
+  border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer;
 }
 
 /* ===== МОДАЛКИ ===== */
-
 #browser-warning {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #c8102e; z-index: 9500;
   display: flex; justify-content: center; align-items: center;
-  padding: 20px;
-  overflow-y: auto;
+  padding: 20px; overflow-y: auto;
 }
 .bw-card {
   background: #fff; color: #000;
   max-width: 500px; width: 100%;
-  padding: 30px 25px;
-  border-radius: 5px;
+  padding: 30px 25px; border-radius: 5px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
 .bw-header {
   display: flex; align-items: center; gap: 10px;
-  margin-bottom: 20px;
-  font-size: 16px; color: #333;
+  margin-bottom: 20px; font-size: 16px; color: #333;
 }
 .bw-logo {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  color: #fff;
-  display: flex; justify-content: center; align-items: center;
-  font-weight: bold;
-  font-size: 18px;
-  flex-shrink: 0;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
+  width: 36px; height: 36px; border-radius: 50%;
+  color: #fff; display: flex; justify-content: center; align-items: center;
+  font-weight: bold; font-size: 18px; flex-shrink: 0;
+  font-family: Arial, sans-serif; overflow: hidden;
 }
 .bw-title {
-  color: #c8102e;
-  font-size: 22px;
-  font-weight: bold;
-  line-height: 1.3;
-  margin-bottom: 20px;
+  color: #c8102e; font-size: 22px; font-weight: bold;
+  line-height: 1.3; margin-bottom: 20px;
 }
-.bw-text {
-  color: #333;
-  font-size: 14px;
-  line-height: 1.5;
-  margin-bottom: 15px;
-}
+.bw-text { color: #333; font-size: 14px; line-height: 1.5; margin-bottom: 15px; }
 .bw-button {
-  display: inline-block;
-  background: #ffd700;
-  color: #000;
-  border: none;
-  padding: 14px 25px;
-  font-size: 15px;
-  font-weight: bold;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-  font-family: inherit;
+  display: inline-block; background: #ffd700; color: #000; border: none;
+  padding: 14px 25px; font-size: 15px; font-weight: bold; border-radius: 5px;
+  cursor: pointer; margin-top: 10px; font-family: inherit;
 }
-.bw-ignore {
-  text-align: center;
-  margin-top: 25px;
-  color: rgba(255,255,255,0.8);
-  font-size: 13px;
-}
+.bw-ignore { text-align: center; margin-top: 25px; color: rgba(255,255,255,0.8); font-size: 13px; }
 .bw-ignore-btn {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.6);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 3px;
-  font-size: 13px;
-  cursor: pointer;
-  font-family: inherit;
-  margin-top: 10px;
-}
-.bw-footer {
-  text-align: center;
-  color: #fff;
-  margin-top: 15px;
-  font-size: 12px;
-  opacity: 0.8;
+  background: transparent; border: 1px solid rgba(255,255,255,0.6);
+  color: #fff; padding: 10px 20px; border-radius: 3px; font-size: 13px;
+  cursor: pointer; font-family: inherit; margin-top: 10px;
 }
 
 .weak-modal {
-  background: #fff;
-  border-radius: 10px;
-  max-width: 420px;
-  width: 100%;
-  padding: 30px 25px;
-  text-align: center;
-  color: #000;
+  background: #fff; border-radius: 10px; max-width: 420px; width: 100%;
+  padding: 30px 25px; text-align: center; color: #000;
 }
-.weak-modal h2 {
-  color: #c8102e;
-  font-size: 22px;
-  margin-bottom: 20px;
-  line-height: 1.3;
-}
+.weak-modal h2 { color: #c8102e; font-size: 22px; margin-bottom: 20px; line-height: 1.3; }
 .weak-modal button {
-  background: #0078d7;
-  color: #fff;
-  border: none;
-  padding: 14px 30px;
-  font-size: 15px;
-  font-weight: bold;
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: inherit;
+  background: #0078d7; color: #fff; border: none; padding: 14px 30px;
+  font-size: 15px; font-weight: bold; border-radius: 8px;
+  cursor: pointer; font-family: inherit;
 }
 
 .error-modal {
-  background: #fff;
-  border-radius: 8px;
-  max-width: 450px;
-  width: 100%;
-  padding: 40px 30px;
-  text-align: center;
-  border: 3px solid #d32f2f;
-  color: #000;
-  animation: shakeIn 0.3s ease-out;
+  background: #fff; border-radius: 8px; max-width: 450px; width: 100%;
+  padding: 40px 30px; text-align: center; border: 3px solid #d32f2f;
+  color: #000; animation: shakeIn 0.3s ease-out;
 }
 @keyframes shakeIn {
   0% { transform: scale(0.7); opacity: 0; }
@@ -298,15 +268,9 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .error-modal p { color: #555; font-size: 14px; margin-bottom: 10px; }
 
 .confirm-modal {
-  background: #fff;
-  border-radius: 8px;
-  max-width: 450px;
-  width: 100%;
-  padding: 30px 25px;
-  text-align: center;
-  border: 3px solid #ff8800;
-  color: #000;
-  animation: shakeIn 0.3s ease-out;
+  background: #fff; border-radius: 8px; max-width: 450px; width: 100%;
+  padding: 30px 25px; text-align: center; border: 3px solid #ff8800;
+  color: #000; animation: shakeIn 0.3s ease-out;
 }
 .confirm-modal .confirm-icon { font-size: 60px; margin-bottom: 15px; }
 .confirm-modal h2 { font-size: 22px; color: #ff8800; margin-bottom: 15px; }
@@ -320,13 +284,9 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .btn-yes { background: #ff8800; color: #fff; }
 
 .sysnotif-modal {
-  background: #fff; border-radius: 10px;
-  max-width: 400px; width: 100%;
-  padding: 25px 25px 20px;
-  text-align: center;
-  border: 2px solid #ccc;
-  animation: shakeIn 0.3s ease-out;
-  color: #000;
+  background: #fff; border-radius: 10px; max-width: 400px; width: 100%;
+  padding: 25px 25px 20px; text-align: center; border: 2px solid #ccc;
+  animation: shakeIn 0.3s ease-out; color: #000;
 }
 .sysnotif-modal .sysnotif-icon { font-size: 50px; margin-bottom: 15px; }
 .sysnotif-modal h2 { font-size: 18px; color: #333; margin-bottom: 12px; font-weight: bold; }
@@ -342,26 +302,58 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 .btn-close-sys { background: #555; color: #fff; border-color: #555; }
 
 .simple-notif {
-  background: #fff; border-radius: 10px;
-  max-width: 420px; width: 100%;
-  padding: 25px; text-align: center;
-  border: 2px solid #d32f2f;
-  animation: shakeIn 0.3s ease-out;
-  color: #000;
+  background: #fff; border-radius: 10px; max-width: 420px; width: 100%;
+  padding: 25px; text-align: center; border: 2px solid #d32f2f;
+  animation: shakeIn 0.3s ease-out; color: #000;
 }
 .simple-notif .notif-icon { font-size: 60px; margin-bottom: 15px; }
 .simple-notif h2 { font-size: 18px; color: #d32f2f; margin-bottom: 15px; }
 .simple-notif p { color: #333; font-size: 14px; line-height: 1.5; margin-bottom: 15px; }
 .simple-notif button {
-  background: #0078d7;
-  color: #fff;
-  border: none;
-  padding: 12px 30px;
-  border-radius: 5px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
+  background: #0078d7; color: #fff; border: none; padding: 12px 30px;
+  border-radius: 5px; font-size: 14px; font-weight: bold;
+  cursor: pointer; font-family: inherit;
+}
+
+/* РЕЙТИНГ */
+#screen-rating {
+  padding: 40px 20px; max-width: 600px; margin: 0 auto;
+  text-align: center; padding-top: 60px;
+}
+#screen-rating h1 {
+  color: #00e676; font-size: 28px; margin-bottom: 20px;
+  text-shadow: 0 0 20px #00e676;
+}
+#screen-rating p {
+  color: #aaa; font-size: 16px; margin-bottom: 40px;
+}
+.stars-wrap {
+  display: flex; justify-content: center; gap: 10px; margin-bottom: 25px;
+}
+.star {
+  font-size: 50px; cursor: pointer; color: #333;
+  transition: color 0.2s, transform 0.2s;
+  user-select: none;
+}
+.star:hover, .star.active { color: #ffd700; text-shadow: 0 0 20px #ffd700; transform: scale(1.1); }
+.rating-numbers {
+  display: flex; justify-content: center; gap: 10px; margin-bottom: 30px;
+}
+.rating-num {
+  width: 50px; height: 50px;
+  background: #111; color: #888; border: 2px solid #333;
+  border-radius: 10px; font-size: 20px; font-weight: bold;
+  cursor: pointer; transition: all 0.2s;
   font-family: inherit;
+}
+.rating-num:hover, .rating-num.active {
+  background: #00e676; color: #000; border-color: #00e676;
+  box-shadow: 0 0 15px #00e676;
+}
+#rating-result {
+  margin-top: 20px; font-size: 20px; font-weight: bold;
+  color: #00e676; text-shadow: 0 0 15px #00e676;
+  min-height: 30px;
 }
 
 .modal-overlay {
@@ -381,11 +373,19 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   #final-text { font-size: 18px; padding: 35px; }
   #meme-67-text { font-size: 32px; }
   #bsod h1 { font-size: 26px; }
+  .star { font-size: 60px; }
 }
 </style>
 </head>
 <body>
 
+<!-- ПРОГРЕСС-БАР -->
+<div id="progress-bar-wrap" class="hidden">
+  <div id="progress-bar-track"><div id="progress-bar-fill"></div></div>
+  <div id="progress-percent">0%</div>
+</div>
+
+<!-- КРАСНЫЙ ЭКРАН -->
 <div id="browser-warning" class="hidden">
   <div style="max-width: 500px; width: 100%;">
     <div class="bw-card">
@@ -412,15 +412,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   </div>
 </div>
 
-<div id="modal-error" class="modal-overlay hidden">
-  <div class="error-modal">
-    <div class="error-icon">🔌</div>
-    <h2>Соединение разорвано</h2>
-    <p>Не удалось установить безопасное соединение с сервером.</p>
-    <p>Повторная попытка...</p>
-  </div>
-</div>
-
 <div id="modal-confirm" class="modal-overlay hidden">
   <div class="confirm-modal">
     <div class="confirm-icon">❓</div>
@@ -433,20 +424,18 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   </div>
 </div>
 
-<!-- КАМЕРА: ЗАПРОС -->
 <div id="modal-camera" class="modal-overlay hidden">
   <div class="sysnotif-modal">
     <div class="sysnotif-icon">📷</div>
     <h2>Запрос доступа</h2>
     <p>Сайт <b>insane-famq.github.io</b> запрашивает доступ к вашей камере.</p>
-    <div class="sysnotif-buttons" id="camera-buttons">
+    <div class="sysnotif-buttons">
       <button class="btn-deny" id="btn-deny-cam">Запретить</button>
       <button class="btn-allow" id="btn-allow-cam">Разрешить</button>
     </div>
   </div>
 </div>
 
-<!-- КАМЕРА: РЕЗУЛЬТАТ -->
 <div id="modal-camera-result" class="modal-overlay hidden">
   <div class="simple-notif">
     <div class="notif-icon">📷</div>
@@ -456,7 +445,6 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   </div>
 </div>
 
-<!-- ЛОКАЦИЯ -->
 <div id="modal-location" class="modal-overlay hidden">
   <div class="simple-notif">
     <div class="notif-icon">📍</div>
@@ -532,7 +520,28 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
       <button id="next-bonus-btn">Вперёд →</button>
     </div>
   </div>
+  <button id="rate-btn" class="hidden">⭐ Оценить сайт</button>
   <button id="back-btn-4" class="back-btn">← Назад к поздравлению</button>
+</div>
+
+<div id="screen-rating" class="hidden">
+  <h1>Оцени сайт</h1>
+  <p>От 1 до 5 звёзд</p>
+  <div class="stars-wrap" id="stars-wrap">
+    <span class="star" data-value="1">★</span>
+    <span class="star" data-value="2">★</span>
+    <span class="star" data-value="3">★</span>
+    <span class="star" data-value="4">★</span>
+    <span class="star" data-value="5">★</span>
+  </div>
+  <div class="rating-numbers" id="rating-numbers">
+    <button class="rating-num" data-value="1">1</button>
+    <button class="rating-num" data-value="2">2</button>
+    <button class="rating-num" data-value="3">3</button>
+    <button class="rating-num" data-value="4">4</button>
+    <button class="rating-num" data-value="5">5</button>
+  </div>
+  <div id="rating-result"></div>
 </div>
 
 <div id="meme-67" class="hidden">
@@ -572,6 +581,7 @@ const screenPage1 = document.getElementById('screen-page1');
 const screenPage2 = document.getElementById('screen-page2');
 const screenFinal = document.getElementById('screen-final');
 const screenBonus = document.getElementById('screen-bonus');
+const screenRating = document.getElementById('screen-rating');
 const bgMusic = document.getElementById('bg-music');
 const sadMusic = document.getElementById('sad-music');
 const rainMusic = document.getElementById('rain-music');
@@ -595,6 +605,8 @@ const bonusAudio = document.getElementById('bonus-audio');
 const prevBonusBtn = document.getElementById('prev-bonus-btn');
 const nextBonusBtn = document.getElementById('next-bonus-btn');
 const bonusCounter = document.getElementById('bonus-counter');
+const rateBtn = document.getElementById('rate-btn');
+const ratingResult = document.getElementById('rating-result');
 const meme67 = document.getElementById('meme-67');
 const meme67Img = document.getElementById('meme-67-img');
 const meme67Close = document.getElementById('meme-67-close');
@@ -605,6 +617,10 @@ const bsod = document.getElementById('bsod');
 const bsodPercent = document.getElementById('bsod-percent');
 const bsodContinue = document.getElementById('bsod-continue');
 
+const progressBarWrap = document.getElementById('progress-bar-wrap');
+const progressBarFill = document.getElementById('progress-bar-fill');
+const progressPercent = document.getElementById('progress-percent');
+
 const browserWarning = document.getElementById('browser-warning');
 const bwLogo = document.getElementById('bw-logo');
 const bwBrowserName = document.getElementById('bw-browser-name');
@@ -613,7 +629,6 @@ const bwIgnore = document.getElementById('bw-ignore');
 
 const modalWeak = document.getElementById('modal-weak');
 const btnRetry = document.getElementById('btn-retry');
-const modalError = document.getElementById('modal-error');
 const modalConfirm = document.getElementById('modal-confirm');
 const modalCamera = document.getElementById('modal-camera');
 const modalCameraResult = document.getElementById('modal-camera-result');
@@ -623,7 +638,6 @@ const btnDenyCam = document.getElementById('btn-deny-cam');
 const btnAllowCam = document.getElementById('btn-allow-cam');
 const btnCloseResult = document.getElementById('btn-close-result');
 const btnOkLocation = document.getElementById('btn-ok-location');
-
 const btnNo = document.getElementById('btn-no');
 const btnYes = document.getElementById('btn-yes');
 
@@ -653,57 +667,38 @@ let bsodShown = false;
 let notif15Shown = false;
 let notif90Shown = false;
 
-// ==== ОПРЕДЕЛЕНИЕ БРАУЗЕРА (правильный порядок) ====
+// ==== ПРОГРЕСС ====
+let currentProgress = 0;
+let progressVisible = false;
+
+function setProgress(target) {
+  if (target > currentProgress) {
+    currentProgress = target;
+    if (progressVisible) {
+      progressBarFill.style.width = currentProgress + '%';
+      progressPercent.textContent = Math.round(currentProgress) + '%';
+    }
+  }
+}
+
+function showProgress() {
+  progressVisible = true;
+  progressBarWrap.classList.remove('hidden');
+  progressBarFill.style.width = currentProgress + '%';
+  progressPercent.textContent = Math.round(currentProgress) + '%';
+}
+
+// ==== БРАУЗЕР ====
 function detectBrowser() {
   const ua = navigator.userAgent;
-
-  // Яндекс — первым (он маскируется под Chrome)
-  if (ua.indexOf('YaBrowser') !== -1) {
-    return {
-      name: 'Яндекс Браузер',
-      logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#fff"/><text x="50" y="74" font-size="70" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fc3f1d">Я</text></svg>'
-    };
-  }
-  if (ua.indexOf('SamsungBrowser') !== -1) {
-    return {
-      name: 'Samsung Internet',
-      logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#1428a0"/><text x="50" y="72" font-size="60" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">S</text></svg>'
-    };
-  }
-  if (ua.indexOf('OPR') !== -1 || ua.indexOf('Opera') !== -1) {
-    return {
-      name: 'Opera',
-      logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#ff1b2d"/><text x="50" y="74" font-size="70" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">O</text></svg>'
-    };
-  }
-  if (ua.indexOf('Edg') !== -1) {
-    return {
-      name: 'Microsoft Edge',
-      logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#0078d7"/><text x="50" y="72" font-size="60" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">e</text></svg>'
-    };
-  }
-  if (ua.indexOf('Firefox') !== -1) {
-    return {
-      name: 'Firefox',
-      logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#ff7139"/><text x="50" y="72" font-size="60" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">F</text></svg>'
-    };
-  }
-  if (ua.indexOf('Chrome') !== -1) {
-    return {
-      name: 'Google Chrome',
-      logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#fff"/><path d="M50 50 L50 0 A50 50 0 0 1 100 50 Z" fill="#ea4335"/><path d="M50 50 L100 50 A50 50 0 0 1 50 100 Z" fill="#fbbc04"/><path d="M50 50 L50 100 A50 50 0 0 1 0 50 Z" fill="#34a853"/><circle cx="50" cy="50" r="22" fill="#4285f4"/><circle cx="50" cy="50" r="18" fill="#fff"/><circle cx="50" cy="50" r="14" fill="#4285f4"/></svg>'
-    };
-  }
-  if (ua.indexOf('Safari') !== -1) {
-    return {
-      name: 'Safari',
-      logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#007aff"/><circle cx="50" cy="50" r="42" fill="#fff"/><polygon points="50,20 60,50 50,80 40,50" fill="#ff3b30"/><polygon points="50,20 60,50 40,50" fill="#fff"/></svg>'
-    };
-  }
-  return {
-    name: 'Браузер',
-    logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#666"/><text x="50" y="74" font-size="70" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">B</text></svg>'
-  };
+  if (ua.indexOf('YaBrowser') !== -1) return { name: 'Яндекс Браузер', logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#fff"/><text x="50" y="74" font-size="70" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fc3f1d">Я</text></svg>' };
+  if (ua.indexOf('SamsungBrowser') !== -1) return { name: 'Samsung Internet', logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#1428a0"/><text x="50" y="72" font-size="60" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">S</text></svg>' };
+  if (ua.indexOf('OPR') !== -1 || ua.indexOf('Opera') !== -1) return { name: 'Opera', logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#ff1b2d"/><text x="50" y="74" font-size="70" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">O</text></svg>' };
+  if (ua.indexOf('Edg') !== -1) return { name: 'Microsoft Edge', logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#0078d7"/><text x="50" y="72" font-size="60" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">e</text></svg>' };
+  if (ua.indexOf('Firefox') !== -1) return { name: 'Firefox', logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#ff7139"/><text x="50" y="72" font-size="60" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">F</text></svg>' };
+  if (ua.indexOf('Chrome') !== -1) return { name: 'Google Chrome', logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#fff"/><path d="M50 50 L50 0 A50 50 0 0 1 100 50 Z" fill="#ea4335"/><path d="M50 50 L100 50 A50 50 0 0 1 50 100 Z" fill="#fbbc04"/><path d="M50 50 L50 100 A50 50 0 0 1 0 50 Z" fill="#34a853"/><circle cx="50" cy="50" r="22" fill="#4285f4"/><circle cx="50" cy="50" r="18" fill="#fff"/><circle cx="50" cy="50" r="14" fill="#4285f4"/></svg>' };
+  if (ua.indexOf('Safari') !== -1) return { name: 'Safari', logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#007aff"/><circle cx="50" cy="50" r="42" fill="#fff"/><polygon points="50,20 60,50 50,80 40,50" fill="#ff3b30"/></svg>' };
+  return { name: 'Браузер', logo: '<svg viewBox="0 0 100 100" width="24" height="24"><circle cx="50" cy="50" r="50" fill="#666"/><text x="50" y="74" font-size="70" font-family="Arial" font-weight="bold" text-anchor="middle" fill="#fff">B</text></svg>' };
 }
 
 const browserInfo = detectBrowser();
@@ -857,8 +852,9 @@ const FINAL_MESSAGE = `И снова здравствуй мой старый д
 
 — Твой вонючий дрыщ качок`;
 
-// ==== СТАРТ С КРАСНЫМ ЭКРАНОМ ====
+// ==== СТАРТ ====
 browserWarning.classList.remove('hidden');
+setProgress(2);
 
 bwLeave.addEventListener('click', () => {
   browserWarning.classList.add('hidden');
@@ -873,6 +869,7 @@ btnRetry.addEventListener('click', () => {
 bwIgnore.addEventListener('click', () => {
   browserWarning.classList.add('hidden');
   modalConfirm.classList.remove('hidden');
+  setProgress(4);
 });
 
 btnNo.addEventListener('click', () => {
@@ -887,6 +884,7 @@ btnYes.addEventListener('click', () => {
 
 function startLoadingSequence() {
   loadingScreen.classList.remove('hidden');
+  setProgress(6);
   runLoading();
 }
 
@@ -904,6 +902,7 @@ function runLoading() {
     if (i >= loadingSteps.length) {
       loadingScreen.classList.add('hidden');
       screenStart.classList.remove('hidden');
+      setProgress(10);
       return;
     }
     const step = loadingSteps[i];
@@ -927,6 +926,8 @@ loginBtn.addEventListener('click', () => {
   if (login === CORRECT_LOGIN && password === CORRECT_PASSWORD) {
     screenLogin.classList.add('hidden');
     screenPage1.classList.remove('hidden');
+    setProgress(15);
+    showProgress();
     bgMusic.volume = 0.5;
     bgMusic.play().catch(e => console.log('Музыка:', e));
     showPhoto(0);
@@ -939,6 +940,7 @@ loginBtn.addEventListener('click', () => {
   }
 });
 
+// ФОТО
 let currentPhoto = 0;
 function showPhoto(index) {
   galleryImg.src = PHOTOS[index];
@@ -947,10 +949,14 @@ function showPhoto(index) {
   nextPhotoBtn.disabled = index === PHOTOS.length - 1;
   if (index === PHOTOS.length - 1) nextBtn.classList.remove('hidden');
   else nextBtn.classList.add('hidden');
+  // Прогресс: от 15% до 50% за все фото
+  const photoProgress = 15 + (index / (PHOTOS.length - 1)) * 35;
+  setProgress(photoProgress);
 }
 prevBtn.addEventListener('click', () => { if (currentPhoto > 0) { currentPhoto--; showPhoto(currentPhoto); } });
 nextPhotoBtn.addEventListener('click', () => { if (currentPhoto < PHOTOS.length - 1) { currentPhoto++; showPhoto(currentPhoto); } });
 
+// ВИДЕО
 let currentVideo = 0;
 function showVideo(index) {
   videoPlayer.src = VIDEOS[index];
@@ -959,6 +965,9 @@ function showVideo(index) {
   nextVideoBtn.disabled = index === VIDEOS.length - 1;
   if (index === VIDEOS.length - 1) killBtn.classList.remove('hidden');
   else killBtn.classList.add('hidden');
+  // Прогресс: от 55% до 75%
+  const videoProgress = 55 + (index / (VIDEOS.length - 1)) * 20;
+  setProgress(videoProgress);
 }
 prevVideoBtn.addEventListener('click', () => { if (currentVideo > 0) { currentVideo--; showVideo(currentVideo); } });
 nextVideoBtn.addEventListener('click', () => { if (currentVideo < VIDEOS.length - 1) { currentVideo++; showVideo(currentVideo); } });
@@ -966,18 +975,25 @@ videoPlayer.addEventListener('play', () => bgMusic.pause());
 videoPlayer.addEventListener('pause', () => bgMusic.play());
 videoPlayer.addEventListener('ended', () => bgMusic.play());
 
+// БОНУС
 let currentBonus = 0;
 function showBonus(index) {
   bonusAudio.src = BONUS[index];
   bonusCounter.textContent = `${index + 1} / ${BONUS.length}`;
   prevBonusBtn.disabled = index === 0;
   nextBonusBtn.disabled = index === BONUS.length - 1;
+  if (index === BONUS.length - 1) rateBtn.classList.remove('hidden');
+  else rateBtn.classList.add('hidden');
+  // Прогресс: от 90% до 95%
+  const bonusProgress = 90 + (index / (BONUS.length - 1)) * 5;
+  setProgress(bonusProgress);
 }
 prevBonusBtn.addEventListener('click', () => { if (currentBonus > 0) { currentBonus--; showBonus(currentBonus); } });
 nextBonusBtn.addEventListener('click', () => { if (currentBonus < BONUS.length - 1) { currentBonus++; showBonus(currentBonus); } });
 bonusAudio.addEventListener('play', () => { bgMusic.pause(); sadMusic.pause(); rainMusic.pause(); });
 bonusAudio.addEventListener('ended', () => { if (screenBonus.classList.contains('hidden')) return; });
 
+// УБЕГАЮЩАЯ КНОПКА
 let nextBtnAttempts = 0;
 function moveNextBtn() {
   const bw = nextBtn.offsetWidth || 200;
@@ -1005,6 +1021,7 @@ nextBtn.addEventListener('click', (e) => {
   } else {
     screenPage1.classList.add('hidden');
     screenPage2.classList.remove('hidden');
+    setProgress(55);
     window.scrollTo(0, 0);
   }
 });
@@ -1035,6 +1052,7 @@ bonusBtn.addEventListener('click', () => {
   bgMusic.pause();
   rainVideo.pause();
   showBonus(0);
+  setProgress(90);
   window.scrollTo(0, 0);
 });
 
@@ -1048,26 +1066,68 @@ backBtn4.addEventListener('click', () => {
   window.scrollTo(0, 0);
 });
 
-// ==== КАМЕРА: обе кнопки ведут к результату ====
+// РЕЙТИНГ
+let selectedRating = 0;
+
+rateBtn.addEventListener('click', () => {
+  screenBonus.classList.add('hidden');
+  screenRating.classList.remove('hidden');
+  setProgress(97);
+  window.scrollTo(0, 0);
+});
+
+document.querySelectorAll('.star').forEach(star => {
+  star.addEventListener('click', () => {
+    const value = parseInt(star.dataset.value);
+    selectedRating = value;
+    document.querySelectorAll('.star').forEach(s => {
+      s.classList.toggle('active', parseInt(s.dataset.value) <= value);
+    });
+    document.querySelectorAll('.rating-num').forEach(n => n.classList.remove('active'));
+    showRatingResult(value);
+  });
+});
+
+document.querySelectorAll('.rating-num').forEach(num => {
+  num.addEventListener('click', () => {
+    const value = parseInt(num.dataset.value);
+    selectedRating = value;
+    document.querySelectorAll('.rating-num').forEach(n => {
+      n.classList.toggle('active', parseInt(n.dataset.value) === value);
+    });
+    document.querySelectorAll('.star').forEach(s => {
+      s.classList.toggle('active', parseInt(s.dataset.value) <= value);
+    });
+    showRatingResult(value);
+  });
+});
+
+function showRatingResult(value) {
+  if (value === 5) {
+    ratingResult.textContent = 'Ты поставил 5. Я знал. Ты же не дрыщ';
+  } else {
+    ratingResult.textContent = 'Ладно, дрыщ, я запомнил';
+  }
+  setProgress(100);
+}
+
+// КАМЕРА
 btnDenyCam.addEventListener('click', () => {
   modalCamera.classList.add('hidden');
   modalCameraResult.classList.remove('hidden');
 });
-
 btnAllowCam.addEventListener('click', () => {
   modalCamera.classList.add('hidden');
   modalCameraResult.classList.remove('hidden');
 });
-
 btnCloseResult.addEventListener('click', () => {
   modalCameraResult.classList.add('hidden');
 });
-
 btnOkLocation.addEventListener('click', () => {
   modalLocation.classList.add('hidden');
 });
 
-// ==== СЧЁТЧИК ====
+// СЧЁТЧИК
 function startClickCounter() {
   document.body.addEventListener('click', () => {
     clicks++;
@@ -1077,7 +1137,6 @@ function startClickCounter() {
       notif15Shown = true;
       modalCamera.classList.remove('hidden');
     }
-
     if (clicks === 50 && !bsodShown) {
       bsodShown = true;
       bsod.classList.remove('hidden');
@@ -1103,12 +1162,10 @@ function startClickCounter() {
         bsodPercent.textContent = percent + '%';
       }, stepMs);
     }
-
     if (clicks === 67) {
       meme67Img.src = MEME_67_URL;
       meme67.classList.remove('hidden');
     }
-
     if (clicks === 90 && !notif90Shown) {
       notif90Shown = true;
       modalLocation.classList.remove('hidden');
@@ -1145,6 +1202,7 @@ killBtn.addEventListener('click', () => {
     rainVideo.muted = true;
     rainVideo.loop = true;
     rainVideo.play().catch(e => console.log('RainVideo:', e));
+    setProgress(80);
     window.scrollTo(0, 0);
     typeFinalText();
   }
@@ -1158,17 +1216,22 @@ function typeFinalText() {
 
   let i = 0;
   const speed = 35;
+  const totalChars = FINAL_MESSAGE.length;
 
   function type() {
     if (i >= FINAL_MESSAGE.length) {
       if (cursor.parentNode) cursor.parentNode.removeChild(cursor);
       bonusBtn.classList.remove('hidden');
+      setProgress(90);
       return;
     }
     const ch = FINAL_MESSAGE[i];
     const textNode = document.createTextNode(ch);
     finalText.insertBefore(textNode, cursor);
     i++;
+    // Прогресс от 80 до 90 по мере печати
+    const textProgress = 80 + (i / totalChars) * 10;
+    setProgress(textProgress);
     setTimeout(type, (ch === '.' || ch === '\n') ? speed * 5 : speed);
   }
   type();
@@ -1176,4 +1239,4 @@ function typeFinalText() {
 </script>
 
 </body>
-        </html>
+</html>
