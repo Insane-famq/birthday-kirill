@@ -69,7 +69,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 #title-canvas { display: block; margin: 0 auto; max-width: 100%; }
 #counter-canvas { display: block; margin: 0 auto 25px; max-width: 100%; }
 
-#gallery, #video-gallery, #bonus-gallery {
+#gallery, #video-gallery, #bonus-gallery, #kryg-gallery {
   background: #111; border-radius: 15px; padding: 15px; margin-bottom: 25px;
   border: 2px solid #222;
 }
@@ -80,13 +80,17 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   text-align: center; color: #00e676; font-size: 18px;
   font-weight: bold; margin-bottom: 15px; text-shadow: 0 0 15px #00e676;
 }
+.kryg-label {
+  text-align: center; color: #00e676; font-size: 18px;
+  font-weight: bold; margin-bottom: 15px; text-shadow: 0 0 15px #00e676;
+}
 .gallery-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; gap: 10px; }
 .gallery-controls button {
   background: #00e676; color: #000; border: none; padding: 12px 20px;
   border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; flex: 1;
 }
 .gallery-controls button:disabled { background: #333; color: #666; cursor: not-allowed; }
-#photo-counter, #video-counter, #bonus-counter { color: #888; font-size: 14px; text-align: center; min-width: 80px; }
+#photo-counter, #video-counter, #bonus-counter, #kryg-counter { color: #888; font-size: 14px; text-align: center; min-width: 80px; }
 
 #next-btn, #kill-btn, #bonus-btn, #rate-btn {
   display: block; width: 100%; padding: 20px; background: #00e676; color: #000;
@@ -135,6 +139,80 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   position: relative; z-index: 20;
 }
 
+/* КРУЖОК */
+.kryg-wrap {
+  display: flex; justify-content: center; align-items: center;
+  margin: 20px 0;
+}
+#kryg-video {
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #00e676;
+  box-shadow: 0 0 25px #00e676, 0 0 50px rgba(0,230,118,0.4);
+  cursor: pointer;
+  background: #000;
+}
+#kryg-video.playing {
+  animation: krygPulse 1.5s ease-in-out infinite;
+}
+@keyframes krygPulse {
+  0%, 100% { box-shadow: 0 0 25px #00e676, 0 0 50px rgba(0,230,118,0.4); }
+  50% { box-shadow: 0 0 40px #00e676, 0 0 80px rgba(0,230,118,0.7); }
+}
+
+/* КАСТОМНЫЙ ПЛЕЕР */
+.custom-player {
+  background: #0a0a0a; border: 2px solid #00e676; border-radius: 15px;
+  padding: 20px; margin: 20px 0; box-shadow: 0 0 20px rgba(0,230,118,0.3);
+}
+.player-title {
+  color: #00e676; font-size: 14px; font-weight: bold;
+  text-align: center; margin-bottom: 15px;
+  text-shadow: 0 0 10px #00e676;
+  font-family: 'Courier New', monospace;
+}
+.waveform {
+  display: flex; justify-content: center; align-items: center;
+  gap: 3px; height: 60px; margin-bottom: 15px;
+}
+.wave-bar {
+  width: 4px; height: 8px; background: #333;
+  border-radius: 2px;
+  transition: height 0.15s, background 0.15s;
+}
+.wave-bar.active {
+  background: #00e676; box-shadow: 0 0 10px #00e676;
+}
+.player-controls {
+  display: flex; align-items: center; gap: 12px;
+}
+.play-btn {
+  width: 55px; height: 55px;
+  border-radius: 50%;
+  background: #00e676; color: #000; border: none;
+  font-size: 24px; cursor: pointer;
+  display: flex; justify-content: center; align-items: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 15px #00e676;
+}
+.play-btn:active { transform: scale(0.95); }
+.player-time {
+  color: #00e676; font-size: 13px;
+  font-family: 'Courier New', monospace;
+  min-width: 45px;
+}
+.player-progress-wrap {
+  flex: 1; height: 8px; background: #222; border-radius: 10px;
+  overflow: hidden; cursor: pointer;
+}
+.player-progress {
+  height: 100%; width: 0%; background: #00e676;
+  box-shadow: 0 0 10px #00e676;
+  border-radius: 10px;
+  transition: width 0.1s linear;
+}
+
 #meme-67 {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0, 0, 0, 0.95); display: flex; flex-direction: column;
@@ -174,18 +252,14 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   padding: 20px; overflow-y: auto;
 }
 .bw-card {
-  background: #fff; color: #000;
-  max-width: 500px; width: 100%;
+  background: #fff; color: #000; max-width: 500px; width: 100%;
   padding: 30px 25px; border-radius: 5px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
-.bw-header {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 20px; font-size: 16px; color: #333;
-}
+.bw-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-size: 16px; color: #333; }
 .bw-logo {
-  width: 36px; height: 36px; border-radius: 50%;
-  color: #fff; display: flex; justify-content: center; align-items: center;
+  width: 36px; height: 36px; border-radius: 50%; color: #fff;
+  display: flex; justify-content: center; align-items: center;
   font-weight: bold; font-size: 18px; flex-shrink: 0;
   font-family: Arial, sans-serif; overflow: hidden;
 }
@@ -267,29 +341,17 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 }
 
 /* РЕЙТИНГ */
-#screen-rating {
-  padding: 40px 20px; max-width: 600px; margin: 0 auto;
-  text-align: center;
-}
-#screen-rating h1 {
-  color: #00e676; font-size: 28px; margin-bottom: 20px;
-  text-shadow: 0 0 20px #00e676;
-}
-#screen-rating p {
-  color: #aaa; font-size: 16px; margin-bottom: 40px;
-}
-.stars-wrap {
-  display: flex; justify-content: center; gap: 10px; margin-bottom: 25px;
-}
+#screen-rating { padding: 40px 20px; max-width: 600px; margin: 0 auto; text-align: center; }
+#screen-rating h1 { color: #00e676; font-size: 28px; margin-bottom: 20px; text-shadow: 0 0 20px #00e676; }
+#screen-rating p { color: #aaa; font-size: 16px; margin-bottom: 40px; }
+.stars-wrap { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
 .star {
   font-size: 50px; cursor: pointer; color: #333;
   transition: color 0.2s, transform 0.2s;
   user-select: none;
 }
 .star:hover, .star.active { color: #ffd700; text-shadow: 0 0 20px #ffd700; transform: scale(1.1); }
-.rating-numbers {
-  display: flex; justify-content: center; gap: 10px; margin-bottom: 30px;
-}
+.rating-numbers { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
 .rating-num {
   width: 50px; height: 50px;
   background: #111; color: #888; border: 2px solid #333;
@@ -320,38 +382,18 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   font-family: inherit;
 }
 #submit-review:disabled { background: #333; color: #666; cursor: not-allowed; }
-#review-status {
-  margin-top: 15px; font-size: 14px; color: #00e676;
-}
+#review-status { margin-top: 15px; font-size: 14px; color: #00e676; }
 
-/* АДМИНКА */
-#screen-admin {
-  padding: 30px 20px; max-width: 800px; margin: 0 auto;
-}
-#screen-admin h1 {
-  color: #00e676; font-size: 24px; margin-bottom: 25px;
-  text-shadow: 0 0 20px #00e676;
-  text-align: center;
-}
+#screen-admin { padding: 30px 20px; max-width: 800px; margin: 0 auto; }
+#screen-admin h1 { color: #00e676; font-size: 24px; margin-bottom: 25px; text-shadow: 0 0 20px #00e676; text-align: center; }
 .review-card {
   background: #111; border: 2px solid #222; border-radius: 12px;
   padding: 15px 18px; margin-bottom: 12px;
 }
-.review-stars {
-  color: #ffd700; font-size: 20px; margin-bottom: 8px;
-  text-shadow: 0 0 10px #ffd700;
-}
-.review-text {
-  color: #fff; font-size: 15px; line-height: 1.5;
-  margin-bottom: 8px;
-  word-wrap: break-word;
-}
-.review-date {
-  color: #666; font-size: 12px;
-}
-#no-reviews {
-  color: #666; text-align: center; font-size: 16px; padding: 40px 0;
-}
+.review-stars { color: #ffd700; font-size: 20px; margin-bottom: 8px; text-shadow: 0 0 10px #ffd700; }
+.review-text { color: #fff; font-size: 15px; line-height: 1.5; margin-bottom: 8px; word-wrap: break-word; }
+.review-date { color: #666; font-size: 12px; }
+#no-reviews { color: #666; text-align: center; font-size: 16px; padding: 40px 0; }
 
 .modal-overlay {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -371,6 +413,7 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
   #meme-67-text { font-size: 32px; }
   #bsod h1 { font-size: 26px; }
   .star { font-size: 60px; }
+  #kryg-video { width: 340px; height: 340px; }
 }
 </style>
 </head>
@@ -501,15 +544,44 @@ body { background: #000; color: #fff; overflow-x: hidden; min-height: 100vh; }
 </div>
 
 <div id="screen-bonus" class="hidden page">
+  <div class="kryg-label">🎥 Кружки</div>
+  <div id="kryg-gallery">
+    <div class="kryg-wrap">
+      <video id="kryg-video" playsinline preload="metadata"></video>
+    </div>
+    <div class="gallery-controls">
+      <button id="prev-kryg-btn">← Назад</button>
+      <span id="kryg-counter">1 / 1</span>
+      <button id="next-kryg-btn">Вперёд →</button>
+    </div>
+  </div>
+
   <div class="bonus-label">🎧 Бонусная комната</div>
   <div id="bonus-gallery">
-    <audio id="bonus-audio" controls></audio>
+    <div class="custom-player">
+      <div class="player-title" id="bonus-player-title">Голосовое 1 / 14</div>
+      <div class="waveform" id="bonus-waveform"></div>
+      <div class="player-controls">
+        <button class="play-btn" id="bonus-play-btn">▶</button>
+        <span class="player-time" id="bonus-time-current">0:00</span>
+        <div class="player-progress-wrap" id="bonus-progress-wrap">
+          <div class="player-progress" id="bonus-progress"></div>
+        </div>
+        <span class="player-time" id="bonus-time-total">0:00</span>
+      </div>
+    </div>
+    <audio id="bonus-audio" preload="metadata"></audio>
     <div class="gallery-controls">
       <button id="prev-bonus-btn">← Назад</button>
       <span id="bonus-counter">1 / 1</span>
       <button id="next-bonus-btn">Вперёд →</button>
     </div>
   </div>
+
+  <div id="bonus-warning" class="hidden" style="text-align:center;color:#ffd700;font-size:16px;font-weight:bold;margin:20px 0;text-shadow:0 0 15px #ffd700;">
+    ⚠️ Обязательно посмотри и прослушай всё!
+  </div>
+
   <button id="rate-btn" class="hidden">⭐ Оценить сайт</button>
   <button id="back-btn-4" class="back-btn">← Назад к поздравлению</button>
 </div>
@@ -631,6 +703,20 @@ const bsod = document.getElementById('bsod');
 const bsodPercent = document.getElementById('bsod-percent');
 const bsodContinue = document.getElementById('bsod-continue');
 
+const krygVideo = document.getElementById('kryg-video');
+const prevKrygBtn = document.getElementById('prev-kryg-btn');
+const nextKrygBtn = document.getElementById('next-kryg-btn');
+const krygCounter = document.getElementById('kryg-counter');
+const bonusWarning = document.getElementById('bonus-warning');
+
+const bonusPlayBtn = document.getElementById('bonus-play-btn');
+const bonusProgress = document.getElementById('bonus-progress');
+const bonusProgressWrap = document.getElementById('bonus-progress-wrap');
+const bonusTimeCurrent = document.getElementById('bonus-time-current');
+const bonusTimeTotal = document.getElementById('bonus-time-total');
+const bonusPlayerTitle = document.getElementById('bonus-player-title');
+const bonusWaveform = document.getElementById('bonus-waveform');
+
 const browserWarning = document.getElementById('browser-warning');
 const bwLogo = document.getElementById('bw-logo');
 const bwBrowserName = document.getElementById('bw-browser-name');
@@ -663,6 +749,11 @@ const BASE = 'https://insane-famq.github.io/birthday-kirill/';
 const RAIN_VIDEO_URL = BASE + 'RainVideo.mp4';
 
 rainVideo.src = RAIN_VIDEO_URL;
+
+const KRYG = [
+  BASE + 'Kryg1.mp4', BASE + 'Kryg2.mp4', BASE + 'Kryg3.mp4', BASE + 'Kryg4.mp4',
+  BASE + 'Kryg5.mp4', BASE + 'Kryg6.mp4', BASE + 'Kryg7.mp4', BASE + 'Kryg8.mp4'
+];
 
 const BONUS = [
   BASE + 'Bonus1.ogg', BASE + 'Bonus2.ogg', BASE + 'Bonus3.ogg',
@@ -908,7 +999,6 @@ loginBtn.addEventListener('click', () => {
   const password = passwordInput.value.trim();
 
   if (login === ADMIN_LOGIN && password === ADMIN_PASSWORD) {
-    // АДМИН
     screenLogin.classList.add('hidden');
     screenAdmin.classList.remove('hidden');
     loadAllReviews();
@@ -922,6 +1012,7 @@ loginBtn.addEventListener('click', () => {
     bgMusic.play().catch(e => console.log('Музыка:', e));
     showPhoto(0);
     showVideo(0);
+    showKryg(0);
     showBonus(0);
     renderAll();
     startClickCounter();
@@ -930,7 +1021,6 @@ loginBtn.addEventListener('click', () => {
   }
 });
 
-// АДМИНКА
 async function loadAllReviews() {
   reviewsList.innerHTML = '';
   noReviews.classList.add('hidden');
@@ -1011,19 +1101,146 @@ videoPlayer.addEventListener('play', () => bgMusic.pause());
 videoPlayer.addEventListener('pause', () => bgMusic.play());
 videoPlayer.addEventListener('ended', () => bgMusic.play());
 
+// КРУЖКИ
+let currentKryg = 0;
+function showKryg(index) {
+  krygVideo.src = KRYG[index];
+  krygCounter.textContent = `${index + 1} / ${KRYG.length}`;
+  prevKrygBtn.disabled = index === 0;
+  nextKrygBtn.disabled = index === KRYG.length - 1;
+  krygVideo.pause();
+  krygVideo.classList.remove('playing');
+  // Автозапуск кружка по кругу
+  krygVideo.loop = true;
+}
+prevKrygBtn.addEventListener('click', () => { if (currentKryg > 0) { currentKryg--; showKryg(currentKryg); } });
+nextKrygBtn.addEventListener('click', () => { if (currentKryg < KRYG.length - 1) { currentKryg++; showKryg(currentKryg); } });
+
+krygVideo.addEventListener('click', () => {
+  if (krygVideo.paused) {
+    krygVideo.play();
+    krygVideo.classList.add('playing');
+  } else {
+    krygVideo.pause();
+    krygVideo.classList.remove('playing');
+  }
+});
+
+krygVideo.addEventListener('play', () => {
+  krygVideo.classList.add('playing');
+  bgMusic.pause();
+  sadMusic.pause();
+  rainMusic.pause();
+  bonusAudio.pause();
+});
+
+krygVideo.addEventListener('pause', () => {
+  krygVideo.classList.remove('playing');
+  if (!screenBonus.classList.contains('hidden')) {
+    // На бонусной ничего не включаем
+  }
+});
+
 // БОНУС
 let currentBonus = 0;
+let waveformBars = [];
+
+function initWaveform() {
+  bonusWaveform.innerHTML = '';
+  waveformBars = [];
+  const barCount = 40;
+  for (let i = 0; i < barCount; i++) {
+    const bar = document.createElement('div');
+    bar.className = 'wave-bar';
+    bonusWaveform.appendChild(bar);
+    waveformBars.push(bar);
+  }
+}
+
+function animateWaveform() {
+  if (bonusAudio.paused) {
+    waveformBars.forEach(b => { b.style.height = '8px'; b.classList.remove('active'); });
+    return;
+  }
+  waveformBars.forEach((b, i) => {
+    const h = 8 + Math.random() * 50;
+    b.style.height = h + 'px';
+    b.classList.add('active');
+  });
+  requestAnimationFrame(animateWaveform);
+}
+
+function formatTime(sec) {
+  if (!isFinite(sec)) return '0:00';
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  return m + ':' + (s < 10 ? '0' : '') + s;
+}
+
 function showBonus(index) {
   bonusAudio.src = BONUS[index];
+  bonusPlayerTitle.textContent = `Голосовое ${index + 1} / ${BONUS.length}`;
   bonusCounter.textContent = `${index + 1} / ${BONUS.length}`;
   prevBonusBtn.disabled = index === 0;
   nextBonusBtn.disabled = index === BONUS.length - 1;
-  if (index === BONUS.length - 1) rateBtn.classList.remove('hidden');
-  else rateBtn.classList.add('hidden');
+  bonusPlayBtn.textContent = '▶';
+  bonusProgress.style.width = '0%';
+  bonusTimeCurrent.textContent = '0:00';
+  bonusTimeTotal.textContent = '0:00';
+
+  // Предупреждение и кнопка "Оценить" - только на 14-м
+  if (index === BONUS.length - 1) {
+    rateBtn.classList.remove('hidden');
+    bonusWarning.classList.remove('hidden');
+  } else {
+    rateBtn.classList.add('hidden');
+    bonusWarning.classList.add('hidden');
+  }
 }
+
 prevBonusBtn.addEventListener('click', () => { if (currentBonus > 0) { currentBonus--; showBonus(currentBonus); } });
 nextBonusBtn.addEventListener('click', () => { if (currentBonus < BONUS.length - 1) { currentBonus++; showBonus(currentBonus); } });
-bonusAudio.addEventListener('play', () => { bgMusic.pause(); sadMusic.pause(); rainMusic.pause(); });
+
+bonusPlayBtn.addEventListener('click', () => {
+  if (bonusAudio.paused) {
+    bonusAudio.play();
+    bonusPlayBtn.textContent = '⏸';
+    animateWaveform();
+  } else {
+    bonusAudio.pause();
+    bonusPlayBtn.textContent = '▶';
+  }
+});
+
+bonusAudio.addEventListener('play', () => {
+  bgMusic.pause(); sadMusic.pause(); rainMusic.pause();
+  krygVideo.pause();
+  bonusPlayBtn.textContent = '⏸';
+  animateWaveform();
+});
+bonusAudio.addEventListener('pause', () => {
+  bonusPlayBtn.textContent = '▶';
+});
+bonusAudio.addEventListener('loadedmetadata', () => {
+  bonusTimeTotal.textContent = formatTime(bonusAudio.duration);
+});
+bonusAudio.addEventListener('timeupdate', () => {
+  if (bonusAudio.duration) {
+    const pct = (bonusAudio.currentTime / bonusAudio.duration) * 100;
+    bonusProgress.style.width = pct + '%';
+    bonusTimeCurrent.textContent = formatTime(bonusAudio.currentTime);
+  }
+});
+bonusProgressWrap.addEventListener('click', (e) => {
+  if (bonusAudio.duration) {
+    const rect = bonusProgressWrap.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    bonusAudio.currentTime = pct * bonusAudio.duration;
+  }
+});
+bonusAudio.addEventListener('ended', () => {
+  bonusPlayBtn.textContent = '▶';
+});
 
 // УБЕГАЮЩАЯ КНОПКА
 let nextBtnAttempts = 0;
@@ -1082,6 +1299,7 @@ bonusBtn.addEventListener('click', () => {
   rainMusic.pause();
   bgMusic.pause();
   rainVideo.pause();
+  showKryg(0);
   showBonus(0);
   window.scrollTo(0, 0);
 });
@@ -1090,6 +1308,7 @@ backBtn4.addEventListener('click', () => {
   screenBonus.classList.add('hidden');
   screenFinal.classList.remove('hidden');
   bonusAudio.pause();
+  krygVideo.pause();
   sadMusic.play();
   rainMusic.play();
   rainVideo.play();
@@ -1285,7 +1504,10 @@ function typeFinalText() {
   }
   type();
 }
+
+// Инициализация визуализации плеера
+initWaveform();
 </script>
 
 </body>
-  </html>
+      </html>
